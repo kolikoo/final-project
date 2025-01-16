@@ -1,17 +1,39 @@
 import { supabase } from "..";
 
-import { FillProfileInfoPayload } from "./index.types";
 
-export const fillProfileInfo = (payload: FillProfileInfoPayload) => {
-  return supabase
+
+type FillProfileInfoPayload = {
+    username: string;
+    full_name_ka: string;
+    full_name_en: string;
+    avatar_url: string;
+    id: string;}
+
+export const fillProfileInfo = async (
+  payload: FillProfileInfoPayload
+): Promise<void> => {
+  const { error } = await supabase
     .from("profiles")
-    .upsert(payload as any)
+    .upsert(payload)
     .throwOnError();
+
+  if (error) {
+    throw new Error(error.message);
+  }
+};
+
+export const getProfileInfo = async (id: string): Promise<any> => {
+  const { data, error } = await supabase
+    .from("profiles")
+    .select("*")
+    .eq("id", id);
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return data;
 };
 
 
 
-export const getProfileInfo = (id:string|number)=>{
- return supabase.from("profiles").select("*").eq("id",id)
-
-}

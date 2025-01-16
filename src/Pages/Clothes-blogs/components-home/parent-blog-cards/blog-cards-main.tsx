@@ -1,15 +1,16 @@
+import React from "react";
+
 type Props={
 
   children?: React.ReactNode;
 }
 
 const MainBlogCards:React.FC<Props>=({children})=>{
- return(
-        <div className=" flex flex-col gap-5">
-         {children}
-        </div>
-  
- )
+ return (
+   <div className="  flex-col  grid grid-cols-4 gap-[30px]">
+     {children}
+   </div>
+ );
 }
 
 

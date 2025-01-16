@@ -16,18 +16,18 @@ const RegisterForm: React.FC = () => {
     mutationFn: register,
   });
 
-  const handleSubmit = (e:React.FormEvent) => {
-e.preventDefault()
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
 
     if (!!registerPayload.email && !!registerPayload.password) {
       handleRegister(registerPayload);
     }
   };
 
+
   return (
     <form
-    onSubmit={handleSubmit}
-      
+      onSubmit={handleSubmit}
       className="m-auto flex w-full max-w-sm flex-col justify-start gap-4 space-x-2 dark:bg-black dark:text-black"
     >
       <div className="ml-2 w-[98%] dark:text-white">

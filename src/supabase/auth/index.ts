@@ -1,6 +1,6 @@
 import { supabase } from "../index";
 
-export const register = async ({
+export const register =  ({
   email,
   password,
 }: {
