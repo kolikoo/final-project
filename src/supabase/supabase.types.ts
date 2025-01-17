@@ -94,6 +94,39 @@ export type Database = {
           },
         ]
       }
+      favorites: {
+        Row: {
+          blog_id: number | null
+          id: number
+          user_id: string | null
+        }
+        Insert: {
+          blog_id?: number | null
+          id?: number
+          user_id?: string | null
+        }
+        Update: {
+          blog_id?: number | null
+          id?: number
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "favorites_blog_id_fkey"
+            columns: ["blog_id"]
+            isOneToOne: false
+            referencedRelation: "blogs-list"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "favorites_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           avatar_url: string | null

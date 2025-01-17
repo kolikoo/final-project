@@ -9,9 +9,8 @@ import {
   Popover,
   PopoverTrigger,
   PopoverContent,
-  PopoverArrow,
+ 
 } from "@radix-ui/react-popover";
-import { cn } from "../../../lib/utils";
 import searchSvg from "../../../../src/images/search-svgrepo-com (2).svg";
 import worldSvg from "../../../images/world-1-svgrepo-com.svg";
 import { NavLink, useNavigate } from "react-router-dom";
@@ -23,6 +22,7 @@ import { useMutation } from "@tanstack/react-query";
 import { logout } from "../../../supabase/auth/index";
 import { useAtom } from "jotai";
 import { userAtom } from "@/store/auth";
+import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 
 const Header: React.FC = () => {
   const { t } = useTranslation();
@@ -80,13 +80,11 @@ const Header: React.FC = () => {
           </nav>
         </div>
 
-   
         <div className="bg-[#C2EFD4] dark:bg-[#224F34] dark:text-white ml-[100px] text-4xl font-[600]">
           <NavLink to={"/"}>ThriftShop</NavLink>
         </div>
 
-        <div className="header-right-items flex w-[30%] text-black gap-3 justify-between dark:text-white w-50 p-2 h-10 rounded-[25px]">
-  
+        <div className="header-right-items  flex w-[30%] text-black gap-3 justify-between dark:text-white w-50 p-2 h-10 rounded-[25px]">
           {user && (
             <div
               onClick={() => handleNavigate("/AddBlog")}
@@ -96,10 +94,9 @@ const Header: React.FC = () => {
             </div>
           )}
 
-    
           <div className="bg-gradient-to-r from-[#6BC785] to-[#224F34] dark:bg-[#417a51] rounded-[25px] flex w-[70%] justify-center gap-5 h-10 p-2">
-            <p>
-              <img className="w-7 text-black" src={searchSvg} alt="worldsvg" />
+            <p onClick={() => handleNavigate("/CheckoutView")}>
+              <AddShoppingCartIcon className="text-white hover:text-black cursor-pointer" />
             </p>
 
             {/* Theme toggle */}

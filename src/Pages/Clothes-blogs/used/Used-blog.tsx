@@ -1,13 +1,17 @@
 import { useEffect, useState } from "react";
 import { supabase } from "@/supabase";
 import { useNavigate } from "react-router-dom";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import Loading from "@/MainComponents/defaultComponents/loadingPage/loading"; // ლოადინგ კომპონენტის იმპორტი
 import MainBlogCards from "../components-blogs/parent-blog-cards/blog-cards-main";
-import UsedFirstSection from "./components/First-section/usedFirstSection";
 import BlogHomeSection from "../components-blogs/blog-home-section/blog-home-section";
+import UsedFirstSection from "./components/First-section/usedFirstSection";
 
 const UsedBlog: React.FC = () => {
   const [blogs, setBlogs] = useState<any[]>([]);
+  const [favoriteBlogs, setFavoriteBlogs] = useState<number[]>([]); // ფავორიტი ბლოგების ID-ების სია
   const [userId, setUserId] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(true); // ლოადინგის მდგომარეობა
   const navigate = useNavigate();
 
   // მომხმარებლის ID-ის აღება
@@ -24,13 +28,41 @@ const UsedBlog: React.FC = () => {
     fetchUserId();
   }, []);
 
+  // ფავორიტების დატვირთვა
+  useEffect(() => {
+    const fetchFavorites = async () => {
+      if (!userId) return;
+
+      const { data, error } = await supabase
+        .from("favorites")
+        .select("blog_id")
+        .eq("user_id", userId);
+
+      if (error) {
+        console.error("Error fetching favorites:", error.message);
+        return;
+      }
+
+      // მხოლოდ `number` ტიპის ელემენტების ფილტრაცია
+      const validFavorites = data
+        ?.map((fav) => fav.blog_id)
+        .filter((id): id is number => id !== null);
+
+      setFavoriteBlogs(validFavorites);
+    };
+
+    fetchFavorites();
+  }, [userId]);
+
+
+  // ბლოგების დატვირთვა
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
         const { data, error } = await supabase
           .from("blogs-list")
           .select("*")
-          .eq("category", "used"); // ფილტრაცია ხდება "used"-ზე
+          .eq("category", "used"); // ფილტრაცია "used"-ზე
 
         if (error) {
           console.error("Error fetching data:", error.message);
@@ -44,50 +76,54 @@ const UsedBlog: React.FC = () => {
         }
       } catch (err) {
         console.error("Unexpected error:", err);
+      } finally {
+        setIsLoading(false); // მონაცემების ჩატვირთვის დასრულების შემდეგ, ლოადინგი იხსნება
       }
     };
 
     fetchBlogs();
   }, []);
 
-  // Handle navigate to detail page
   const handleNavigate = (path: string) => {
     navigate(path);
   };
 
-  // Handle delete blog post
-  const handleDelete = async (blogId: number) => {
+  const handleFavoriteToggle = async (blogId: number) => {
     if (!userId) {
-      alert("You must be logged in to delete your post.");
+      alert("You must be logged in to favorite items.");
       return;
     }
 
-    try {
-      // Delete only if the current user is the one who created the blog
-      const { data, error } = await supabase
-        .from("blogs-list")
+    if (favoriteBlogs.includes(blogId)) {
+      // ფავორიტებიდან ამოღება
+      const { error } = await supabase
+        .from("favorites")
         .delete()
-        .eq("id", blogId)
-        .eq("user_id", userId); // Check if the user ID matches
+        .eq("blog_id", blogId)
+        .eq("user_id", userId);
 
       if (error) {
-        console.error("Error deleting blog:", error.message);
-        return;
+        console.error("Error removing favorite:", error.message);
+      } else {
+        setFavoriteBlogs((prev) => prev.filter((id) => id !== blogId));
       }
+    } else {
+      // ფავორიტებში დამატება
+      const { error } = await supabase
+        .from("favorites")
+        .insert([{ blog_id: blogId, user_id: userId }]);
 
-      if (data) {
-        // Immediately update the UI without needing to refresh the page
-        setBlogs((prevBlogs) => {
-          console.log("Prev Blogs:", prevBlogs);
-          console.log("Deleted Blog ID:", blogId);
-          return prevBlogs.filter((blog) => blog.id !== blogId);
-        });
-        alert("Post deleted successfully.");
+      if (error) {
+        console.error("Error adding favorite:", error.message);
+      } else {
+        setFavoriteBlogs((prev) => [...prev, blogId]);
       }
-    } catch (err) {
-      console.error("Error during delete:", err);
     }
   };
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <>
@@ -101,11 +137,28 @@ const UsedBlog: React.FC = () => {
                 key={blog.id}
                 className="bg-white dark:bg-zinc-800 p-4 shadow-lg rounded-lg cursor-pointer hover:scale-110 duration-300"
               >
-                <img
-                  src={`https://ezorpkouhvpeqvlzrolq.supabase.co/storage/v1/object/public/blog-images/${blog.image_url}`}
-                  alt={blog.title}
-                  className="w-full h-64 object-cover rounded-md"
-                />
+                <div className="relative">
+                  <img
+                    src={`https://ezorpkouhvpeqvlzrolq.supabase.co/storage/v1/object/public/blog-images/${blog.image_url}`}
+                    alt={blog.title}
+                    className="w-full h-64 object-cover rounded-md relative"
+                  />
+
+                  <div className="absolute top-3 right-3">
+                    <FavoriteBorderIcon
+                      className={`rounded-full p-0.5 cursor-pointer ${
+                        favoriteBlogs.includes(blog.id)
+                          ? "text-white bg-black"
+                          : "text-black hover:text-white hover:bg-black"
+                      }`}
+                      onClick={(e) => {
+                        e.stopPropagation(); // ხელს უშლის მშობლის `onClick`-ის გამოვლენას
+                        handleFavoriteToggle(blog.id);
+                      }}
+                    />
+                  </div>
+                </div>
+
                 <h3 className="text-lg font-semibold mt-4">{blog.title}</h3>
                 <p className="text-gray-600 dark:text-gray-300">
                   {blog.description}
@@ -116,19 +169,6 @@ const UsedBlog: React.FC = () => {
                     {blog.price} {blog.currency}
                   </span>
                 </p>
-                {/* {წაშლის ღილაკი რომელიც ვინც შექმნა მას შეუძლია რომ წაშალოს } */}
-                {userId === blog.user_id && (
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation(); // ნავიგაციის შეჩერება
-                      console.log("Deleting Blog ID:", blog.id); // Log ID for debugging
-                      handleDelete(blog.id);
-                    }}
-                    className="bg-red-500 text-white py-2 px-4 rounded mt-4 hover:bg-red-600"
-                  >
-                    Delete Post
-                  </button>
-                )}
               </div>
             ))}
           </MainBlogCards>

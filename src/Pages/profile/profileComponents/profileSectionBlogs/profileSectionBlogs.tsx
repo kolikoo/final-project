@@ -14,7 +14,7 @@ interface Blog {
 
 const ProfileSectionBlogs: React.FC = () => {
   const [blogs, setBlogs] = useState<Blog[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [, setLoading] = useState(false);
 
   const fetchBlogs = async () => {
     setLoading(true);

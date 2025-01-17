@@ -1,17 +1,20 @@
 import { useEffect, useState } from "react";
 import { supabase } from "@/supabase";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import MainBlogCards from "../components-blogs/parent-blog-cards/blog-cards-main";
-
 import BlogHomeSection from "../components-blogs/blog-home-section/blog-home-section";
 import UsedFirstSection from "../used/components/First-section/usedFirstSection";
+import Loading from "@/MainComponents/defaultComponents/loadingPage/loading";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 
 const NewBlog: React.FC = () => {
   const [blogs, setBlogs] = useState<any[]>([]);
+  const [favoriteBlogs, setFavoriteBlogs] = useState<number[]>([]);
   const [userId, setUserId] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
-  // მომხმარებლის ID-ის აღება
   useEffect(() => {
     const fetchUserId = async () => {
       const { data: userSession, error } = await supabase.auth.getUser();
@@ -31,7 +34,7 @@ const NewBlog: React.FC = () => {
         const { data, error } = await supabase
           .from("blogs-list")
           .select("*")
-          .eq("category", "new"); // ფილტრაცია ხდება "used"-ზე
+          .eq("category", "new");
 
         if (error) {
           console.error("Error fetching data:", error.message);
@@ -45,18 +48,73 @@ const NewBlog: React.FC = () => {
         }
       } catch (err) {
         console.error("Unexpected error:", err);
+      } finally {
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 1500);
       }
     };
 
     fetchBlogs();
   }, []);
 
-  // Handle navigate to detail page
-  const handleNavigate = (path: string) => {
-    navigate(path);
+  useEffect(() => {
+    const fetchFavorites = async () => {
+      if (!userId) return;
+
+      const { data, error } = await supabase
+        .from("favorites")
+        .select("blog_id")
+        .eq("user_id", userId);
+
+      if (error) {
+        console.error("Error fetching favorites:", error.message);
+        return;
+      }
+
+      const validFavorites = data
+        ?.map((fav) => fav.blog_id)
+        .filter((id): id is number => id !== null);
+
+      setFavoriteBlogs(validFavorites || []);
+    };
+
+    fetchFavorites();
+  }, [userId]);
+
+  const handleFavoriteToggle = async (blogId: number) => {
+    if (!userId) {
+      alert("You must be logged in to favorite items.");
+      return;
+    }
+
+    if (favoriteBlogs.includes(blogId)) {
+      // Remove favorite
+      const { error } = await supabase
+        .from("favorites")
+        .delete()
+        .eq("blog_id", blogId)
+        .eq("user_id", userId);
+
+      if (error) {
+        console.error("Error removing favorite:", error.message);
+      } else {
+        setFavoriteBlogs((prev) => prev.filter((id) => id !== blogId));
+      }
+    } else {
+      // Add favorite
+      const { error } = await supabase
+        .from("favorites")
+        .insert([{ blog_id: blogId, user_id: userId }]);
+
+      if (error) {
+        console.error("Error adding favorite:", error.message);
+      } else {
+        setFavoriteBlogs((prev) => [...prev, blogId]);
+      }
+    }
   };
 
-  // Handle delete blog post
   const handleDelete = async (blogId: number) => {
     if (!userId) {
       alert("You must be logged in to delete your post.");
@@ -64,12 +122,11 @@ const NewBlog: React.FC = () => {
     }
 
     try {
-      // Delete only if the current user is the one who created the blog
       const { data, error } = await supabase
         .from("blogs-list")
         .delete()
         .eq("id", blogId)
-        .eq("user_id", userId); // Check if the user ID matches
+        .eq("user_id", userId);
 
       if (error) {
         console.error("Error deleting blog:", error.message);
@@ -77,14 +134,17 @@ const NewBlog: React.FC = () => {
       }
 
       if (data) {
-        // Successfully deleted, now update the UI
-        setBlogs(blogs.filter((blog) => blog.id !== blogId)); // Remove deleted blog from state
+        setBlogs(blogs.filter((blog) => blog.id !== blogId));
         alert("Post deleted successfully.");
       }
     } catch (err) {
       console.error("Error during delete:", err);
     }
   };
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <>
@@ -94,17 +154,34 @@ const NewBlog: React.FC = () => {
           <MainBlogCards>
             {blogs.map((blog) => (
               <div
-                onClick={() => handleNavigate(`/Details/${blog.id}`)}
+                onClick={() => navigate(`/Details/${blog.id}`)}
                 key={blog.id}
-                className="bg-white dark:bg-zinc-800 p-4  shadow-lg rounded-lg cursor-pointer hover:scale-110 duration-300"
+                className="bg-white dark:bg-zinc-800 p-4 shadow-lg rounded-lg cursor-pointer hover:scale-110 duration-300"
               >
-                <img
-                  src={`https://ezorpkouhvpeqvlzrolq.supabase.co/storage/v1/object/public/blog-images/${blog.image_url}`}
-                  alt={blog.title}
-                  className="w-full h-64 object-cover rounded-md"
-                />
+                <div className="relative">
+                  <img
+                    src={`https://ezorpkouhvpeqvlzrolq.supabase.co/storage/v1/object/public/blog-images/${blog.image_url}`}
+                    alt={blog.title}
+                    className="w-full h-64 object-cover rounded-md relative"
+                  />
+
+                  <div className="absolute top-3 right-3">
+                    <FavoriteBorderIcon
+                      className={`rounded-full p-0.5 cursor-pointer ${
+                        favoriteBlogs.includes(blog.id)
+                          ? "text-white bg-black"
+                          : "text-black hover:text-white hover:bg-black"
+                      }`}
+                      onClick={(e) => {
+                        e.stopPropagation(); // ხელს უშლის მშობლის `onClick`-ის გამოვლენას
+                        handleFavoriteToggle(blog.id);
+                      }}
+                    />
+                  </div>
+                </div>
+
                 <h3 className="text-lg font-semibold mt-4">{blog.title}</h3>
-                <p className="text-gray-600  dark:text-gray-300">
+                <p className="text-gray-600 dark:text-gray-300">
                   {blog.description}
                 </p>
                 <p className="text-gray-800 mt-3 dark:text-gray-300">
@@ -113,18 +190,16 @@ const NewBlog: React.FC = () => {
                     {blog.price} {blog.currency}
                   </span>
                 </p>
-                {/* {წაშლის ღილაკი რომელიც ვინც შექმნა მას შეუძლია რომ წაშალოსსს } */}
-                {userId === blog.user_id && (
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation(); 
-                      handleDelete(blog.id);
-                    }}
-                    className="bg-red-500 text-white py-2 px-4 rounded mt-4 hover:bg-red-600"
-                  >
-                    Delete Post
-                  </button>
-                )}
+
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleDelete(blog.id);
+                  }}
+                  className="bg-red-500 text-white py-2 px-4 rounded mt-4 hover:bg-red-600 hidden"
+                >
+                  Delete Post
+                </button>
               </div>
             ))}
           </MainBlogCards>
@@ -134,9 +209,4 @@ const NewBlog: React.FC = () => {
   );
 };
 
-
-
 export default NewBlog;
-
-
-

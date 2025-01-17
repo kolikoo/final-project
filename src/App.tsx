@@ -1,4 +1,4 @@
-import { Suspense, lazy, useEffect } from "react";
+import { Suspense,  useEffect } from "react";
 import "./App.css";
 import Header from "./MainComponents/defaultComponents/header/header";
 import {
@@ -17,7 +17,6 @@ import {
 } from "./MainComponents/defaultComponents/routeGuards/auth/authGuard";
 import { useAtom } from "jotai";
 import { userAtom } from "./store/auth";
-import ProfileView from "./Pages/profile/profileDetailsEdit/profileDetailsEdit";
 import MainHome from "./Pages/Home/home";
 import NewBlog from "./Pages/Clothes-blogs/new/New-blog";
 import Footer from "./MainComponents/defaultComponents/footer/footer";
@@ -26,9 +25,8 @@ import AddBlog from "./Pages/Add-blog/addBlog";
 import Details from "./Pages/Detailing-page/DetailPageView/detailPageView";
 import ProfileMainView from "./Pages/profile/profileMainView/profileMainView";
 import ProfileDetailsEdit from "./Pages/profile/profileDetailsEdit/profileDetailsEdit";
-
-
-
+import Loading from "./MainComponents/defaultComponents/loadingPage/loading"; // ლოადინგ კომპონენტის იმპორტი
+import CheckoutView from "./Pages/checkout/checkoutView/checkoutView";
 
 function App() {
   const [, setUser] = useAtom(userAtom);
@@ -53,15 +51,52 @@ function App() {
         <Route
           path="/"
           element={
-            <Suspense fallback={"loading"}>
+            <Suspense fallback={<Loading />}>
               <MainHome />
             </Suspense>
           }
         />
-        <Route path="/NewBlog" element={<NewBlog />} />
-        <Route path="/UsedBlog" element={<UsedBlog />} />
-        <Route path="/AddBlog" element={<AddBlog />} />
-        <Route path="/Details/:id" element={<Details />} />
+        <Route
+          path="/NewBlog"
+          element={
+            <Suspense fallback={<Loading />}>
+              <NewBlog />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/CheckoutView"
+          element={
+            <Suspense fallback={<Loading />}>
+              <CheckoutView />
+            </Suspense>
+          }
+        />
+
+        <Route
+          path="/UsedBlog"
+          element={
+            <Suspense fallback={<Loading />}>
+              <UsedBlog />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/AddBlog"
+          element={
+            <Suspense fallback={<Loading />}>
+              <AddBlog />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/Details/:id"
+          element={
+            <Suspense fallback={<Loading />}>
+              <Details />
+            </Suspense>
+          }
+        />
         <Route
           path="/LogIn"
           element={
@@ -82,7 +117,9 @@ function App() {
           path="/profile"
           element={
             <AuthGuard>
-              <ProfileMainView />
+              <Suspense fallback={<Loading />}>
+                <ProfileMainView />
+              </Suspense>
             </AuthGuard>
           }
         />
@@ -90,11 +127,12 @@ function App() {
           path="/profileDetailsEdit"
           element={
             <AuthGuard>
-              <ProfileDetailsEdit />
+              <Suspense fallback={<Loading />}>
+                <ProfileDetailsEdit />
+              </Suspense>
             </AuthGuard>
           }
         />
-
         <Route path="/" element={<Navigate to="/ka/home" />} />
       </Routes>
       <Footer />

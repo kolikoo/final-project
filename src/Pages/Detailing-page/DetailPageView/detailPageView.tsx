@@ -2,18 +2,17 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { supabase } from "@/supabase"; // თქვენი Supabase კლიენტი
 import detailBackground1 from "@/images/detailBackground1.png";
-
+import Loading from "@/MainComponents/defaultComponents/loadingPage/loading";
 
 const Details: React.FC = () => {
   const { id } = useParams(); // URL პარამეტრიდან ID-ს აღება
   const [blog, setBlog] = useState<any>(null); // ბლოგის მონაცემები
+  const [isLoading, setIsLoading] = useState<boolean>(true); // ლოდინის სტატუსი
 
   useEffect(() => {
     const fetchBlogDetails = async () => {
       try {
-        // `id` გარდაქმნა number ტიპში
-        const blogId = id ? parseInt(id) : NaN; // თუ `id` არსებობს, გარდაქმნე number-ში, წინააღმდეგ შემთხვევაში NaN
-
+        const blogId = id ? parseInt(id) : NaN; // თუ `id` არსებობს, გარდაქმნე number-ში
         if (isNaN(blogId)) {
           console.error("Invalid blog ID");
           return;
@@ -24,14 +23,17 @@ const Details: React.FC = () => {
           .from("blogs-list")
           .select("*")
           .eq("id", blogId)
-          .single(); // მხოლოდ ერთი ბლოგის მონაცემი
+          .single();
 
         if (error) {
           console.error("Error fetching blog details:", error.message);
         }
 
         if (data) {
-          setBlog(data); // თუ მონაცემები არის, განაახლეთ მდგომარეობა
+          setTimeout(() => {
+            setBlog(data); // 0.5 წამში მონაცემების განახლება
+            setIsLoading(false); // ლოდინის დასრულება
+          }, 500);
         }
       } catch (err) {
         console.error("Unexpected error:", err);
@@ -41,11 +43,21 @@ const Details: React.FC = () => {
     if (id) {
       fetchBlogDetails();
     }
-  }, [id]); // ID-ის ცვლილებაზე ხელახლა დაიბეჭდება
+  }, [id]);
 
-  // Loading და Error Handling
+  // Loading Page
+  if (isLoading) {
+    return (
+      <Loading/>
+    );
+  }
+
   if (!blog) {
-    return <div>Loading...</div>;
+    return (
+      <div className="h-screen flex items-center justify-center">
+        No data found
+      </div>
+    );
   }
 
   return (
@@ -65,28 +77,26 @@ const Details: React.FC = () => {
           />
         </div>
         {/* Right Section: Details */}
-        <div className="dark:text-white  w-full md:w-1/2 p-6 space-y-6 m-auto">
-          <h1 className="dark:text-white  text-3xl font-semibold text-gray-800">
+        <div className="dark:text-white w-full md:w-1/2 p-6 space-y-6 m-auto">
+          <h1 className="dark:text-white text-3xl font-semibold text-gray-800">
             {blog.title}
           </h1>
-          <p className="dark:text-white  text-xl font-bold text-gray-700">
+          <p className="dark:text-white text-xl font-bold text-gray-700">
             {blog.price} {blog.currency}
           </p>
           <div>
-            <label className="block dark:text-white  text-gray-600 mb-2 font-extrabold">
+            <label className="block dark:text-white text-gray-600 mb-2 font-extrabold">
               Description:
             </label>
-            <p className="dark:text-white  text-gray-600 ">
-              {blog.description}
-            </p>
+            <p className="dark:text-white text-gray-600 ">{blog.description}</p>
           </div>
           <div>
-            <label className="block text-gray-600 mb-2 dark:text-white  font-extrabold">
+            <label className="block text-gray-600 mb-2 dark:text-white font-extrabold">
               Category:
             </label>
             <p className="text-gray-600 dark:text-white ">{blog.category}</p>
           </div>
-          <button className="w-full bg-black text-white py-2 rounded dark:text-white  dark:bg-green-9 hover:bg-gray-800">
+          <button className="w-full bg-black text-white py-2 rounded dark:text-white dark:bg-green-9 hover:bg-gray-800">
             Add to Cart
           </button>
         </div>
