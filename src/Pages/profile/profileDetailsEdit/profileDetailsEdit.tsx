@@ -61,8 +61,7 @@ const ProfileDetailsEdit: React.FC = () => {
 
   const {
     mutate: handleFillProfileInfo,
-    error,
-    isError,
+   
   } = useMutation({
     mutationKey: ["fill-Profile-Info"],
     mutationFn: fillProfileInfo,

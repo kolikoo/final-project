@@ -11,7 +11,6 @@ import {
   PopoverContent,
  
 } from "@radix-ui/react-popover";
-import searchSvg from "../../../../src/images/search-svgrepo-com (2).svg";
 import worldSvg from "../../../images/world-1-svgrepo-com.svg";
 import { NavLink, useNavigate } from "react-router-dom";
 import i18n from "i18next";

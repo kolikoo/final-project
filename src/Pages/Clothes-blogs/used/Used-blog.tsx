@@ -73,14 +73,14 @@ const UsedBlog: React.FC = () => {
     fetchBlogsData();
   }, []);
 
-  // Filter blogs by search query and category
+
   const filteredBlogs = blogs.filter(
     (blog) =>
       blog.category === "used" &&
       blog.title.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  // Pagination logic
+
   const indexOfLastBlog = currentPage * blogsPerPage;
   const indexOfFirstBlog = indexOfLastBlog - blogsPerPage;
   const currentBlogs = filteredBlogs.slice(indexOfFirstBlog, indexOfLastBlog);
@@ -112,7 +112,7 @@ const UsedBlog: React.FC = () => {
     }
   };
 
-  // Pagination control functions
+
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
   const totalPages = Math.ceil(filteredBlogs.length / blogsPerPage);

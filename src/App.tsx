@@ -25,7 +25,7 @@ import AddBlog from "./Pages/Add-blog/addBlog";
 import Details from "./Pages/Detailing-page/DetailPageView/detailPageView";
 import ProfileMainView from "./Pages/profile/profileMainView/profileMainView";
 import ProfileDetailsEdit from "./Pages/profile/profileDetailsEdit/profileDetailsEdit";
-import Loading from "./MainComponents/defaultComponents/loadingPage/loading"; // ლოადინგ კომპონენტის იმპორტი
+import Loading from "./MainComponents/defaultComponents/loadingPage/loading"; 
 import CheckoutView from "./Pages/checkout/checkoutView/checkoutView";
 import BlogEditPage from "./Pages/blogEditPage/blogEditPage";
 
