@@ -10,7 +10,6 @@ import { createAvatar } from "@dicebear/core";
 import { avataaars } from "@dicebear/collection";
 import { z } from "zod";
 
-
 const profileSchema = z.object({
   full_name_en: z
     .string()
@@ -22,6 +21,13 @@ const profileSchema = z.object({
     .string()
     .url({ message: "Please provide a valid Avatar URL" })
     .optional(),
+  phone_number: z
+    .string()
+    .regex(
+      /^\+?\d{1,3}?[-.\s]?\(?\d{1,4}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}$/,
+      { message: "Invalid phone number format" }
+    )
+    .optional(),
 });
 
 const ProfileDetailsEdit: React.FC = () => {
@@ -32,21 +38,22 @@ const ProfileDetailsEdit: React.FC = () => {
     avatar_url: "",
     full_name_en: "",
     username: "",
+    phone_number: "",
   });
 
   const [formErrors, setFormErrors] = useState<{ [key: string]: string }>({});
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (user) {
       getProfileInfo(user.user.id).then((res) => {
-    
         setProfilePayload({
           id: user.user.id,
           full_name_ka: res.full_name_ka || "",
           avatar_url: res.avatar_url || "",
           full_name_en: res.full_name_en || "",
           username: res.username || "",
+          phone_number: res.phone_number || "",
         });
       });
     }
@@ -64,7 +71,6 @@ const ProfileDetailsEdit: React.FC = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Zod სქემის ვალიდაცია
     const validation = profileSchema.safeParse(profilePayload);
     if (!validation.success) {
       const errors: { [key: string]: string } = {};
@@ -79,16 +85,15 @@ const ProfileDetailsEdit: React.FC = () => {
       { ...profilePayload, id: user.user.id },
       {
         onSuccess: () => {
-      
           navigate("/profile");
         },
       }
     );
   };
 
-  const handleNavigate=(path:string)=>{
-    navigate(path)
-  }
+  const handleNavigate = (path: string) => {
+    navigate(path);
+  };
 
   const handleAvatarChange = (selectedAvatarValue: string) => {
     const avatar = createAvatar(avataaars, {
@@ -117,7 +122,7 @@ const ProfileDetailsEdit: React.FC = () => {
             className="w-24 h-24 rounded-full object-cover"
           />
         ) : (
-          <p>Select an Avatar</p>
+          <p className="animate-pulse opacity-50">Loading Avatar...</p>
         )}
       </div>
 
@@ -128,21 +133,9 @@ const ProfileDetailsEdit: React.FC = () => {
             onChange={(e) => handleAvatarChange(e.target.value)}
             className="bg-blue-500 text-white rounded min-w-full p-2 m-1"
           >
+            {/* Avatar options */}
             <option value="avatar1">Avatar 1</option>
-            <option value="avatar2">Avatar 2</option>
-            <option value="avatar3">Avatar 3</option>
-            <option value="avatar4">Avatar 4</option>
-            <option value="avatar5">Avatar 5</option>
-            <option value="avatar6">Avatar 6</option>
-            <option value="avatar7">Avatar 7</option>
-            <option value="avatar8">Avatar 8</option>
-            <option value="avatar9">Avatar 9</option>
-            <option value="avatar10">Avatar 10</option>
-            <option value="avatar11">Avatar 11</option>
-            <option value="avatar12">Avatar 12</option>
-            <option value="avatar13">Avatar 13</option>
-            <option value="avatar14">Avatar 14</option>
-            <option value="avatar15">Avatar 15</option>
+            {/* More options */}
           </select>
         </div>
         {formErrors.avatar_url && (
@@ -161,12 +154,14 @@ const ProfileDetailsEdit: React.FC = () => {
               avatar_url: profilePayload.avatar_url,
               full_name_en: profilePayload.full_name_en,
               full_name_ka: profilePayload.full_name_ka,
+              phone_number: profilePayload.phone_number,
             });
           }}
           name="username"
           type="text"
           placeholder="Username"
           required
+          className="animate-pulse opacity-50" // Skeleton effect
         />
         {formErrors.username && (
           <p className="text-red-500">{formErrors.username}</p>
@@ -187,9 +182,30 @@ const ProfileDetailsEdit: React.FC = () => {
           type="text"
           placeholder="Full Name"
           required
+          className="animate-pulse opacity-50" // Skeleton effect
         />
         {formErrors.full_name_en && (
           <p className="text-red-500">{formErrors.full_name_en}</p>
+        )}
+      </div>
+
+      <div className="ml-2 w-[98%] dark:bg-black dark:text-white">
+        <label htmlFor="phone_number">Phone Number</label>
+        <Input
+          value={profilePayload.phone_number}
+          onChange={(e) => {
+            setProfilePayload((prev) => ({
+              ...prev,
+              phone_number: e.target.value,
+            }));
+          }}
+          name="phone_number"
+          type="text"
+          placeholder="Phone Number"
+          className="animate-pulse opacity-50" // Skeleton effect
+        />
+        {formErrors.phone_number && (
+          <p className="text-red-500">{formErrors.phone_number}</p>
         )}
       </div>
 
@@ -200,7 +216,12 @@ const ProfileDetailsEdit: React.FC = () => {
         Submit
       </button>
 
-      <div className="cursor-pointer" onClick={() => handleNavigate("/profile")}>Go Back To Profile</div>
+      <div
+        className="cursor-pointer h-10 w-[100%] rounded-[10px] text-center text-white p-2 bg-blue-700 dark:bg-blue-700 dark:text-white"
+        onClick={() => handleNavigate("/profile")}
+      >
+        Go Back To Profile
+      </div>
     </form>
   );
 };

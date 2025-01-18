@@ -27,6 +27,7 @@ import ProfileMainView from "./Pages/profile/profileMainView/profileMainView";
 import ProfileDetailsEdit from "./Pages/profile/profileDetailsEdit/profileDetailsEdit";
 import Loading from "./MainComponents/defaultComponents/loadingPage/loading"; // ლოადინგ კომპონენტის იმპორტი
 import CheckoutView from "./Pages/checkout/checkoutView/checkoutView";
+import BlogEditPage from "./Pages/blogEditPage/blogEditPage";
 
 function App() {
   const [, setUser] = useAtom(userAtom);
@@ -72,7 +73,6 @@ function App() {
             </Suspense>
           }
         />
-
         <Route
           path="/UsedBlog"
           element={
@@ -123,6 +123,17 @@ function App() {
             </AuthGuard>
           }
         />
+        <Route
+          path="/BlogEditPage/:id"
+          element={
+            <AuthGuard>
+              <Suspense fallback={<Loading />}>
+                <BlogEditPage />
+              </Suspense>
+            </AuthGuard>
+          }
+        />
+
         <Route
           path="/profileDetailsEdit"
           element={

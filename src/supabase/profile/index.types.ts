@@ -4,4 +4,5 @@ export  type FillProfileInfoPayload = {
   full_name_en: string;
   avatar_url:string;
   id:string
+  phone_number:string
 };

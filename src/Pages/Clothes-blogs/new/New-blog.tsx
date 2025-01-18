@@ -1,18 +1,26 @@
 import { useEffect, useState } from "react";
 import { supabase } from "@/supabase";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import Loading from "@/MainComponents/defaultComponents/loadingPage/loading";
 import MainBlogCards from "../components-blogs/parent-blog-cards/blog-cards-main";
 import BlogHomeSection from "../components-blogs/blog-home-section/blog-home-section";
+import { fetchBlogs } from "@/supabase/blogs/newBlogs/newBlogs";
+import {
+  fetchFavorites,
+  addFavorite,
+  removeFavorite,
+} from "@/supabase/favorites/favorites";
 import UsedFirstSection from "../used/components/First-section/usedFirstSection";
-import Loading from "@/MainComponents/defaultComponents/loadingPage/loading";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import FavoriteIcon from "@mui/icons-material/Favorite";
 
-const NewBlog: React.FC = () => {
+const NewBlogs: React.FC = () => {
   const [blogs, setBlogs] = useState<any[]>([]);
   const [favoriteBlogs, setFavoriteBlogs] = useState<number[]>([]);
   const [userId, setUserId] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [currentPage, setCurrentPage] = useState<number>(1); 
+  const blogsPerPage = 12; 
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -29,58 +37,45 @@ const NewBlog: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    const fetchBlogs = async () => {
+    const fetchFavoritesData = async () => {
+      if (!userId) return;
       try {
-        const { data, error } = await supabase
-          .from("blogs-list")
-          .select("*")
-          .eq("category", "new");
-
-        if (error) {
-          console.error("Error fetching data:", error.message);
-          return;
-        }
-
-        if (data) {
-          setBlogs(data);
+        const favorites = await fetchFavorites(userId);
+        setFavoriteBlogs(favorites);
+      } catch (error: unknown) {
+        if (error instanceof Error) {
+          console.error("Error fetching favorites:", error.message);
         } else {
-          console.log("No blogs found");
+          console.error("Unknown error occurred:", error);
         }
-      } catch (err) {
-        console.error("Unexpected error:", err);
-      } finally {
-        setTimeout(() => {
-          setIsLoading(false);
-        }, 1500);
       }
     };
 
-    fetchBlogs();
-  }, []);
+    fetchFavoritesData();
+  }, [userId]);
 
   useEffect(() => {
-    const fetchFavorites = async () => {
-      if (!userId) return;
-
-      const { data, error } = await supabase
-        .from("favorites")
-        .select("blog_id")
-        .eq("user_id", userId);
-
-      if (error) {
-        console.error("Error fetching favorites:", error.message);
-        return;
+    const fetchBlogsData = async () => {
+      try {
+        const blogs = await fetchBlogs();
+        setBlogs(blogs);
+      } catch (error: unknown) {
+        if (error instanceof Error) {
+          console.error("Error fetching blogs:", error.message);
+        } else {
+          console.error("Unknown error occurred:", error);
+        }
+      } finally {
+        setIsLoading(false);
       }
-
-      const validFavorites = data
-        ?.map((fav) => fav.blog_id)
-        .filter((id): id is number => id !== null);
-
-      setFavoriteBlogs(validFavorites || []);
     };
 
-    fetchFavorites();
-  }, [userId]);
+    fetchBlogsData();
+  }, []);
+
+  const handleNavigate = (path: string) => {
+    navigate(path);
+  };
 
   const handleFavoriteToggle = async (blogId: number) => {
     if (!userId) {
@@ -88,59 +83,37 @@ const NewBlog: React.FC = () => {
       return;
     }
 
-    if (favoriteBlogs.includes(blogId)) {
-      // Remove favorite
-      const { error } = await supabase
-        .from("favorites")
-        .delete()
-        .eq("blog_id", blogId)
-        .eq("user_id", userId);
-
-      if (error) {
-        console.error("Error removing favorite:", error.message);
-      } else {
+    try {
+      if (favoriteBlogs.includes(blogId)) {
+        await removeFavorite(userId, blogId);
         setFavoriteBlogs((prev) => prev.filter((id) => id !== blogId));
-      }
-    } else {
-      // Add favorite
-      const { error } = await supabase
-        .from("favorites")
-        .insert([{ blog_id: blogId, user_id: userId }]);
-
-      if (error) {
-        console.error("Error adding favorite:", error.message);
       } else {
+        await addFavorite(userId, blogId);
         setFavoriteBlogs((prev) => [...prev, blogId]);
       }
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        console.error("Error handling favorite:", error.message);
+      } else {
+        console.error("Unknown error occurred:", error);
+      }
     }
   };
 
-  const handleDelete = async (blogId: number) => {
-    if (!userId) {
-      alert("You must be logged in to delete your post.");
-      return;
-    }
+  // Filtering blogs based on search query
+  const filteredBlogs = blogs.filter((blog) =>
+    blog.title.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
-    try {
-      const { data, error } = await supabase
-        .from("blogs-list")
-        .delete()
-        .eq("id", blogId)
-        .eq("user_id", userId);
+  // Pagination logic
+  const indexOfLastPost = currentPage * blogsPerPage;
+  const indexOfFirstPost = indexOfLastPost - blogsPerPage;
+  const currentPosts = filteredBlogs.slice(indexOfFirstPost, indexOfLastPost);
 
-      if (error) {
-        console.error("Error deleting blog:", error.message);
-        return;
-      }
+  // Change page
+  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
-      if (data) {
-        setBlogs(blogs.filter((blog) => blog.id !== blogId));
-        alert("Post deleted successfully.");
-      }
-    } catch (err) {
-      console.error("Error during delete:", err);
-    }
-  };
+  const totalPages = Math.ceil(filteredBlogs.length / blogsPerPage);
 
   if (isLoading) {
     return <Loading />;
@@ -150,11 +123,20 @@ const NewBlog: React.FC = () => {
     <>
       <UsedFirstSection />
       <div className="w-[100%] bg-white px-10 dark:bg-zinc-900">
+        <div className="search-container mb-6">
+          <input
+            type="text"
+            placeholder="Search blogs..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)} // Update search query on input change
+            className="search-input search-input mb-8 w-[25%] h-10 border-[2px] border-black rounded-[10px]"
+          />
+        </div>
         <BlogHomeSection>
           <MainBlogCards>
-            {blogs.map((blog) => (
+            {currentPosts.map((blog) => (
               <div
-                onClick={() => navigate(`/Details/${blog.id}`)}
+                onClick={() => handleNavigate(`/Details/${blog.id}`)}
                 key={blog.id}
                 className="bg-white dark:bg-zinc-800 p-4 shadow-lg rounded-lg cursor-pointer hover:scale-110 duration-300"
               >
@@ -164,7 +146,6 @@ const NewBlog: React.FC = () => {
                     alt={blog.title}
                     className="w-full h-64 object-cover rounded-md relative"
                   />
-
                   <div className="absolute top-3 right-3">
                     <FavoriteBorderIcon
                       className={`rounded-full p-0.5 cursor-pointer ${
@@ -173,13 +154,12 @@ const NewBlog: React.FC = () => {
                           : "text-black hover:text-white hover:bg-black"
                       }`}
                       onClick={(e) => {
-                        e.stopPropagation(); // ხელს უშლის მშობლის `onClick`-ის გამოვლენას
+                        e.stopPropagation();
                         handleFavoriteToggle(blog.id);
                       }}
                     />
                   </div>
                 </div>
-
                 <h3 className="text-lg font-semibold mt-4">{blog.title}</h3>
                 <p className="text-gray-600 dark:text-gray-300">
                   {blog.description}
@@ -190,23 +170,32 @@ const NewBlog: React.FC = () => {
                     {blog.price} {blog.currency}
                   </span>
                 </p>
-
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleDelete(blog.id);
-                  }}
-                  className="bg-red-500 text-white py-2 px-4 rounded mt-4 hover:bg-red-600 hidden"
-                >
-                  Delete Post
-                </button>
               </div>
             ))}
           </MainBlogCards>
         </BlogHomeSection>
+
+        {/* Pagination buttons */}
+        <div className="flex justify-center my-6">
+          <button
+            onClick={() => paginate(currentPage - 1)}
+            disabled={currentPage === 1}
+            className="px-4 py-2 bg-black text-white rounded-l-lg disabled:bg-gray-400"
+          >
+            Previous
+          </button>
+          <span className="px-4 py-2">{currentPage}</span>
+          <button
+            onClick={() => paginate(currentPage + 1)}
+            disabled={currentPage === totalPages}
+            className="px-4 py-2 bg-black text-white rounded-r-lg disabled:bg-gray-400"
+          >
+            Next
+          </button>
+        </div>
       </div>
     </>
   );
 };
 
-export default NewBlog;
+export default NewBlogs;

@@ -45,6 +45,10 @@ const ProfileSectionInformation: React.FC = () => {
         <div className="text-lg font-semibold mb-4">
           Full Name: {profile.full_name_en}
         </div>
+
+        <div className="text-lg font-semibold mb-4">
+          Phone Number: {profile.phone_number || "Not provided"}
+        </div>
         <div
           onClick={() => navigate("/profileDetailsEdit")}
           className="cursor-pointer text-black bg-yellow-400 w-30 border-black border-[1px] rounded-md text-center px-4 py-2"

@@ -2,19 +2,27 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/supabase";
 import { useNavigate } from "react-router-dom";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import Loading from "@/MainComponents/defaultComponents/loadingPage/loading"; // ლოადინგ კომპონენტის იმპორტი
+import Loading from "@/MainComponents/defaultComponents/loadingPage/loading";
 import MainBlogCards from "../components-blogs/parent-blog-cards/blog-cards-main";
 import BlogHomeSection from "../components-blogs/blog-home-section/blog-home-section";
 import UsedFirstSection from "./components/First-section/usedFirstSection";
+import { fetchBlogs } from "@/supabase/blogs/usedBlogs/usedBlogs";
+import {
+  fetchFavorites,
+  addFavorite,
+  removeFavorite,
+} from "@/supabase/favorites/favorites";
 
 const UsedBlog: React.FC = () => {
   const [blogs, setBlogs] = useState<any[]>([]);
-  const [favoriteBlogs, setFavoriteBlogs] = useState<number[]>([]); // ფავორიტი ბლოგების ID-ების სია
+  const [favoriteBlogs, setFavoriteBlogs] = useState<number[]>([]);
   const [userId, setUserId] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(true); // ლოადინგის მდგომარეობა
+  const [isLoading, setIsLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const blogsPerPage = 12; // Show 12 blogs per page
   const navigate = useNavigate();
 
-  // მომხმარებლის ID-ის აღება
   useEffect(() => {
     const fetchUserId = async () => {
       const { data: userSession, error } = await supabase.auth.getUser();
@@ -28,61 +36,54 @@ const UsedBlog: React.FC = () => {
     fetchUserId();
   }, []);
 
-  // ფავორიტების დატვირთვა
   useEffect(() => {
-    const fetchFavorites = async () => {
+    const fetchFavoritesData = async () => {
       if (!userId) return;
-
-      const { data, error } = await supabase
-        .from("favorites")
-        .select("blog_id")
-        .eq("user_id", userId);
-
-      if (error) {
-        console.error("Error fetching favorites:", error.message);
-        return;
+      try {
+        const favorites = await fetchFavorites(userId);
+        setFavoriteBlogs(favorites);
+      } catch (error: unknown) {
+        if (error instanceof Error) {
+          console.error("Error fetching favorites:", error.message);
+        } else {
+          console.error("Unknown error occurred:", error);
+        }
       }
-
-      // მხოლოდ `number` ტიპის ელემენტების ფილტრაცია
-      const validFavorites = data
-        ?.map((fav) => fav.blog_id)
-        .filter((id): id is number => id !== null);
-
-      setFavoriteBlogs(validFavorites);
     };
 
-    fetchFavorites();
+    fetchFavoritesData();
   }, [userId]);
 
-
-  // ბლოგების დატვირთვა
   useEffect(() => {
-    const fetchBlogs = async () => {
+    const fetchBlogsData = async () => {
       try {
-        const { data, error } = await supabase
-          .from("blogs-list")
-          .select("*")
-          .eq("category", "used"); // ფილტრაცია "used"-ზე
-
-        if (error) {
-          console.error("Error fetching data:", error.message);
-          return;
-        }
-
-        if (data) {
-          setBlogs(data);
+        const blogs = await fetchBlogs();
+        setBlogs(blogs);
+      } catch (error: unknown) {
+        if (error instanceof Error) {
+          console.error("Error fetching blogs:", error.message);
         } else {
-          console.log("No blogs found");
+          console.error("Unknown error occurred:", error);
         }
-      } catch (err) {
-        console.error("Unexpected error:", err);
       } finally {
-        setIsLoading(false); // მონაცემების ჩატვირთვის დასრულების შემდეგ, ლოადინგი იხსნება
+        setIsLoading(false);
       }
     };
 
-    fetchBlogs();
+    fetchBlogsData();
   }, []);
+
+  // Filter blogs by search query and category
+  const filteredBlogs = blogs.filter(
+    (blog) =>
+      blog.category === "used" &&
+      blog.title.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  // Pagination logic
+  const indexOfLastBlog = currentPage * blogsPerPage;
+  const indexOfFirstBlog = indexOfLastBlog - blogsPerPage;
+  const currentBlogs = filteredBlogs.slice(indexOfFirstBlog, indexOfLastBlog);
 
   const handleNavigate = (path: string) => {
     navigate(path);
@@ -94,32 +95,27 @@ const UsedBlog: React.FC = () => {
       return;
     }
 
-    if (favoriteBlogs.includes(blogId)) {
-      // ფავორიტებიდან ამოღება
-      const { error } = await supabase
-        .from("favorites")
-        .delete()
-        .eq("blog_id", blogId)
-        .eq("user_id", userId);
-
-      if (error) {
-        console.error("Error removing favorite:", error.message);
-      } else {
+    try {
+      if (favoriteBlogs.includes(blogId)) {
+        await removeFavorite(userId, blogId);
         setFavoriteBlogs((prev) => prev.filter((id) => id !== blogId));
-      }
-    } else {
-      // ფავორიტებში დამატება
-      const { error } = await supabase
-        .from("favorites")
-        .insert([{ blog_id: blogId, user_id: userId }]);
-
-      if (error) {
-        console.error("Error adding favorite:", error.message);
       } else {
+        await addFavorite(userId, blogId);
         setFavoriteBlogs((prev) => [...prev, blogId]);
+      }
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        console.error("Error handling favorite:", error.message);
+      } else {
+        console.error("Unknown error occurred:", error);
       }
     }
   };
+
+  // Pagination control functions
+  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
+
+  const totalPages = Math.ceil(filteredBlogs.length / blogsPerPage);
 
   if (isLoading) {
     return <Loading />;
@@ -128,10 +124,19 @@ const UsedBlog: React.FC = () => {
   return (
     <>
       <UsedFirstSection />
-      <div className="w-[100%] bg-white px-10 dark:bg-zinc-900">
+      <div className="w-[100%] bg-white px-10 dark:bg-zinc-900 flex flex-col">
+        <div className="search-container">
+          <input
+            type="text"
+            placeholder="Search blogs..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="search-input mb-8 w-[25%] h-10 border-[2px] border-black rounded-[10px]"
+          />
+        </div>
         <BlogHomeSection>
           <MainBlogCards>
-            {blogs.map((blog) => (
+            {currentBlogs.map((blog) => (
               <div
                 onClick={() => handleNavigate(`/Details/${blog.id}`)}
                 key={blog.id}
@@ -143,7 +148,6 @@ const UsedBlog: React.FC = () => {
                     alt={blog.title}
                     className="w-full h-64 object-cover rounded-md relative"
                   />
-
                   <div className="absolute top-3 right-3">
                     <FavoriteBorderIcon
                       className={`rounded-full p-0.5 cursor-pointer ${
@@ -152,13 +156,12 @@ const UsedBlog: React.FC = () => {
                           : "text-black hover:text-white hover:bg-black"
                       }`}
                       onClick={(e) => {
-                        e.stopPropagation(); // ხელს უშლის მშობლის `onClick`-ის გამოვლენას
+                        e.stopPropagation();
                         handleFavoriteToggle(blog.id);
                       }}
                     />
                   </div>
                 </div>
-
                 <h3 className="text-lg font-semibold mt-4">{blog.title}</h3>
                 <p className="text-gray-600 dark:text-gray-300">
                   {blog.description}
@@ -173,6 +176,24 @@ const UsedBlog: React.FC = () => {
             ))}
           </MainBlogCards>
         </BlogHomeSection>
+        {/* Pagination controls */}
+        <div className="flex justify-center my-6">
+          <button
+            onClick={() => paginate(currentPage - 1)}
+            disabled={currentPage === 1}
+            className="px-4 py-2 bg-gray-300 text-black rounded-l-lg disabled:bg-gray-400"
+          >
+            Previous
+          </button>
+          <span className="px-4 py-2">{currentPage}</span>
+          <button
+            onClick={() => paginate(currentPage + 1)}
+            disabled={currentPage === totalPages}
+            className="px-4 py-2 bg-gray-300 text-black rounded-r-lg disabled:bg-gray-400"
+          >
+            Next
+          </button>
+        </div>
       </div>
     </>
   );
