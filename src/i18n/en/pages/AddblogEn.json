@@ -1,0 +1,24 @@
+{
+  "form": {
+    "title": "Title",
+    "description": "Description",
+    "price": "Price",
+    "currency": {
+      "label": "Currency",
+      "options": {
+        "gel": "₾ (Lari)",
+        "usd": "$ (Dollar)"
+      }
+    },
+    "category": {
+      "label": "Category",
+      "options": {
+        "new": "New",
+        "used": "Used"
+      }
+    },
+    "image": "Upload Image",
+    "submit": "Submit",
+    "heading": "Add Clothing"
+  }
+}

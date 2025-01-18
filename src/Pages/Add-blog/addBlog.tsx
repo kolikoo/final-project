@@ -1,13 +1,15 @@
 import React, { useState } from "react";
-import { supabase } from "@/supabase"; // Supabase ინიციალიზაცია
+import { supabase } from "@/supabase"; 
+import { useTranslation } from "react-i18next";
 
 const AddClothingForm: React.FC = () => {
+    const { t } = useTranslation();
   const [formData, setFormData] = useState({
     title: "",
     description: "",
     price: "",
-    currency: "GEL", // Default to Georgian Lari
-    category: "new", // Default to "new"
+    currency: "GEL", 
+    category: "new", 
   });
 
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -30,7 +32,7 @@ const AddClothingForm: React.FC = () => {
     }
   };
 
-  // სურათის ატვირთვის ფუნქცია
+
   const uploadImage = async (file: File) => {
     const filePath = `blogs-images/${file.name}`;
     const { data, error } = await supabase.storage
@@ -41,7 +43,7 @@ const AddClothingForm: React.FC = () => {
       throw error;
     }
 
-    return data?.path; // ატვირთული სურათის პათის დაბრუნება
+    return data?.path; 
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -62,7 +64,7 @@ const AddClothingForm: React.FC = () => {
         throw new Error("User is not logged in.");
       }
 
-      // შექმნა ბლოგი Supabase-ში
+
       const { data, error: insertError } = await supabase
         .from("blogs-list")
         .insert([
@@ -72,8 +74,8 @@ const AddClothingForm: React.FC = () => {
             price: formData.price,
             currency: formData.currency,
             category: formData.category,
-            image_url: selectedFile ? await uploadImage(selectedFile) : null, // სურათის URL
-            user_id: user.id, // თუ საჭიროა მომხმარებლის ID
+            image_url: selectedFile ? await uploadImage(selectedFile) : null, 
+            user_id: user.id, 
           },
         ]);
 
@@ -81,10 +83,10 @@ const AddClothingForm: React.FC = () => {
         throw insertError;
       }
 
-      // თუ ბლოგი წარმატებით შეიქმნა
+      
       console.log("Successfully created blog post:", data);
 
-      // ფორმის გათეთრება
+   
       setFormData({
         title: "",
         description: "",
@@ -94,7 +96,7 @@ const AddClothingForm: React.FC = () => {
       });
       setSelectedFile(null);
     } catch (error) {
-      console.error("Error during form submission:", error); // შეცდომის გამოჩენა
+      console.error("Error during form submission:", error); 
     }
   };
 
@@ -103,12 +105,12 @@ const AddClothingForm: React.FC = () => {
       onSubmit={handleSubmit}
       className="max-w-md mx-auto bg-white shadow-md rounded px-8 py-6"
     >
-      <h2 className="text-xl font-bold mb-4">Add Clothing</h2>
+      <h2 className="text-xl font-bold mb-4">{t("addBlog.form.heading")}</h2>
 
       {/* Title */}
       <div className="mb-4">
         <label htmlFor="title" className="block text-sm font-medium mb-2">
-          Title
+          {t("addBlog.form.title")}
         </label>
         <input
           type="text"
@@ -124,7 +126,7 @@ const AddClothingForm: React.FC = () => {
       {/* Description */}
       <div className="mb-4">
         <label htmlFor="description" className="block text-sm font-medium mb-2">
-          Description
+          {t("addBlog.form.description")}
         </label>
         <textarea
           id="description"
@@ -136,10 +138,10 @@ const AddClothingForm: React.FC = () => {
         />
       </div>
 
-      {/* Price */}
+     
       <div className="mb-4">
         <label htmlFor="price" className="block text-sm font-medium mb-2">
-          Price
+          {t("addBlog.form.price")}
         </label>
         <div className="flex items-center space-x-2">
           <input
@@ -158,16 +160,20 @@ const AddClothingForm: React.FC = () => {
             onChange={handleSelectChange}
             className="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
           >
-            <option value="GEL">₾ (Lari)</option>
-            <option value="USD">$ (Dollar)</option>
+            <option value="GEL">
+              {t("addBlog.form.currency.options.gel")}
+            </option>
+            <option value="USD">
+              {t("addBlog.form.currency.options.usd")}
+            </option>
           </select>
         </div>
       </div>
 
-      {/* Category */}
+    
       <div className="mb-4">
         <label htmlFor="category" className="block text-sm font-medium mb-2">
-          Category
+          {t("addBlog.form.category.label")}
         </label>
         <select
           id="category"
@@ -177,15 +183,17 @@ const AddClothingForm: React.FC = () => {
           required
           className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
         >
-          <option value="new">New</option>
-          <option value="used">Used</option>
+          <option value="new">{t("addBlog.form.category.options.new")}</option>
+          <option value="used">
+            {t("addBlog.form.category.options.used")}
+          </option>
         </select>
       </div>
 
-      {/* Image Upload */}
+      
       <div className="mb-4">
         <label htmlFor="image" className="block text-sm font-medium mb-2">
-          Upload Image
+          {t("addBlog.form.image")}
         </label>
         <input
           type="file"
@@ -197,12 +205,12 @@ const AddClothingForm: React.FC = () => {
         />
       </div>
 
-      {/* Submit Button */}
+    
       <button
         type="submit"
         className="w-full bg-green-500 text-white font-bold py-2 px-4 rounded hover:bg-green-600 transition-colors"
       >
-        Submit
+        {t("addBlog.form.submit")}
       </button>
     </form>
   );

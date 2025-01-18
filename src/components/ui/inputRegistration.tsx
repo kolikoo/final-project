@@ -4,8 +4,10 @@ import { Button } from "@/components/ui/button"; // შეცვალეთ რ
 import { useState } from "react";
 import { register } from "../../supabase/auth";
 import { useMutation } from "@tanstack/react-query"
+import { useTranslation } from "react-i18next";
 
 const RegisterForm: React.FC = () => {
+  const {t}=useTranslation()
   const [registerPayload, setRegisterPayload] = useState({
     email: "",
     password: "",
@@ -31,7 +33,7 @@ const RegisterForm: React.FC = () => {
       className="m-auto flex w-full max-w-sm flex-col justify-start gap-4 space-x-2 dark:bg-black dark:text-black"
     >
       <div className="ml-2 w-[98%] dark:text-white">
-        <label htmlFor="email">Email</label>
+        <label htmlFor="email">{t("SignIn-Page.email")}</label>
         <Input
           value={registerPayload.email}
           onChange={(e) => {
@@ -42,13 +44,13 @@ const RegisterForm: React.FC = () => {
           }}
           name="email"
           type="email"
-          placeholder="Email"
+          placeholder={t("SignIn-Page.emailHolder")}
           required
         />
       </div>
 
       <div className="dark:text-white">
-        <label htmlFor="password">Password</label>
+        <label htmlFor="password">{t("SignIn-Page.password")}</label>
         <Input
           value={registerPayload.password}
           onChange={(e) => {
@@ -60,7 +62,7 @@ const RegisterForm: React.FC = () => {
           name="password"
           className="w-[100%]"
           type="password"
-          placeholder="Password"
+          placeholder={t("SignIn-Page.passwordHolder")}
           required
         />
       </div>
@@ -70,7 +72,7 @@ const RegisterForm: React.FC = () => {
         className="w-[100%] dark:bg-blue-700 dark:text-white"
         type="submit"
       >
-        Register
+        {t("SignIn-Page.sign up")}
       </Button>
     </form>
   );

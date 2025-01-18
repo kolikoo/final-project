@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { createAvatar } from "@dicebear/core";
 import { avataaars } from "@dicebear/collection";
 import { z } from "zod";
+import { useTranslation } from "react-i18next";
 
 const profileSchema = z.object({
   full_name_en: z
@@ -31,6 +32,7 @@ const profileSchema = z.object({
 });
 
 const ProfileDetailsEdit: React.FC = () => {
+  const { t } = useTranslation(); // Translation hook
   const user = useAtomValue(userAtom);
   const [profilePayload, setProfilePayload] = useState<FillProfileInfoPayload>({
     id: user?.user.id || "",
@@ -59,10 +61,7 @@ const ProfileDetailsEdit: React.FC = () => {
     }
   }, [user]);
 
-  const {
-    mutate: handleFillProfileInfo,
-   
-  } = useMutation({
+  const { mutate: handleFillProfileInfo } = useMutation({
     mutationKey: ["fill-Profile-Info"],
     mutationFn: fillProfileInfo,
   });
@@ -121,20 +120,21 @@ const ProfileDetailsEdit: React.FC = () => {
             className="w-24 h-24 rounded-full object-cover"
           />
         ) : (
-          <p className="animate-pulse opacity-50">Loading Avatar...</p>
+          <p className="animate-pulse opacity-50 hidden">
+            {t("ProfileInformation.loading")}
+          </p>
         )}
       </div>
 
       <div className="ml-2 w-[98%] dark:bg-black dark:text-white">
-        <label>Avatar Selection</label>
+        <label>{t("ProfileInformation.avatarSelection")}</label>
         <div>
           <select
             onChange={(e) => handleAvatarChange(e.target.value)}
             className="bg-blue-500 text-white rounded min-w-full p-2 m-1"
           >
-            {/* Avatar options */}
-            <option value="avatar1">Avatar 1</option>
-            {/* More options */}
+            <option value="avatar1">{t("avatar1")}</option>
+            
           </select>
         </div>
         {formErrors.avatar_url && (
@@ -143,7 +143,7 @@ const ProfileDetailsEdit: React.FC = () => {
       </div>
 
       <div className="ml-2 w-[98%] dark:bg-black dark:text-white">
-        <label htmlFor="username">Username</label>
+        <label htmlFor="username">{t("ProfileInformation.username")}</label>
         <Input
           value={profilePayload.username}
           onChange={(e) => {
@@ -158,9 +158,9 @@ const ProfileDetailsEdit: React.FC = () => {
           }}
           name="username"
           type="text"
-          placeholder="Username"
+          placeholder={t("username")}
           required
-          className="animate-pulse opacity-50" // Skeleton effect
+          className="animate-pulse opacity-50"
         />
         {formErrors.username && (
           <p className="text-red-500">{formErrors.username}</p>
@@ -168,7 +168,7 @@ const ProfileDetailsEdit: React.FC = () => {
       </div>
 
       <div className="ml-2 w-[98%] dark:bg-black dark:text-white">
-        <label>Full Name</label>
+        <label>{t("ProfileInformation.fullName")}</label>
         <Input
           value={profilePayload.full_name_en}
           onChange={(e) => {
@@ -179,9 +179,9 @@ const ProfileDetailsEdit: React.FC = () => {
           }}
           name="Full Name"
           type="text"
-          placeholder="Full Name"
+          placeholder={t("ProfileInformation.fullName")}
           required
-          className="animate-pulse opacity-50" // Skeleton effect
+          className="animate-pulse opacity-50"
         />
         {formErrors.full_name_en && (
           <p className="text-red-500">{formErrors.full_name_en}</p>
@@ -189,7 +189,9 @@ const ProfileDetailsEdit: React.FC = () => {
       </div>
 
       <div className="ml-2 w-[98%] dark:bg-black dark:text-white">
-        <label htmlFor="phone_number">Phone Number</label>
+        <label htmlFor="phone_number">
+          {t("ProfileInformation.phoneNumber")}
+        </label>
         <Input
           value={profilePayload.phone_number}
           onChange={(e) => {
@@ -200,8 +202,8 @@ const ProfileDetailsEdit: React.FC = () => {
           }}
           name="phone_number"
           type="text"
-          placeholder="Phone Number"
-          className="animate-pulse opacity-50" // Skeleton effect
+          placeholder={t("ProfileInformation.phoneNumber")}
+          className="animate-pulse opacity-50"
         />
         {formErrors.phone_number && (
           <p className="text-red-500">{formErrors.phone_number}</p>
@@ -212,14 +214,14 @@ const ProfileDetailsEdit: React.FC = () => {
         className="h-10 w-[100%] rounded-[10px] bg-blue-700 dark:bg-blue-700 dark:text-white"
         type="submit"
       >
-        Submit
+        {t("ProfileInformation.submit")}
       </button>
 
       <div
         className="cursor-pointer h-10 w-[100%] rounded-[10px] text-center text-white p-2 bg-blue-700 dark:bg-blue-700 dark:text-white"
         onClick={() => handleNavigate("/profile")}
       >
-        Go Back To Profile
+        {t("ProfileInformation.goBackToProfile")}
       </div>
     </form>
   );

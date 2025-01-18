@@ -1,0 +1,13 @@
+{
+  
+    "CheckoutView": {
+      "checkYourCart": "Check your cart",
+      "summary": "Summary",
+      "subtotal": "Subtotal",
+      "shipping": "Shipping",
+      "totalGEL": "Total (GEL)",
+      "totalUSD": "Total (USD)",
+      "checkOut": "Buy "
+    
+  }
+}

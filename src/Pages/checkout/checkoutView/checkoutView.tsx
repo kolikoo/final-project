@@ -1,7 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,} from "react";
 import { supabase } from "@/supabase";
+import { useTranslation } from "react-i18next";
+
 
 const CheckoutView: React.FC = () => {
+
+    const { t } = useTranslation();
   const [favorites, setFavorites] = useState<any[]>([]);
   const [userId, setUserId] = useState<string | null>(null);
   const exchangeRate = 2.84; 
@@ -77,13 +81,11 @@ const CheckoutView: React.FC = () => {
 
   return (
     <div className="w-[70%] m-auto flex flex-col gap-10">
-
       <h2 className="text-3xl mt-11 font-semibold mb-4 self-center">
-        Check Your Cart
+        {t("Checkout.CheckoutView.checkYourCart")}
       </h2>
 
       <div className="flex gap-10">
-  
         <div className="w-[60%]">
           <div className="flex flex-col gap-7">
             {favorites.map((item) => (
@@ -121,37 +123,35 @@ const CheckoutView: React.FC = () => {
           </div>
         </div>
 
-
         <div className="w-[40%] max-h-[350px] bg-gray-50 p-6 shadow-md">
-          <h3 className="text-lg font-semibold mb-4">Summary</h3>
+          <h3 className="text-lg font-semibold mb-4">
+            {t("Checkout.CheckoutView.summary")}
+          </h3>
           <div className="mb-4">
-
             <p className="flex justify-between">
-              <span>Subtotal (GEL):</span>
+              <span>{t("Checkout.CheckoutView.subtotal")}</span>
               <span>{subtotalInGEL} GEL</span>
             </p>
             <p className="flex justify-between">
-              <span>Shipping (GEL):</span>
+              <span>{t("Checkout.CheckoutView.shipping")}</span>
               <span>{shippingInGEL} GEL</span>
             </p>
             <hr className="my-2" />
 
-      
             <p className="flex justify-between font-bold">
-              <span>Total (GEL):</span>
+              <span>{t("Checkout.CheckoutView.totalGEL")}</span>
               <span>{(subtotal + shipping).toFixed(2)} GEL</span>
             </p>
             <hr className="my-2" />
 
-     
             <p className="flex justify-between font-bold">
-              <span>Total (USD):</span>
+              <span>{t("Checkout.CheckoutView.totalUSD")}</span>
               <span>{finalTotalInUSD} USD</span>
             </p>
           </div>
           <div>
             <button className="w-full bg-black text-white py-2">
-              Check Out
+              {t("Checkout.CheckoutView.checkOut")}
             </button>
           </div>
         </div>

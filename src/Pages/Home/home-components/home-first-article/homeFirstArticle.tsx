@@ -1,10 +1,12 @@
-import React from "react";
+import React  from "react";
 import dickiesImg from "../../../../images/dickies.png"
 import westwood from "../../../../images/westwood.png";
 import carhat from "../../../../images/carhat.png";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const HomeFirstArticle:React.FC=()=>{
+  const { t } = useTranslation();
  const navigate = useNavigate();
  const handleClick = () => {
    navigate("/NewBlog");
@@ -33,7 +35,7 @@ const HomeFirstArticle:React.FC=()=>{
            onClick={handleClick}
            className="px-4 w-40 py-2 mt-5 border-2 dark:border-[#6BC785] border-[#224F34] rounded-sm hover:bg-[#224F34] hover:text-white active:bg-black focus:outline-none focus:ring-2 focus:ring-blue-500 text-[#224F34]  hover:dark:bg-white dark:bg-[#224F34] hover:dark:text-[#224F34] dark:text-white"
          >
-           See All
+           {t("Home-Page.seeall")}
          </button>
        </div>
      </article>

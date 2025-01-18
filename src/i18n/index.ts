@@ -7,6 +7,14 @@ import LoginKa from "./ka/pages/LogInKa.json";
 import LoginEN from "./en/pages/LogInEn.json";
 import SignEn from "./en/pages/SignInEn.json"
 import SignKa from "./ka/pages/SignInKa.json"
+import headerKa from "./ka/pages/headerKa.json"
+import headerEn from "./en/pages/headerEn.json";
+import addblogKa from "./ka/pages/AddblogKa.json"
+import addblogEn from "./en/pages/AddblogEn.json"
+import ProfileInformationEn from "./en/pages/ProfileInformationEn.json"
+import ProfileInformationKa from "./Ka/pages/ProfileInformationKa.json";
+import CheckoutKa from "./ka/pages/CheckoutKa.json"
+import CheckoutEn from "./en/pages/CheckoutEn.json";
 
 
 i18n
@@ -20,6 +28,10 @@ i18n
           "Home-Page": HomeKa,
           "LogIn-Page": LoginKa,
           "SignIn-Page": SignKa,
+          "header": headerKa,
+          "addBlog": addblogKa,
+          "ProfileInformation": ProfileInformationKa,
+          "Checkout":CheckoutKa
         },
       },
 
@@ -28,6 +40,10 @@ i18n
           "Home-Page": HomeEn,
           "LogIn-Page": LoginEN,
           "SignIn-Page": SignEn,
+          "header": headerEn,
+          "addBlog": addblogEn,
+          "ProfileInformation": ProfileInformationEn,
+          "Checkout":CheckoutEn
         },
       },
     },

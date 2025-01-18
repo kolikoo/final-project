@@ -70,10 +70,10 @@ const Header: React.FC = () => {
           <nav className="header-nav w-40 m-auto h-11">
             <ul className="flex dark:bg-[#417a51] space-x-6 justify-center dark:text-white bg-gradient-to-r from-[#6BC785] to-[#224F34] w-50 p-2 h-10 rounded-[25px]">
               <li className="hover:text-[17px]">
-                <NavLink to={"/NewBlog"}>New</NavLink>
+                <NavLink to={"/NewBlog"}>{t("header.New")}</NavLink>
               </li>
-              <li className="hover:text-[17px]">
-                <NavLink to={"/UsedBlog"}>Used</NavLink>
+              <li className="hover:text-[17px] text-[15px]">
+                <NavLink to={"/UsedBlog"}>{t("header.Used")}</NavLink>
               </li>
             </ul>
           </nav>
@@ -89,7 +89,7 @@ const Header: React.FC = () => {
               onClick={() => handleNavigate("/AddBlog")}
               className="w-[50%] cursor-pointer align-middle h-12 bg-gradient-to-r from-[#6BC785] to-[#224F34] rounded-lg p-3 text-black dark:text-white"
             >
-              Add List +
+              {t("Home-Page.Add List +")}
             </div>
           )}
 
@@ -129,12 +129,12 @@ const Header: React.FC = () => {
               <SelectContent className="bg-black text-white dark:bg-white dark:text-black mt-9 w-20 text-center p-2 border-black border-[1px] rounded-lg ml-30">
                 <SelectItem value="ka">
                   <button onClick={() => handleChangeLanguage("ka")}>
-                    Geo
+                    {t("header.geo")}
                   </button>
                 </SelectItem>
                 <SelectItem value="en">
                   <button onClick={() => handleChangeLanguage("en")}>
-                    ENG
+                    {t("header.eng")}
                   </button>
                 </SelectItem>
               </SelectContent>
@@ -157,14 +157,14 @@ const Header: React.FC = () => {
                 <PopoverContent className="bg-black text-white dark:bg-white dark:text-black mt-7 w-30 text-center p-2 border-black border-[1px] rounded-lg ml-30">
                   <ul className="flex flex-col space-y-2">
                     <li>
-                      <NavLink to="/profile">Profile</NavLink>
+                      <NavLink to="/profile">{t("header.Profile")}</NavLink>
                     </li>
                     <li>
                       <span
                         className="cursor-pointer text-red-600"
                         onClick={() => handlelogout()}
                       >
-                        Log Out
+                        {t("header.logout")}
                       </span>
                     </li>
                   </ul>

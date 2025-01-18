@@ -5,6 +5,8 @@ import {
   fetchBlogs,
   deleteBlog,
 } from "@/supabase/profile/UserBlogs/UserBlogs";
+import Loading from "@/MainComponents/defaultComponents/loadingPage/loading";
+import { useTranslation } from "react-i18next";
 
 interface Blog {
   id: string;
@@ -18,6 +20,7 @@ interface Blog {
 }
 
 const ProfileSectionBlogs: React.FC = () => {
+  const { t } = useTranslation(); 
   const [blogs, setBlogs] = useState<Blog[]>([]);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -59,9 +62,13 @@ const ProfileSectionBlogs: React.FC = () => {
 
   return (
     <div className="container mx-auto">
-      <h2 className="text-2xl font-bold mb-4">My Blogs</h2>
+      <h2 className="text-2xl font-bold mb-4">
+        {t("ProfileInformation.myblogs")}
+      </h2>
       {loading ? (
-        <div>Loading...</div>
+        <div>
+          <Loading />
+        </div>
       ) : (
         <div className="grid grid-cols-4 gap-4">
           {blogs.map((blog) => (
@@ -84,13 +91,13 @@ const ProfileSectionBlogs: React.FC = () => {
                   onClick={() => handleEdit(blog.id)}
                   className="bg-blue-500 text-white py-2 px-4 rounded"
                 >
-                  Edit
+                  {t("ProfileInformation.editProfile")}
                 </button>
                 <button
                   onClick={() => handleDelete(blog.id)}
                   className="bg-red-500 text-white py-2 px-4 rounded"
                 >
-                  Delete
+                  {t("ProfileInformation.Delete")}
                 </button>
               </div>
             </div>

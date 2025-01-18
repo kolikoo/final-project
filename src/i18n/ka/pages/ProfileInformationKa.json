@@ -1,0 +1,13 @@
+{
+  "username": "მომხმარებელი",
+  "fullName": "სრული სახელი",
+  "phoneNumber": "ტელეფონი",
+  "notProvided": "არ არის მითითებული",
+  "editProfile": "რედაქტირება",
+  "loading": "იტვირთება...",
+  "myblogs":"ჩემი ბლოგები",
+  "Delete":"წაშლა", 
+    "avatarSelection": "Avatar-ის არჩევა",
+    "submit": "გაგზავნა",
+    "goBackToProfile": "პროფილზე დაბრუნება"
+}

@@ -3,8 +3,10 @@ import { useAtomValue } from "jotai";
 import { userAtom } from "@/store/auth";
 import { getProfileInfo } from "@/supabase/profile";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const ProfileSectionInformation: React.FC = () => {
+  const { t } = useTranslation(); 
   const user = useAtomValue(userAtom);
   const [profile, setProfile] = useState<any>(null);
   const navigate = useNavigate();
@@ -24,7 +26,7 @@ const ProfileSectionInformation: React.FC = () => {
   }, [user]);
 
   if (!profile) {
-    return <div>Loading...</div>;
+    return <div>{t("loading")}</div>;
   }
 
   return (
@@ -40,20 +42,21 @@ const ProfileSectionInformation: React.FC = () => {
           </div>
         )}
         <div className="text-lg font-semibold mb-2">
-          Username: {profile.username}
+          {t("ProfileInformation.username")}: {profile.username}
         </div>
         <div className="text-lg font-semibold mb-4">
-          Full Name: {profile.full_name_en}
+          {t("ProfileInformation.fullName")}: {profile.full_name_en}
         </div>
 
         <div className="text-lg font-semibold mb-4">
-          Phone Number: {profile.phone_number || "Not provided"}
+          {t("ProfileInformation.phoneNumber")}:{" "}
+          {profile.phone_number || t("ProfileInformation.notProvided")}
         </div>
         <div
           onClick={() => navigate("/profileDetailsEdit")}
           className="cursor-pointer text-black bg-yellow-400 w-30 border-black border-[1px] rounded-md text-center px-4 py-2"
         >
-          Edit Profile
+          {t("ProfileInformation.editProfile")}
         </div>
       </div>
     </div>

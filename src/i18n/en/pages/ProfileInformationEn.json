@@ -1,0 +1,13 @@
+{
+  "username": "Username",
+  "fullName": "Full Name",
+  "phoneNumber": "Phone Number",
+  "notProvided": "Not provided",
+  "editProfile": "Edit Profile",
+  "myblogs":"My Blogs",
+  "Delete":"Delete", 
+  "loading": "Loading...",
+    "avatarSelection": "Select Avatar",
+    "submit": "Submit",
+    "goBackToProfile": "Go Back to Profile"
+}

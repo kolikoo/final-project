@@ -1,7 +1,12 @@
 {
-  "Sign Up for BitBlogs":"Sign Up for BitBlogs",
-  "Create your account to start blogging":"reate your account to start blogging",
+  "Sign Up for BitBlogs":"Sign Up for ThriftShop",
+  "Create your account to start blogging":"Create Your Account for More Details",
   "Already have an account":"Already have an account?",
-  "Log In":"Log In"
+  "Log In":"Log In", 
+  "sign up": "Sign Up",
+    "email":" Email",
+    "password":"Password",
+     "emailHolder":"text Email",
+    "passwordHolder":"text Password"
 
 }

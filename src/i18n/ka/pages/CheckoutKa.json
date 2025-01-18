@@ -1,0 +1,13 @@
+{
+ 
+    "CheckoutView": {
+      "checkYourCart": "დაათვალიერეთ თქვენი კალათში არსებული პროდუქცია",
+      "summary": "შეჯამება",
+      "subtotal": "მთლიანად",
+      "shipping": "მიტანის ხარჯი",
+      "totalGEL": "სრული თანხა (GEL)",
+      "totalUSD": "სრული თანხა (USD)",
+      "checkOut": "გადახდა"
+    }
+  
+}

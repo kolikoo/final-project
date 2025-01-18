@@ -1,7 +1,12 @@
 {
- "Sign Up for BitBlogs":"დარეგისტრირდი BitBlogs-ში",
- "Create your account to start blogging":"შექმენი შენი ანგარიში",
+ "Sign Up for BitBlogs":"დარეგისტრირდი ThriftShop-ში",
+ "Create your account to start blogging":"შექმენი და დაათვალიერე ThriftShop",
  "Already have an account":"უკვე გაქვთ ანგარიში?",
- "Log In":"შესვლა"
+ "Log In":"შესვლა",
+ "sign up": "დარეგისტრირდი",
+    "email":" მეილი",
+    "password":"პაროლი",
+     "emailHolder":"შეიყვანე შენი მეილი",
+    "passwordHolder":"შეიყვანე შენი პაროლი"
 
 }
