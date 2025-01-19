@@ -11,7 +11,6 @@ import {
   PopoverContent,
  
 } from "@radix-ui/react-popover";
-import worldSvg from "../../../images/world-1-svgrepo-com.svg";
 import { NavLink, useNavigate } from "react-router-dom";
 import i18n from "i18next";
 import { useTranslation } from "react-i18next";
@@ -22,6 +21,7 @@ import { logout } from "../../../supabase/auth/index";
 import { useAtom } from "jotai";
 import { userAtom } from "@/store/auth";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
+import LanguageIcon from "@mui/icons-material/Language";
 
 const Header: React.FC = () => {
   const { t } = useTranslation();
@@ -56,51 +56,63 @@ const Header: React.FC = () => {
     navigate(path);
   };
 
-  const selectedImage = i18n.language === "ka" ? worldSvg : worldSvg;
+  
 
   const handleChangeLanguage = (lang: string) => {
     i18n.changeLanguage(lang);
   };
 
   return (
-    <header className="m-auto h-[100px] w-[100%] bg-[#C2EFD4] dark:bg-[#224F34]">
+    <header className="m-auto h-[100px] w-[100%] bg-[#F7F5EB] dark:bg-zinc-900">
       <div className="header flex justify-between p-10">
         {/* Left section */}
-        <div className="header-left-side flex w-[20%] h-10">
-          <nav className="header-nav w-40 m-auto h-11">
-            <ul className="flex dark:bg-[#417a51] space-x-6 justify-center dark:text-white bg-gradient-to-r from-[#6BC785] to-[#224F34] w-50 p-2 h-10 rounded-[25px]">
-              <li className="hover:text-[17px]">
-                <NavLink to={"/NewBlog"}>{t("header.New")}</NavLink>
-              </li>
-              <li className="hover:text-[17px] text-[15px]">
-                <NavLink to={"/UsedBlog"}>{t("header.Used")}</NavLink>
-              </li>
-            </ul>
-          </nav>
+
+        <div className="flex w-[20%] gap-[15px]">
+          <NavLink
+            className="h-10 mt-2 text-[20px] text-center rounded-[25px] w-[100%] text-zinc-800 font-thin border-[#450920] dark:border-[#C4D7F2] dark:text-white border-[1px] hover:scale-110 transition-transform duration-300 hover:bg-[#450920] hover:text-white"
+            to={"/NewBlog"}
+          >
+            <div>
+              <ul className="m-auto p-1">
+                <li>{t("header.New")}</li>
+              </ul>
+            </div>
+          </NavLink>
+
+          <NavLink
+            className="h-10 mt-2 text-[20px] text-center rounded-[25px] w-[100%] text-zinc-800 font-thin border-[#450920] border-[1px] hover:scale-110 transition-transform duration-300 dark:border-[#C4D7F2] dark:text-white hover:bg-[#450920] hover:text-white"
+            to={"/UsedBlog"}
+          >
+            <div>
+              <ul className="m-auto p-1">
+                <li className=" ">{t("header.Used")}</li>
+              </ul>
+            </div>
+          </NavLink>
         </div>
 
-        <div className="bg-[#C2EFD4] dark:bg-[#224F34] dark:text-white ml-[100px] text-4xl font-[600]">
+        <div className="bg-[#f8f4e3] dark:bg-zinc-900 text-[#450920] dark:text-white ml-[100px] text-4xl font-[600]">
           <NavLink to={"/"}>ThriftShop</NavLink>
         </div>
 
-        <div className="header-right-items  flex w-[30%] text-black gap-3 justify-between dark:text-white w-50 p-2 h-10 rounded-[25px]">
+        <div className="header-right-items mb-4 flex w-[30%] text-black gap-3 justify-between dark:text-white w-50 p-2 h-10 rounded-[25px]">
           {user && (
             <div
               onClick={() => handleNavigate("/AddBlog")}
-              className="w-[50%] cursor-pointer align-middle h-12 bg-gradient-to-r from-[#6BC785] to-[#224F34] rounded-lg p-3 text-black dark:text-white"
+              className="w-[50%] bg-[#450920] dark:bg-[#C4D7F2] dark:text-black cursor-pointer align-middle h-10   rounded-[25px] pr-1 pl-8 pt-2 text-white  hover:scale-110 transition-transform duration-300"
             >
               {t("Home-Page.Add List +")}
             </div>
           )}
 
-          <div className="bg-gradient-to-r from-[#6BC785] to-[#224F34] dark:bg-[#417a51] rounded-[25px] flex w-[70%] justify-center gap-5 h-10 p-2">
+          <div className=" border-[1px] border-[#450920] dark:border-[#C4D7F2] rounded-[25px] flex w-[70%] justify-center gap-5 h-10 p-1">
             <p onClick={() => handleNavigate("/CheckoutView")}>
-              <AddShoppingCartIcon className="text-white hover:text-black cursor-pointer" />
+              <AddShoppingCartIcon className="text-[#450920] dark:text-white hover:text-black cursor-pointer" />
             </p>
 
             {/* Theme toggle */}
             <Select defaultValue="light" onValueChange={handleChangeToggle}>
-              <SelectTrigger className="text-black ">
+              <SelectTrigger className="text-zinc-800">
                 <SelectValue
                   className="bg-black"
                   placeholder={t("change Theme")}
@@ -113,7 +125,7 @@ const Header: React.FC = () => {
                   />
                 </SelectValue>
               </SelectTrigger>
-              <SelectContent className="bg-black text-white dark:bg-white dark:text-black mt-9 w-20 text-center p-2 border-black border-[1px] rounded-lg">
+              <SelectContent className="bg-black text-white dark:bg-[#C4D7F2] dark:text-black mt-9 w-20 text-center p-2 border-white border-[1px] rounded-lg z-50">
                 <SelectItem value="light">Light</SelectItem>
                 <SelectItem value="dark">Dark</SelectItem>
               </SelectContent>
@@ -123,10 +135,10 @@ const Header: React.FC = () => {
             <Select defaultValue="light" onValueChange={handleChangeLanguage}>
               <SelectTrigger className="selecttriger text-black">
                 <SelectValue>
-                  <img className="w-7" src={selectedImage} alt="worldsvg" />
+                  <LanguageIcon className="text-black dark:text-white" />
                 </SelectValue>
               </SelectTrigger>
-              <SelectContent className="bg-black text-white dark:bg-white dark:text-black mt-9 w-20 text-center p-2 border-black border-[1px] rounded-lg ml-30">
+              <SelectContent className="bg-black text-white dark:bg-[#C4D7F2] dark:text-black mt-9 w-20 text-center p-2 border-white border-[1px] rounded-lg z-50">
                 <SelectItem value="ka">
                   <button onClick={() => handleChangeLanguage("ka")}>
                     {t("header.geo")}
@@ -146,7 +158,7 @@ const Header: React.FC = () => {
             {user ? (
               <Popover>
                 <PopoverTrigger>
-                  <div className="h-10 w-10  rounded-full bg-[#224F34] text-black dark:bg-[#417a51] dark:text-white flex justify-center items-center">
+                  <div className="h-10 w-10  rounded-full bg-[#450920] text-black dark:bg-[#C4D7F2] dark:text-white flex justify-center items-center">
                     <img
                       src="https://api.dicebear.com/9.x/avataaars/svg"
                       alt="avatar"

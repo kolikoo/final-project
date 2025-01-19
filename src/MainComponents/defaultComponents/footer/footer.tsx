@@ -2,7 +2,7 @@ import React from "react";
 
 const Footer:React.FC=()=>{
   return (
-    <footer className="bg-[#224F34] text-white mt-7 ">
+    <footer className="bg-[#F7F5EB] text-black  ">
       <div className="container mx-auto py-8">
         <div className="flex flex-col md:flex-row justify-between items-center">
           <div className="mb-4 md:mb-0">
@@ -78,7 +78,6 @@ const Footer:React.FC=()=>{
             </div>
             <div>
               <h3 className="text-lg font-semibold mb-2">Stay Up To Date</h3>
-             
             </div>
           </div>
         </div>

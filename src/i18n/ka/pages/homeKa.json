@@ -1,4 +1,3 @@
-
 {
   "lang version": "ქართულ ვერსიას",
   "hello world": "გამარჯობა სამყარო",
@@ -6,9 +5,10 @@
   "log in": "შესვლა",
   "log out": "გამოსვლა",
   "Add List +": "დაამატე +",
-  "Discover and Find Your Own Fashion!": "აღმოაჩინე და შექმენი შენი მოდა!",
-  "Explore our curated collection of stylish clothing and accessories tailored to your unique taste.": "დაათვალიერე ჩვენი სპეციალურად შერჩეული ტანსაცმლისა და აქსესუარების კოლექცია, რომელიც შეესაბამება შენს უნიკალურ გემოვნებას.",
-  "EXPLORE NOW": "ნახვა",
   "Create Your Style": "შექმენი შენი სტილი",
-  "seeall":"ნახე ყველა"
+  "seeall": "ნახე ყველა",
+  "explore message": "გამოიკვლიე ჩვენი გამორჩეული კოლექცია სტილური ტანსაცმლისა და აქსესუარების, რომლებიც შეესაბამება შენს უნიკალურ გემოვნებას.",
+  "location": "საქართველო, თბილისი",
+  "topbrands":"საუკეთესო ბრენდები"
+
 }

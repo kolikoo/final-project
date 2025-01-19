@@ -21,10 +21,15 @@ const MainHome: React.FC = () => {
   }
 
   return (
-    <>
+    <><div className="dark:bg-zinc-800">
+
+
       <HomeFirstSection />
+       <HomeSecondArticle />
       <HomeFirstArticle />
-      <HomeSecondArticle />
+
+     
+          </div>
     </>
   );
 };

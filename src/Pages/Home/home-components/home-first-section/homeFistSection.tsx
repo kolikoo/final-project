@@ -1,39 +1,51 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import shua from "@/images/shua.png";
+import marjvena from "@/images/marjvena.png"
+import marcxena from "@/images/marcxena.png";
 
 const HomeFirstSection: React.FC = () => {
-  const navigate = useNavigate();
   const { t } = useTranslation();
 
-  const handleClick = () => {
-    navigate("/NewBlog");
-  };
-
   return (
-    <section>
-      <div className="flex w-[100%] h-[600px] bg-[#C2EFD4] dark:bg-black justify-around">
-        <div className="flex flex-col w-[40%]">
-          <p className="text-[50px] text-white font-[600] h-[200px] w-[100%]">
-            {t("Home-Page.Discover and Find Your Own Fashion!")}
-          </p>
-          <p className="text-[#267D49] w-[50%]">
-            {t(
-              "Home-Page.Explore our curated collection of stylish clothing and accessories tailored to your unique taste."
-            )}
-          </p>
-          <button
-            onClick={handleClick}
-            className="bg-[#224F34] w-[30%] p-3 mt-5"
-          >
-            {t("Home-Page.EXPLORE NOW")}
-          </button>
-        </div>
+    <section className="bg-[#F7F5EB] dark:bg-zinc-900 w-full h-screen relative flex items-center justify-center overflow-hidden">
+      {/* Background Text */}
+      <h1 className="absolute top-[7%] left-[25%] text-[140px] dark:text-white dark:opacity-90 font-serif font-bold text-[#450920] leading-none z-1">
+        ThiftShop
+      </h1>
 
-        <div className="w-[500px] h-[516px] mt-10 bg-gradient-to-r from-[#6BC785] to-[#224F34] rounded-tl-[15%] rounded-tr-[3%] rounded-bl-[20%] rounded-br-[25%] flex items-center justify-center">
-          <p className="text-4xl text-center [writing-mode:vertical-rl] [text-orientation:upright] text-white">
-            {t("Home-Page.Create Your Style")}
-          </p>
+      {/* Main Content */}
+      <div className="relative w-full h-full flex items-center justify-center">
+        {/* Left Image */}
+        <img
+          src={marcxena}
+          alt="Left Image"
+          className="absolute bottom-10 left-10 w-[250px] h-[250px] object-cover rounded-md shadow-lg"
+        />
+
+        {/* Center Image */}
+        <img
+          src={shua}
+          alt="Center Image"
+          className="relative w-[400px] h-[500px] object-cover rounded-md shadow-xl z-10"
+        />
+
+        {/* Right Image */}
+        <img
+          src={marjvena}
+          alt="Right Image"
+          className="absolute top-10 right-10 w-[200px] h-[300px] object-cover rounded-md shadow-lg"
+        />
+      </div>
+
+      {/* Left Text */}
+      <div className="absolute top-[15%] left-[5%] flex flex-col gap-4 w-[200px] z-10">
+        <h2 className="text-[15px] opacity-25 dark:text-white font-serif font-bold text-black leading-snug">
+          {t("Home-Page.explore message")}
+        </h2>
+        <div className="flex items-center gap-2">
+          <div className="w-3 h-3 rounded-full bg-green-600"></div>
+          <p className="text-gray-600 text-lg">{t("Home-Page.location")}</p>
         </div>
       </div>
     </section>
