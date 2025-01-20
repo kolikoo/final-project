@@ -4,7 +4,7 @@ import blogBanner from "@/images/baner clothes.png"
 const UsedFirstSection:React.FC=()=>{
  return (
    
-     <section className="mb-[50px] ">
+     <section className="">
        <div>
          <img
            className="h-[200px] w-[100%] object-cover "

@@ -3,6 +3,7 @@ import HomeFirstSection from "./home-components/home-first-section/homeFistSecti
 import HomeFirstArticle from "./home-components/home-first-article/homeFirstArticle";
 import HomeSecondArticle from "./home-components/home-second-article/homeSecondArticle";
 import Loading from "@/MainComponents/defaultComponents/loadingPage/loading"; // ლოადინგ კომპონენტის იმპორტი
+import HomeSecondSection from "./home-components/home-second-section/homeSecondSection";
 
 const MainHome: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true); 
@@ -25,8 +26,10 @@ const MainHome: React.FC = () => {
 
 
       <HomeFirstSection />
+        <HomeSecondSection/>
+       <HomeFirstArticle />
        <HomeSecondArticle />
-      <HomeFirstArticle />
+    
 
      
           </div>

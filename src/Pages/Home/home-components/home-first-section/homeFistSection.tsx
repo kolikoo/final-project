@@ -10,8 +10,8 @@ const HomeFirstSection: React.FC = () => {
   return (
     <section className="bg-[#F7F5EB] dark:bg-zinc-900 w-full h-screen relative flex items-center justify-center overflow-hidden">
       {/* Background Text */}
-      <h1 className="absolute top-[7%] left-[25%] text-[140px] dark:text-white dark:opacity-90 font-serif font-bold text-[#450920] leading-none z-1">
-        ThiftShop
+      <h1 className="absolute top-[7%] left-[23%] text-[140px] dark:text-white dark:opacity-90 font-serif font-bold text-[#450920] leading-none z-1">
+        ThriftShop
       </h1>
 
       {/* Main Content */}

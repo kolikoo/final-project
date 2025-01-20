@@ -63,32 +63,50 @@ const Header: React.FC = () => {
   };
 
   return (
-    <header className="m-auto h-[100px] w-[100%] bg-[#F7F5EB] dark:bg-zinc-900">
+    <header className="m-auto h-[100px] w-[100%] bg-[#F7F5EB]  dark:bg-zinc-900  ">
       <div className="header flex justify-between p-10">
         {/* Left section */}
 
-        <div className="flex w-[20%] gap-[15px]">
-          <NavLink
-            className="h-10 mt-2 text-[20px] text-center rounded-[25px] w-[100%] text-zinc-800 font-thin border-[#450920] dark:border-[#C4D7F2] dark:text-white border-[1px] hover:scale-110 transition-transform duration-300 hover:bg-[#450920] hover:text-white"
-            to={"/NewBlog"}
-          >
-            <div>
-              <ul className="m-auto p-1">
-                <li>{t("header.New")}</li>
-              </ul>
-            </div>
-          </NavLink>
+        <div className="flex w-[20%] pl-10 mt-3 gap-[15px] text-[#450920] dark:text-[#C4D7F2] text-[18px]">
+          <div>
+            <p
+              className="cursor-pointer hover:scale-110 transition-all duration-2000"
+              onClick={() => handleNavigate("/")}
+            >
+              {t("header.home")}
+            </p>
+          </div>
 
-          <NavLink
-            className="h-10 mt-2 text-[20px] text-center rounded-[25px] w-[100%] text-zinc-800 font-thin border-[#450920] border-[1px] hover:scale-110 transition-transform duration-300 dark:border-[#C4D7F2] dark:text-white hover:bg-[#450920] hover:text-white"
-            to={"/UsedBlog"}
+          <p
+            className="cursor-pointer hover:scale-110 transition-all duration-2000"
+            onClick={() =>
+              document
+                .getElementById("homeBlogAboutArticle")
+                ?.scrollIntoView({ behavior: "smooth" })
+            }
           >
-            <div>
-              <ul className="m-auto p-1">
-                <li className=" ">{t("header.Used")}</li>
-              </ul>
-            </div>
-          </NavLink>
+            {t("header.about")}
+          </p>
+
+          <div>
+            <Popover>
+              <PopoverTrigger className="cursor-pointer relative hover:scale-110 transition-all duration-2000">
+                <p>{t("header.category")}</p>
+              </PopoverTrigger>
+
+              <PopoverContent
+                className="bg-[#450920] dark:bg-zinc-700 text-white  p-2 border 
+               rounded-[7px] mt-2 left-[-46px] pl-7 pr-7 absolute z-50 left--20 dark:text-white"
+              >
+                <div onClick={() => handleNavigate("/NewBlog")}>
+                  <p>{t("header.New")}</p>
+                </div>
+                <div onClick={() => handleNavigate("/UsedBlog")}>
+                  <p>{t("header.Used")}</p>
+                </div>
+              </PopoverContent>
+            </Popover>
+          </div>
         </div>
 
         <div className="bg-[#f8f4e3] dark:bg-zinc-900 text-[#450920] dark:text-white ml-[100px] text-4xl font-[600]">
@@ -106,7 +124,7 @@ const Header: React.FC = () => {
           )}
 
           <div className=" border-[1px] border-[#450920] dark:border-[#C4D7F2] rounded-[25px] flex w-[70%] justify-center gap-5 h-10 p-1">
-            <p onClick={() => handleNavigate("/CheckoutView")}>
+            <p id="cart-icon" onClick={() => handleNavigate("/CheckoutView")}>
               <AddShoppingCartIcon className="text-[#450920] dark:text-white hover:text-black cursor-pointer" />
             </p>
 
@@ -158,7 +176,7 @@ const Header: React.FC = () => {
             {user ? (
               <Popover>
                 <PopoverTrigger>
-                  <div className="h-10 w-10  rounded-full bg-[#450920] text-black dark:bg-[#C4D7F2] dark:text-white flex justify-center items-center">
+                  <div className="h-10 w-10 rounded-full bg-[#450920] text-black dark:bg-[#C4D7F2] dark:text-white flex justify-center items-center relative">
                     <img
                       src="https://api.dicebear.com/9.x/avataaars/svg"
                       alt="avatar"
@@ -166,7 +184,7 @@ const Header: React.FC = () => {
                     />
                   </div>
                 </PopoverTrigger>
-                <PopoverContent className="bg-black text-white dark:bg-white dark:text-black mt-7 w-30 text-center p-2 border-black border-[1px] rounded-lg ml-30">
+                <PopoverContent className="bg-black text-white  dark:bg-zinc-700 dark:text-white mt-7 w-30 text-center p-2 border-[1px] rounded-[7px] z-50">
                   <ul className="flex flex-col space-y-2">
                     <li>
                       <NavLink to="/profile">{t("header.Profile")}</NavLink>
@@ -184,7 +202,7 @@ const Header: React.FC = () => {
               </Popover>
             ) : (
               <NavLink
-                className="rounded-[10px] h-10 text-black bg-[#224F34] p-2 font-[700] dark:bg-[#417a51] dark:text-white"
+                className="rounded-[10px] h-10 p-2 w-18 bg-[#450920] text-white dark:bg-[#C4D7F2] dark:text-white"
                 to={"/LogIn"}
               >
                 <button>{t("Home-Page.log in")}</button>

@@ -66,6 +66,7 @@ const LoginInput: React.FC = () => {
           name="email"
           type="email"
           placeholder={t("LogIn-Page.emailHolder")}
+          className="border-[#450920] dark:border-slate-400 focus:outline-none focus:ring-2 focus:dark:bg-slate-800 dark:bg-zinc-900 placeholder:text-zinc-500"
         />
         {errors.email && (
           <span className="text-red-500">{errors.email.message}</span>
@@ -77,7 +78,7 @@ const LoginInput: React.FC = () => {
         <Input
           {...register("password")}
           name="password"
-          className="w-[100%]"
+          className="border-[#450920] dark:border-slate-400 focus:outline-none focus:ring-2 focus:dark:bg-slate-800 dark:bg-zinc-900 placeholder:text-zinc-500"
           type="password"
           placeholder={t("LogIn-Page.password")}
         />
@@ -87,7 +88,7 @@ const LoginInput: React.FC = () => {
       </div>
 
       <Button
-        className="w-[100%] dark:bg-blue-700 dark:text-white"
+        className="w-[100%]  bg-[#450920]  text-white font-bold py-2 px-4 rounded border-[#450920] dark:border-slate-400 focus:dark:bg-slate-400 focus:opacity-30 hover:bg-opacity-10 focus:text-black dark:bg-[#C4D7F2] placeholder:text-zinc-500 transition-colors"
         type="submit"
       >
         {t("LogIn-Page.login")}

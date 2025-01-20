@@ -6,6 +6,7 @@ import Loading from "@/MainComponents/defaultComponents/loadingPage/loading";
 import MainBlogCards from "../components-blogs/parent-blog-cards/blog-cards-main";
 import BlogHomeSection from "../components-blogs/blog-home-section/blog-home-section";
 import { fetchBlogs } from "@/supabase/blogs/newBlogs/newBlogs";
+import SearchIcon from "@mui/icons-material/Search";
 import {
   fetchFavorites,
   addFavorite,
@@ -123,14 +124,18 @@ const NewBlogs: React.FC = () => {
     <>
       <UsedFirstSection />
       <div className="w-[100%] bg-white px-10 dark:bg-zinc-900">
-        <div className="search-container mb-6">
-          <input
-            type="text"
-            placeholder="Search blogs..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)} // Update search query on input change
-            className="search-input search-input mb-8 w-[25%] h-10 border-[2px] border-black rounded-[10px]"
-          />
+        <div className="search-container flex gap-5 py-6">
+          <div className="w-[30%] flex items-center border-[2px] rounded-[10px] border-[#450920] dark:border-slate-400 focus:outline-none focus:ring-2 focus:dark:bg-slate-800 dark:bg-zinc-900 placeholder:text-zinc-500">
+            <SearchIcon className="ml-1" />
+
+            <input
+              type="text"
+              placeholder="Search blogs..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-[100%] h-10 rounded-[10px] dark:border-slate-400 dark:bg-zinc-900 placeholder:text-zinc-500 focus:outline-none focus:ring-0"
+            />
+          </div>
         </div>
         <BlogHomeSection>
           <MainBlogCards>
@@ -176,7 +181,7 @@ const NewBlogs: React.FC = () => {
         </BlogHomeSection>
 
         {/* Pagination buttons */}
-        <div className="flex justify-center my-6">
+        <div className="flex justify-center py-10">
           <button
             onClick={() => paginate(currentPage - 1)}
             disabled={currentPage === 1}

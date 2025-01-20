@@ -6,6 +6,10 @@
      "Used":"Used",
      "Profile":"Profile",
      "geo":"Geo",
-     "eng":"Eng"
+     "eng":"Eng",
+     "home":"HOME",
+     "about":"ABOUT",
+     "category":"SHOP",
+     "logout":"LOG OUT"
      
 }

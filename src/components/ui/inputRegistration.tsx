@@ -32,7 +32,7 @@ const RegisterForm: React.FC = () => {
       onSubmit={handleSubmit}
       className="m-auto flex w-full max-w-sm flex-col justify-start gap-4 space-x-2 dark:bg-black dark:text-black"
     >
-      <div className="ml-2 w-[98%] dark:text-white">
+      <div className="ml-2 w-[98%]  dark:text-[#C4D7F2]">
         <label htmlFor="email">{t("SignIn-Page.email")}</label>
         <Input
           value={registerPayload.email}
@@ -46,10 +46,11 @@ const RegisterForm: React.FC = () => {
           type="email"
           placeholder={t("SignIn-Page.emailHolder")}
           required
+          className="border-[#450920] dark:border-slate-400 focus:outline-none focus:ring-2 focus:dark:bg-slate-800 dark:bg-zinc-900 placeholder:text-zinc-500 "
         />
       </div>
 
-      <div className="dark:text-white">
+      <div className="dark:text-[#C4D7F2]">
         <label htmlFor="password">{t("SignIn-Page.password")}</label>
         <Input
           value={registerPayload.password}
@@ -60,7 +61,7 @@ const RegisterForm: React.FC = () => {
             });
           }}
           name="password"
-          className="w-[100%]"
+          className="w-[100%] border-[#450920] dark:border-slate-400 focus:outline-none focus:ring-2 focus:dark:bg-slate-800 dark:bg-zinc-900 placeholder:text-zinc-500"
           type="password"
           placeholder={t("SignIn-Page.passwordHolder")}
           required
@@ -69,7 +70,7 @@ const RegisterForm: React.FC = () => {
 
       <Button
         onClick={handleSubmit}
-        className="w-[100%] dark:bg-blue-700 dark:text-white"
+        className="w-[100%]  bg-[#450920]  text-white font-bold py-2 px-4 rounded border-[#450920] dark:border-slate-400 focus:dark:bg-slate-400 focus:opacity-30 hover:bg-opacity-10 focus:text-black dark:bg-[#C4D7F2] placeholder:text-zinc-500 transition-colors "
         type="submit"
       >
         {t("SignIn-Page.sign up")}

@@ -11,16 +11,18 @@ const Registration:React.FC=()=>{
 
  return (
    <article className="w-[100%]">
-     <div className="m-auto mt-20 flex w-[35%] flex-col gap-9 rounded-[10px] bg-slate-100 pb-10 pl-10 pr-10 pt-10 dark:bg-black dark:text-white">
+     <div className="m-auto mt-20 flex w-[35%] flex-col gap-9 rounded-[10px] bg-[#F7F5EB] mb-4 pb-10 pl-10 pr-10 pt-10 dark:bg-black dark:text-white">
        <div className="signTitle text-center">
-         <h3 className="text-[25px] font-extrabold">
+         <h3 className="text-[25px] font-extrabold dark:text-[#C4D7F2]">
            {t("SignIn-Page.Sign Up for BitBlogs")}
          </h3>
-         <p>{t("SignIn-Page.Create your account to start blogging")}</p>
+         <p className="dark:text-white">
+           {t("SignIn-Page.Create your account to start blogging")}
+         </p>
        </div>
 
        <div className="signInputs">
-         <RegisterForm/>
+         <RegisterForm />
        </div>
 
        <div className="signcardFooter flex justify-center">

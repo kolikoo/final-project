@@ -1,42 +1,68 @@
 import React  from "react";
-import dickiesImg from "../../../../images/dickies.png"
-import westwood from "../../../../images/westwood.png";
-import carhat from "../../../../images/carhat.png";
-import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 const HomeFirstArticle:React.FC=()=>{
   const { t } = useTranslation();
- const navigate = useNavigate();
- const handleClick = () => {
-   navigate("/NewBlog");
- };
+
+
  return (
    <>
-     <article className="flex flex-col bg-[#7E866F] items-center border-spacing-6 space-y-4 pt-[150px] pb-[100px] ">
-       <div className="text-center text-4xl font-bold mb-6 text-[#450920] dark:text-[#FFEECF]">
-         {t("Home-Page.topbrands")}
+     <article
+       id="homeBlogAboutArticle"
+       className="flex flex-col items-center bg-[#F9F5EE] dark:text-[white] dark:bg-zinc-900 py-12 px-4 text-[#450920]"
+     >
+       {/* Main Title */}
+       <div className="text-center text-4xl font-serif font-bold mb-8">
+         <h1 className="uppercase leading-tight">About Our</h1>
+         <h2 className="uppercase text-[4rem] leading-none">ThiftShop</h2>
        </div>
 
-       <div className="flex justify-between w-full max-w-[900px] roun p-8 bg-[rgb(0,0,0,0.3)]">
-         <div className="w-[30%] h-[300px] bg-white flex items-center justify-center">
-           <img src={dickiesImg} alt="dickies img " />
+       <div className="flex flex-wrap justify-center max-w-5xl w-full gap-8">
+         {/* Left Section */}
+         <div className="flex flex-col items-start text-left w-[30%] ">
+           <p className="text-xl italic leading-relaxed mb-4 font-[300]">
+             Tbilisi's premier destination for unique and sustainable fashion.
+             We're a one-of-a-kind thrift store that offers a curated selection
+             of both new and pre-loved clothing for men and woman.Which is
+             opened since
+           </p>
+           <p className="text-[7rem] font-serif font-[50]">2025</p>
          </div>
-         <div className="w-[30%] h-[305px] bg-gray-300 flex items-center justify-center">
-           <img src={westwood} alt="westwood img " />
-         </div>
-         <div className="w-[30%]  h-[300px] bg-gray-300 flex items-center justify-center">
-           <img src={carhat} alt="carhat img " />
-         </div>
-       </div>
 
-       <div>
-         <button
-           onClick={handleClick}
-           className="px-4 w-40 py-2 mt-5 border-2 dark:border-[#6BC785] border-[#450920] rounded-sm hover:bg-white hover:text-[#450920] active:bg-black  text-white bg-[#450920]  hover:dark:bg-white dark:bg-[#224F34] hover:dark:text-[#224F34] dark:text-white"
-         >
-           {t("Home-Page.seeall")}
-         </button>
+         {/* Middle Section */}
+         <div className="flex flex-col w-[30%] text-base leading-relaxed space-y-4">
+           <p>
+             At ThiftShop, we're passionate about sustainable style. Our team
+             meticulously handpicks every item, ensuring it meets our high
+             standards for quality and timeless design. Whether you seek unique
+             vintage treasures or discover contemporary pieces you won't find
+             elsewhere, we offer something special for everyone.
+           </p>
+           <p>
+             Join us on a journey towards a more sustainable future. By choosing
+             pre-loved clothing, you're not just expressing your style; you're
+             giving new life to old garments and reducing textile waste. Plus,
+             with our competitive prices, you can find something you love
+             without compromising your budget.
+           </p>
+         </div>
+
+         {/* Right Section */}
+         <div className="flex flex-col w-[30%] text-base leading-relaxed space-y-4">
+           <p>
+             Located in the heart of Tbilisi, our store is the perfect place to
+             discover your new favorite outfit. Whether you're looking for a
+             vintage treasure or a trendy new piece, we have something for
+             everyone.
+           </p>
+
+           <button className="flex items-center mt-4 space-x-2 text-base font-semibold text-[#450920] hover:text-black">
+             <span className="text-xl">&#8594;</span>
+             <span className="text-black dark:text-white">
+               THE ART OF MAKING CAVIAR
+             </span>
+           </button>
+         </div>
        </div>
      </article>
    </>

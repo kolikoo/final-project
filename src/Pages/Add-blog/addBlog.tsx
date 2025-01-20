@@ -1,15 +1,15 @@
 import React, { useState } from "react";
-import { supabase } from "@/supabase"; 
+import { supabase } from "@/supabase";
 import { useTranslation } from "react-i18next";
 
 const AddClothingForm: React.FC = () => {
-    const { t } = useTranslation();
+  const { t } = useTranslation();
   const [formData, setFormData] = useState({
     title: "",
     description: "",
     price: "",
-    currency: "GEL", 
-    category: "new", 
+    currency: "GEL",
+    category: "new",
   });
 
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -32,6 +32,9 @@ const AddClothingForm: React.FC = () => {
     }
   };
 
+  const handleFileRemove = () => {
+    setSelectedFile(null); // Clear the selected file
+  };
 
   const uploadImage = async (file: File) => {
     const filePath = `blogs-images/${file.name}`;
@@ -43,14 +46,13 @@ const AddClothingForm: React.FC = () => {
       throw error;
     }
 
-    return data?.path; 
+    return data?.path;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     try {
-      // ახალი მეთოდი - supabase.auth.getUser()
       const {
         data: { user },
         error,
@@ -64,7 +66,6 @@ const AddClothingForm: React.FC = () => {
         throw new Error("User is not logged in.");
       }
 
-
       const { data, error: insertError } = await supabase
         .from("blogs-list")
         .insert([
@@ -74,8 +75,8 @@ const AddClothingForm: React.FC = () => {
             price: formData.price,
             currency: formData.currency,
             category: formData.category,
-            image_url: selectedFile ? await uploadImage(selectedFile) : null, 
-            user_id: user.id, 
+            image_url: selectedFile ? await uploadImage(selectedFile) : null,
+            user_id: user.id,
           },
         ]);
 
@@ -83,10 +84,8 @@ const AddClothingForm: React.FC = () => {
         throw insertError;
       }
 
-      
       console.log("Successfully created blog post:", data);
 
-   
       setFormData({
         title: "",
         description: "",
@@ -96,20 +95,23 @@ const AddClothingForm: React.FC = () => {
       });
       setSelectedFile(null);
     } catch (error) {
-      console.error("Error during form submission:", error); 
+      console.error("Error during form submission:", error);
     }
   };
 
   return (
     <form
       onSubmit={handleSubmit}
-      className="max-w-md mx-auto bg-white shadow-md rounded px-8 py-6"
+      className="max-w-md mx-auto mt-4 mb-4 bg-white dark:bg-zinc-900 shadow-md rounded px-8 py-6"
     >
       <h2 className="text-xl font-bold mb-4">{t("addBlog.form.heading")}</h2>
 
       {/* Title */}
       <div className="mb-4">
-        <label htmlFor="title" className="block text-sm font-medium mb-2">
+        <label
+          htmlFor="title"
+          className="block m-auto text-sm font-medium mb-2"
+        >
           {t("addBlog.form.title")}
         </label>
         <input
@@ -119,7 +121,8 @@ const AddClothingForm: React.FC = () => {
           value={formData.title}
           onChange={handleInputChange}
           required
-          className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+          placeholder={t("addBlog.form.title")}
+          className="w-full px-4 py-2 border rounded-lg border-[#450920] dark:border-slate-400 focus:outline-none focus:ring-2 focus:dark:bg-slate-800 dark:bg-zinc-900 placeholder:text-zinc-500 "
         />
       </div>
 
@@ -134,11 +137,12 @@ const AddClothingForm: React.FC = () => {
           value={formData.description}
           onChange={handleInputChange}
           required
-          className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+          placeholder={t("addBlog.form.description")}
+          className="w-full px-4 py-2 border rounded-lg border-[#450920] dark:border-slate-400 focus:outline-none focus:ring-2 focus:dark:bg-slate-800 dark:bg-zinc-900 placeholder:text-zinc-500 "
         />
       </div>
 
-     
+      {/* Price and Currency */}
       <div className="mb-4">
         <label htmlFor="price" className="block text-sm font-medium mb-2">
           {t("addBlog.form.price")}
@@ -151,14 +155,15 @@ const AddClothingForm: React.FC = () => {
             value={formData.price}
             onChange={handleInputChange}
             required
-            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+            placeholder={t("addBlog.form.price")}
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 border-[#450920] dark:border-slate-400 focus:dark:bg-slate-800 dark:bg-zinc-900 placeholder:text-zinc-500"
           />
           <select
             id="currency"
             name="currency"
             value={formData.currency}
             onChange={handleSelectChange}
-            className="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+            className="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 border-[#450920] dark:border-slate-400 focus:dark:bg-slate-800 dark:bg-zinc-900 placeholder:text-zinc-500"
           >
             <option value="GEL">
               {t("addBlog.form.currency.options.gel")}
@@ -170,7 +175,7 @@ const AddClothingForm: React.FC = () => {
         </div>
       </div>
 
-    
+      {/* Category */}
       <div className="mb-4">
         <label htmlFor="category" className="block text-sm font-medium mb-2">
           {t("addBlog.form.category.label")}
@@ -181,7 +186,7 @@ const AddClothingForm: React.FC = () => {
           value={formData.category}
           onChange={handleSelectChange}
           required
-          className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+          className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 border-[#450920] dark:border-slate-400 focus:dark:bg-slate-800 dark:bg-zinc-900 placeholder:text-zinc-500"
         >
           <option value="new">{t("addBlog.form.category.options.new")}</option>
           <option value="used">
@@ -190,7 +195,6 @@ const AddClothingForm: React.FC = () => {
         </select>
       </div>
 
-      
       <div className="mb-4">
         <label htmlFor="image" className="block text-sm font-medium mb-2">
           {t("addBlog.form.image")}
@@ -201,14 +205,29 @@ const AddClothingForm: React.FC = () => {
           name="image"
           accept="image/*"
           onChange={handleFileChange}
-          className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+          className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 border-[#450920] dark:border-slate-400 focus:dark:bg-slate-800 dark:bg-zinc-900 placeholder:text-zinc-500"
         />
+        {selectedFile && (
+          <div className="mt-4 relative">
+            <img
+              src={URL.createObjectURL(selectedFile)}
+              alt="Selected Preview"
+              className=" m-auto w-[250px]  h-[250px] object-cover rounded-xl border-[2px] border-[#450920]"
+            />
+            <button
+              type="button"
+              onClick={handleFileRemove}
+              className="absolute top-0 w-8 h-8 hover:opacity-35 right-6 bg-slate-700 text-red-500  dark:bg-white rounded-[50%] p-1"
+            >
+              &times;
+            </button>
+          </div>
+        )}
       </div>
 
-    
       <button
         type="submit"
-        className="w-full bg-green-500 text-white font-bold py-2 px-4 rounded hover:bg-green-600 transition-colors"
+        className="w-full bg-[#450920] text-white font-bold py-2 px-4 rounded border-[#450920] dark:border-slate-400 focus:dark:bg-slate-800 dark:bg-[#C4D7F2] placeholder:text-zinc-500 transition-colors "
       >
         {t("addBlog.form.submit")}
       </button>

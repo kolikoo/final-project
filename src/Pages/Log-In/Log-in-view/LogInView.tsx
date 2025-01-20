@@ -7,12 +7,14 @@ const LogInView: React.FC = () => {
 
   return (
     <article className="w-[100%]">
-      <div className="m-auto mt-20 flex w-[35%] flex-col gap-9 rounded-[10px] bg-slate-100 pb-10 pl-10 pr-10 pt-10 dark:bg-black dark:text-white">
-        <div className="signTitle text-center">
-          <h3 className="text-3xl font-extrabold">
+      <div className="m-auto mt-20 flex w-[35%] flex-col gap-9 rounded-[10px] bg-[#F7F5EB] mb-6 pb-10 pl-10 pr-10 pt-10 dark:bg-black dark:text-white">
+        <div className="signTitle text-center dark:text-[#C4D7F2]">
+          <h3 className="text-3xl font-extrabold ">
             {t("LogIn-Page.Log in to BitBlogs")}
           </h3>
-          <p>{t("LogIn-Page.Enter credentials")}</p>
+          <p className="dark:text-[#C4D7F2]">
+            {t("LogIn-Page.Enter credentials")}
+          </p>
         </div>
 
         <div className="signInputs">
@@ -20,8 +22,6 @@ const LogInView: React.FC = () => {
         </div>
 
         <div className="signcardFooter flex w-[100%] justify-between">
-          
-
           <p className="text-[16px]">
             {t("LogIn-Page.Don't have an account")}
             <span>
