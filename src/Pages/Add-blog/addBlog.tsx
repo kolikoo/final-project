@@ -102,7 +102,17 @@ const AddClothingForm: React.FC = () => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="max-w-md mx-auto mt-4 mb-4 bg-white dark:bg-zinc-900 shadow-md rounded px-8 py-6"
+      className="max-w-md mx-auto  mb-4 bg-white m-auto dark:bg-zinc-900 shadow-md rounded px-8 py-6
+       w-full xl:mt-10 xl:mb-10 
+
+
+semismall:m-auto
+semimedium:m-auto
+small:m-auto
+small:ml-[35%]
+semismall:ml-[25%]
+sm:ml-[35%]
+"
     >
       <h2 className="text-xl font-bold mb-4">{t("addBlog.form.heading")}</h2>
 

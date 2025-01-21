@@ -110,7 +110,16 @@ const ProfileDetailsEdit: React.FC = () => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="m-auto flex w-full max-w-sm flex-col justify-start gap-4 space-x-2 dark:bg-black dark:text-black"
+      className="m-auto flex w-full max-w-sm flex-col justify-start gap-4 space-x-2  dark:text-black
+      
+      semismall:m-auto
+semimedium:m-auto
+small:m-auto
+small:ml-[37%]
+semismall:ml-[34%]
+sm:ml-[44%]
+bg-white  dark:bg-zinc-900 p-30
+      "
     >
       <div className="mt-4 flex justify-center items-center">
         {profilePayload.avatar_url ? (
@@ -131,10 +140,18 @@ const ProfileDetailsEdit: React.FC = () => {
         <div>
           <select
             onChange={(e) => handleAvatarChange(e.target.value)}
-            className="bg-blue-500 text-white rounded min-w-full p-2 m-1"
+            className="bg-white text-black rounded min-w-full p-2 m-1"
           >
-            <option value="avatar1">{t("avatar1")}</option>
-            
+            <option value="avatar1">avatar1</option>
+            <option value="avatar2">avatar2</option>
+            <option value="avatar3">avatar3</option>
+            <option value="avatar4">avatar4</option>
+            <option value="avatar5">avatar5</option>
+            <option value="avatar6">avatar6</option>
+            <option value="avatar7">avatar7</option>
+            <option value="avatar8">avatar8</option>
+            <option value="avatar9">avatar9</option>
+            <option value="avatar10">avatar10</option>
           </select>
         </div>
         {formErrors.avatar_url && (
@@ -211,14 +228,14 @@ const ProfileDetailsEdit: React.FC = () => {
       </div>
 
       <button
-        className="h-10 w-[100%] rounded-[10px] bg-blue-700 dark:bg-blue-700 dark:text-white"
+        className="w-full bg-[#450920] text-white font-bold py-2 px-4 rounded border-[#450920] dark:border-slate-400 focus:dark:bg-slate-800 dark:bg-[#C4D7F2] dark:text-black placeholder:text-zinc-500 transition-colors"
         type="submit"
       >
         {t("ProfileInformation.submit")}
       </button>
 
       <div
-        className="cursor-pointer h-10 w-[100%] rounded-[10px] text-center text-white p-2 bg-blue-700 dark:bg-blue-700 dark:text-white"
+        className="w-full bg-[#450920] text-white dark:text-black font-bold py-2 px-4 rounded border-[#450920] dark:border-slate-400 focus:dark:bg-slate-800 dark:bg-[#C4D7F2] placeholder:text-zinc-500 transition-colors text-center"
         onClick={() => handleNavigate("/profile")}
       >
         {t("ProfileInformation.goBackToProfile")}

@@ -1,13 +1,19 @@
 import React from "react";
 
-const Footer:React.FC=()=>{
+const Footer: React.FC = () => {
   return (
-    <footer className="bg-[#F7F5EB] text-black dark:bg-zinc-900 dark:text-[#f8f4e3]  ">
+    <footer
+      className="bg-[#F7F5EB] text-black dark:bg-zinc-900 dark:text-[#f8f4e3] w-full
+     
+semismall:w-[138%]
+semimedium:w-[100%]
+small:w-[170%]"
+    >
       <div className="container mx-auto py-8">
         <div className="flex flex-col md:flex-row justify-between items-center">
-          <div className="mb-4 md:mb-0">
+          <div className="mb-4 md:mb-0 text-center md:text-left">
             <h1 className="text-2xl font-bold">ThriftShop</h1>
-            <ul className="flex space-x-4 mt-4">
+            <ul className="flex justify-center md:justify-start space-x-4 mt-4">
               <li>
                 <a href="#" className="hover:text-gray-200">
                   Facebook
@@ -25,7 +31,7 @@ const Footer:React.FC=()=>{
               </li>
             </ul>
           </div>
-          <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
             <div>
               <h3 className="text-lg font-semibold mb-2">Shop</h3>
               <ul>
@@ -78,6 +84,7 @@ const Footer:React.FC=()=>{
             </div>
             <div>
               <h3 className="text-lg font-semibold mb-2">Stay Up To Date</h3>
+              {/* Optionally, add a subscription form or other content */}
             </div>
           </div>
         </div>
@@ -104,6 +111,6 @@ const Footer:React.FC=()=>{
       </div>
     </footer>
   );
-}
+};
 
 export default Footer;

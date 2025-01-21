@@ -57,9 +57,9 @@ const LoginInput: React.FC = () => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="m-auto flex w-full max-w-sm flex-col justify-start gap-4 space-x-2 dark:bg-black dark:text-black"
+      className="m-auto flex w-full max-w-sm flex-col justify-start gap-4 space-x-2 dark:bg-zinc-900 dark:text-zinc-900"
     >
-      <div className="ml-2 w-[98%] dark:text-white dark:bg-black">
+      <div className="ml-2 w-[98%] dark:text-white dark:bg-zinc-900">
         <label htmlFor="email">{t("LogIn-Page.email")}</label>
         <Input
           {...register("email")}

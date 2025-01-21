@@ -7,6 +7,18 @@ export default {
       animation: {
         fly: "fly 0.8s ease-in-out",
       },
+      screens: {
+        sm: "640px", 
+        small: "340px", 
+        semismall:"500px",
+        extramedium:"780px",
+        medium:"580px",
+        semimedium:"800px",
+        large:"900px"
+    
+
+
+      },
 
       keyframes: {
         fly: {
