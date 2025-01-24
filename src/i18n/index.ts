@@ -12,9 +12,9 @@ import headerEn from "./en/pages/headerEn.json";
 import addblogKa from "./ka/pages/AddblogKa.json"
 import addblogEn from "./en/pages/AddblogEn.json"
 import ProfileInformationEn from "./en/pages/ProfileInformationEn.json"
-import ProfileInformationKa from "./Ka/pages/ProfileInformationKa.json";
+import ProfileInformationKa from "@/i18n/ka/pages/ProfileInformationKa.json";
 import CheckoutKa from "./ka/pages/CheckoutKa.json"
-import CheckoutEn from "./en/pages/CheckoutEn.json";
+import CheckoutEn from "./en/pages/checkoutEn.json";
 
 
 i18n
