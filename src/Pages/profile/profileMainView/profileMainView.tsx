@@ -19,7 +19,7 @@ const ProfileMainView: React.FC = () => {
   }
 
   return (
-    <div className="flex flex-col gap-20">
+    <div className="flex flex-col gap-20 small:ml-[150px] semimedium:ml-[0px]">
       <ProfileSectionInformation />
       <ProfileSectionBlogs />
     </div>

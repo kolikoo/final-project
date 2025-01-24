@@ -1,4 +1,6 @@
 {
+  "Estimate":"Estimate 300x500 size in PNG, JPG, or JPEG format",
+  "addphoto":"Upload Image",
   "form": {
     "title": "Title",
     "description": "Description",

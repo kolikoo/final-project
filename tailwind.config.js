@@ -6,18 +6,16 @@ export default {
     extend: {
       animation: {
         fly: "fly 0.8s ease-in-out",
+        "cart-animation": "cartAnimation 2s ease-in-out",
       },
       screens: {
-        sm: "640px", 
-        small: "340px", 
-        semismall:"500px",
-        extramedium:"780px",
-        medium:"580px",
-        semimedium:"800px",
-        large:"900px"
-    
-
-
+        sm: "640px",
+        small: "340px",
+        semismall: "500px",
+        extramedium: "780px",
+        medium: "580px",
+        semimedium: "800px",
+        large: "900px",
       },
 
       keyframes: {
@@ -28,6 +26,25 @@ export default {
               "translate(var(--tw-translate-x), var(--tw-translate-y))",
             opacity: "0",
           },
+        },
+        cartAnimation: {
+          "0%": {
+            transform: "translateX(0) scale(1)",
+            color: "#450920",
+          },
+          "50%": {
+            transform: "translateX(10px) scale(1.2)",
+            color: "red",
+          },
+          "100%": {
+            transform: "translateX(0) scale(1)",
+            color: "#450920",
+          },
+        },
+
+        fallDown: {
+          "0%": { transform: "translateY(-100%)", opacity: 0 },
+          "100%": { transform: "translateY(0)", opacity: 1 },
         },
       },
       borderRadius: {

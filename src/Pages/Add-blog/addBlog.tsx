@@ -1,6 +1,10 @@
+
 import React, { useState } from "react";
 import { supabase } from "@/supabase";
 import { useTranslation } from "react-i18next";
+import TextInput from "./components/textInput/textInput";
+import FileUpload from "./components/fileUpload/fileUpload";
+
 
 const AddClothingForm: React.FC = () => {
   const { t } = useTranslation();
@@ -102,55 +106,30 @@ const AddClothingForm: React.FC = () => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="max-w-md mx-auto  mb-4 bg-white m-auto dark:bg-zinc-900 shadow-md rounded px-8 py-6
-       w-full xl:mt-10 xl:mb-10 
-
-
-semismall:m-auto
-semimedium:m-auto
-small:m-auto
-small:ml-[35%]
-semismall:ml-[25%]
-sm:ml-[35%]
-"
+      className="max-w-md mx-auto mb-4 bg-white m-auto dark:bg-zinc-900 shadow-md rounded px-8 py-6 w-full xl:mt-10 xl:mb-10"
     >
       <h2 className="text-xl font-bold mb-4">{t("addBlog.form.heading")}</h2>
 
-      {/* Title */}
-      <div className="mb-4">
-        <label
-          htmlFor="title"
-          className="block m-auto text-sm font-medium mb-2"
-        >
-          {t("addBlog.form.title")}
-        </label>
-        <input
-          type="text"
-          id="title"
-          name="title"
-          value={formData.title}
-          onChange={handleInputChange}
-          required
-          placeholder={t("addBlog.form.title")}
-          className="w-full px-4 py-2 border rounded-lg border-[#450920] dark:border-slate-400 focus:outline-none focus:ring-2 focus:dark:bg-slate-800 dark:bg-zinc-900 placeholder:text-zinc-500 "
-        />
-      </div>
 
-      {/* Description */}
-      <div className="mb-4">
-        <label htmlFor="description" className="block text-sm font-medium mb-2">
-          {t("addBlog.form.description")}
-        </label>
-        <textarea
-          id="description"
-          name="description"
-          value={formData.description}
-          onChange={handleInputChange}
-          required
-          placeholder={t("addBlog.form.description")}
-          className="w-full px-4 py-2 border rounded-lg border-[#450920] dark:border-slate-400 focus:outline-none focus:ring-2 focus:dark:bg-slate-800 dark:bg-zinc-900 placeholder:text-zinc-500 "
-        />
-      </div>
+      <TextInput
+        id="title"
+        name="title"
+        value={formData.title}
+        onChange={handleInputChange}
+        placeholder={t("addBlog.form.title")}
+        label={t("addBlog.form.title")}
+      />
+
+
+      <TextInput
+        id="description"
+        name="description"
+        value={formData.description}
+        onChange={handleInputChange}
+        placeholder={t("addBlog.form.description")}
+        label={t("addBlog.form.description")}
+        type="textarea"
+      />
 
       {/* Price and Currency */}
       <div className="mb-4">
@@ -185,7 +164,7 @@ sm:ml-[35%]
         </div>
       </div>
 
-      {/* Category */}
+
       <div className="mb-4">
         <label htmlFor="category" className="block text-sm font-medium mb-2">
           {t("addBlog.form.category.label")}
@@ -205,39 +184,16 @@ sm:ml-[35%]
         </select>
       </div>
 
-      <div className="mb-4">
-        <label htmlFor="image" className="block text-sm font-medium mb-2">
-          {t("addBlog.form.image")}
-        </label>
-        <input
-          type="file"
-          id="image"
-          name="image"
-          accept="image/*"
-          onChange={handleFileChange}
-          className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 border-[#450920] dark:border-slate-400 focus:dark:bg-slate-800 dark:bg-zinc-900 placeholder:text-zinc-500"
-        />
-        {selectedFile && (
-          <div className="mt-4 relative">
-            <img
-              src={URL.createObjectURL(selectedFile)}
-              alt="Selected Preview"
-              className=" m-auto w-[250px]  h-[250px] object-cover rounded-xl border-[2px] border-[#450920]"
-            />
-            <button
-              type="button"
-              onClick={handleFileRemove}
-              className="absolute top-0 w-8 h-8 hover:opacity-35 right-6 bg-slate-700 text-red-500  dark:bg-white rounded-[50%] p-1"
-            >
-              &times;
-            </button>
-          </div>
-        )}
-      </div>
+     
+      <FileUpload
+        selectedFile={selectedFile}
+        onFileChange={handleFileChange}
+        onFileRemove={handleFileRemove}
+      />
 
       <button
         type="submit"
-        className="w-full bg-[#450920] text-white font-bold py-2 px-4 rounded border-[#450920] dark:border-slate-400 focus:dark:bg-slate-800 dark:bg-[#C4D7F2] placeholder:text-zinc-500 transition-colors "
+        className="w-full bg-[#450920] text-white font-bold py-2 px-4 rounded border-[#450920] dark:border-slate-400 focus:dark:bg-slate-800 dark:bg-[#C4D7F2] placeholder:text-zinc-500 transition-colors"
       >
         {t("addBlog.form.submit")}
       </button>

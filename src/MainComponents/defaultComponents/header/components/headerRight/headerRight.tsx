@@ -19,19 +19,53 @@ import { useAtom } from "jotai";
 import { userAtom } from "@/store/auth";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import LanguageIcon from "@mui/icons-material/Language";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import WbSunnyIcon from "@mui/icons-material/WbSunny";
 import BedtimeIcon from "@mui/icons-material/Bedtime";
+import { supabase } from "@/supabase";
 
 
 const HeaderRight:React.FC = () => {
   const { t } = useTranslation();
   const [user] = useAtom(userAtom);
+  const [favoritesCount, setFavoritesCount] = useState<number>(0);
 
   const { mutate: handlelogout } = useMutation({
     mutationKey: ["logout"],
     mutationFn: logout,
   });
+  const fetchFavoritesCount = async () => {
+    const { count, error } = await supabase
+      .from("favorites") // ცხრილის სახელი
+      .select("*", { count: "exact" });
+
+    if (error) {
+      console.error("Error fetching favorites count:", error);
+    } else {
+      setFavoritesCount(count || 0);
+    }
+  };
+
+  useEffect(() => {
+
+    fetchFavoritesCount();
+
+    const subscription = supabase
+      .channel("realtime:favorites") 
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "favorites" },
+        () => {
+          fetchFavoritesCount();
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(subscription);
+    };
+  }, []);
+
 
  
 
@@ -93,17 +127,26 @@ const HeaderRight:React.FC = () => {
         <div
           className={`${containerClassNameSecond} small:w-[70%] large:w-[70%] lg:w-[50%]`}
         >
-          <p
-            className="small:text-[1px]"
-            id="cart-icon"
+          <div
+            className="relative"
             onClick={() => handleNavigate("/CheckoutView")}
           >
-            <AddShoppingCartIcon className="text-[#450920] hover:scale-110 transition-transform duration-200 small:text-[1px] dark:text-white hover:text-black cursor-pointer" />
-          </p>
+            <p
+              className="small:text-[1px]"
+              id="cart-icon"
+              onClick={() => handleNavigate("/CheckoutView")}
+            >
+              <AddShoppingCartIcon className="text-[#450920] dark:text-white hover:scale-110 transition-transform duration-300 hover:text-black cursor-pointer" />
+            </p>
 
-          {/* Theme toggle */}
+            {favoritesCount > 0 && (
+              <div className="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center animate-bounce-limited animate-bounce duration-2000">
+                {favoritesCount}
+              </div>
+            )}
+          </div>
+
           <div className="flex items-center justify-center gap-3 ">
-            {/* Toggle Off */}
             <div
               onClick={handleToggle}
               className={` w-10 h-6 flex items-center bg-gray-400 dark:bg-gray-800 rounded-full p-1 cursor-pointer transition-colors small:w-8 small:h-4 ${

@@ -87,16 +87,22 @@ const BlogEditPage: React.FC = () => {
   };
 
   return (
-    <div className="container mx-auto">
-      <h2 className="text-2xl font-bold mb-4">Edit Blog</h2>
-      {loading && <Loading />} {/* აქ დავამატეთ Loading კომპონენტი */}
+    <div className="container mx-auto px-4 sm:px-2">
+      <h2 className="text-2xl font-bold mb-4 text-center p-4">Edit Blog</h2>
+      {loading && <Loading />}
       {!loading && (
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="space-y-4 bg-[#f8f4e3] p-10 mb-4 dark:bg-zinc-900 rounded-lg shadow-md w-full max-w-lg mx-auto small:ml-[60%]
+          semismall:ml-[20%]
+          sm:ml-[30%]
+          "
+        >
           <div>
             <label className="block font-medium">Title</label>
             <input
               {...register("title")}
-              className="border p-2 w-full rounded"
+              className="w-full px-4 py-2 border-[2px]  border-[#450920] dark:border-[#C4D7F2] focus:outline-none focus:ring-2 focus:ring-[#450920] dark:bg-zinc-900 dark:focus:ring-slate-400 rounded-[20px] "
               placeholder="Enter blog title"
             />
             {errors.title && (
@@ -108,7 +114,8 @@ const BlogEditPage: React.FC = () => {
             <label className="block font-medium">Description</label>
             <textarea
               {...register("description")}
-              className="border p-2 w-full rounded"
+              className="w-full px-4 py-2 border-[2px]  border-[#450920]  focus:outline-none focus:ring-2 focus:ring-[#450920] dark:focus:ring-slate-400 rounded-[20px] dark:border-[#C4D7F2]
+dark:bg-zinc-900"
               placeholder="Enter blog description"
             ></textarea>
             {errors.description && (
@@ -120,7 +127,8 @@ const BlogEditPage: React.FC = () => {
             <label className="block font-medium">Price</label>
             <input
               {...register("price")}
-              className="border p-2 w-full rounded"
+              className="w-full px-4 py-2 border-[2px]  border-[#450920]  focus:outline-none focus:ring-2 focus:ring-[#450920] dark:focus:ring-slate-400 rounded-[20px] dark:border-[#C4D7F2]
+dark:bg-zinc-900"
               placeholder="Enter blog price"
             />
             {errors.price && (
@@ -132,7 +140,8 @@ const BlogEditPage: React.FC = () => {
             <label className="block font-medium">Category</label>
             <select
               {...register("category")}
-              className="border p-2 w-full rounded"
+              className="w-full px-4 py-2 border-[2px]  border-[#450920]  focus:outline-none focus:ring-2 focus:ring-[#450920] dark:focus:ring-slate-400 rounded-[20px] dark:border-[#C4D7F2]
+dark:bg-zinc-900"
             >
               <option value="new">New</option>
               <option value="used">Used</option>
@@ -144,7 +153,8 @@ const BlogEditPage: React.FC = () => {
 
           <button
             type="submit"
-            className="bg-blue-500 text-white py-2 px-4 rounded"
+            className="w-full bg-[#450920] text-white font-bold py-2 px-4 dark:border-[#C4D7F2]
+dark:bg-[#C4D7F2] dark:text-black rounded hover:bg-[#720d30] transition-colors "
             disabled={loading}
           >
             {loading ? "Saving..." : "Save"}

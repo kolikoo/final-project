@@ -28,6 +28,7 @@ import Loading from "./MainComponents/defaultComponents/loadingPage/loading";
 import CheckoutView from "./Pages/checkout/checkoutView/checkoutView";
 import BlogEditPage from "./Pages/blogEditPage/blogEditPage";
 import Header from "./MainComponents/defaultComponents/header/header";
+import HomeLoadingPage from "./MainComponents/defaultComponents/homeLoadingPage/homeLoadingPage";
 
 function App() {
   const [, setUser] = useAtom(userAtom);
@@ -52,7 +53,7 @@ function App() {
         <Route
           path="/"
           element={
-            <Suspense fallback={<Loading />}>
+            <Suspense fallback={<HomeLoadingPage />}>
               <MainHome />
             </Suspense>
           }
@@ -68,9 +69,11 @@ function App() {
         <Route
           path="/CheckoutView"
           element={
-            <Suspense fallback={<Loading />}>
-              <CheckoutView />
-            </Suspense>
+            <AuthGuard>
+              <Suspense fallback={<Loading />}>
+                <CheckoutView />
+              </Suspense>
+            </AuthGuard>
           }
         />
         <Route
@@ -84,9 +87,11 @@ function App() {
         <Route
           path="/AddBlog"
           element={
-            <Suspense fallback={<Loading />}>
-              <AddBlog />
-            </Suspense>
+            <AuthGuard>
+              <Suspense fallback={<Loading />}>
+                <AddBlog />
+              </Suspense>
+            </AuthGuard>
           }
         />
         <Route
@@ -144,7 +149,6 @@ function App() {
             </AuthGuard>
           }
         />
-        <Route path="/" element={<Navigate to="/ka/home" />} />
       </Routes>
       <Footer />
     </Router>

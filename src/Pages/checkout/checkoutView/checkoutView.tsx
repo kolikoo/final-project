@@ -80,7 +80,7 @@ const CheckoutView: React.FC = () => {
   const finalTotalInUSD = (subtotalInUSD + shippingInUSD).toFixed(2);
 
   return (
-    <div className="w-[70%] m-auto flex flex-col gap-10">
+    <div className="w-[70%] m-auto flex flex-col gap-10 small:w-[150%] semismall:w-[130%] semimedium:w-[90%] xl:w-[70%] ">
       <h2 className="text-3xl mt-11 font-semibold mb-4 self-center">
         {t("Checkout.CheckoutView.checkYourCart")}
       </h2>
@@ -89,7 +89,10 @@ const CheckoutView: React.FC = () => {
         <div className="w-[60%]">
           <div className="flex flex-col gap-7">
             {favorites.map((item) => (
-              <div key={item.blog_id} className="bg-white flex p-4 shadow-md">
+              <div
+                key={item.blog_id}
+                className="bg-white dark:bg-zinc-900 flex p-4 shadow-md rounded-xl"
+              >
                 <div className="w-[20%]">
                   <img
                     src={`https://ezorpkouhvpeqvlzrolq.supabase.co/storage/v1/object/public/blog-images/${item["blogs-list"].image_url}`}
@@ -98,24 +101,29 @@ const CheckoutView: React.FC = () => {
                   />
                 </div>
                 <div className="w-[60%] pl-4">
-                  <h3 className="font-medium">{item["blogs-list"].title}</h3>
-                  <p className="text-gray-600">
+                  <h3 className="font-medium text-[23px]">
+                    {item["blogs-list"].title}
+                  </h3>
+                  <p
+                    className="text-gray-600 text-[16px]
+                  dark:text-white"
+                  >
                     {item["blogs-list"].price} {item["blogs-list"].currency}
                   </p>
                 </div>
                 <div className="w-[20%] flex items-center">
                   <button
                     onClick={() => handleQuantityChange(item.blog_id, -1)}
-                    className="px-2 bg-gray-200 hover:bg-gray-300"
+                    className="px-3 py-2 bg-black  dark:bg-white hover:bg-gray-300"
                   >
-                    -
+                    <p className="dark:text-black text-white">-</p>
                   </button>
                   <span className="px-3">{item.quantity || 1}</span>
                   <button
                     onClick={() => handleQuantityChange(item.blog_id, 1)}
-                    className="px-2 bg-gray-200 hover:bg-gray-300"
+                    className="px-3 py-2 bg-black  dark:bg-white hover:bg-gray-300"
                   >
-                    +
+                    <p className="text-white dark:text-black">+</p>
                   </button>
                 </div>
               </div>
@@ -123,7 +131,7 @@ const CheckoutView: React.FC = () => {
           </div>
         </div>
 
-        <div className="w-[40%] max-h-[350px] bg-gray-50 p-6 shadow-md">
+        <div className="w-[40%] max-h-[350px] bg-gray-50 p-6 shadow-md dark:bg-zinc-900">
           <h3 className="text-lg font-semibold mb-4">
             {t("Checkout.CheckoutView.summary")}
           </h3>
@@ -150,7 +158,7 @@ const CheckoutView: React.FC = () => {
             </p>
           </div>
           <div>
-            <button className="w-full bg-black text-white py-2">
+            <button className="w-full bg-black dark:hover:bg-[#C4D7F2] text-white py-2 dark:text-black dark:bg-white">
               {t("Checkout.CheckoutView.checkOut")}
             </button>
           </div>

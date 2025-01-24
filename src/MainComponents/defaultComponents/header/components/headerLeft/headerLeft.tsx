@@ -31,7 +31,7 @@ const HeaderLeft: React.FC = () => {
       >
         <div>
           <p
-            className="cursor-pointer hover:scale-110 transition-all duration-2000 small:text-[10px] large:text-[23px]"
+            className="cursor-pointer hover:scale-110 transition-all duration-2000 small:text-[10px] large:text-[23px] xl:font-[300]"
             onClick={() => handleNavigate("/")}
           >
             {t("header.home")}
@@ -40,7 +40,7 @@ const HeaderLeft: React.FC = () => {
 
         <p
           className="cursor-pointer hover:scale-110 transition-all duration-2000 small:text-[10px]
-          large:text-[23px]"
+          large:text-[23px] xl:font-[300]"
           onClick={() =>
             document
               .getElementById("homeBlogAboutArticle")
@@ -52,7 +52,7 @@ const HeaderLeft: React.FC = () => {
 
         <div className="small:text-[10px]">
           <Popover>
-            <PopoverTrigger className="cursor-pointer relative hover:scale-110 transition-all duration-2000 small:text-[10px] large:text-[23px] ">
+            <PopoverTrigger className="cursor-pointer relative hover:scale-110 transition-all duration-2000 small:text-[10px] large:text-[23px] xl:font-[300]">
               <p className="small:text-[10px] large:text-[23px]">
                 {t("header.category")}
               </p>

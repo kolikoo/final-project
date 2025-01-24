@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 const ProfileSectionInformation: React.FC = () => {
-  const { t } = useTranslation(); 
+  const { t } = useTranslation();
   const user = useAtomValue(userAtom);
   const [profile, setProfile] = useState<any>(null);
   const navigate = useNavigate();
@@ -28,37 +28,45 @@ const ProfileSectionInformation: React.FC = () => {
   if (!profile) {
     return <div>{t("loading")}</div>;
   }
+ 
+    
 
   return (
-    <div className="bg-gray-100 dark:bg-black py-10 w-[40%] m-auto mt-[40px] flex flex-col align-middle">
-      <div className="w-[80%] m-auto pl-[28%] pr-[20%] flex flex-col items-center">
-        {profile.avatar_url && (
-          <div className="flex justify-center mb-4">
-            <img
-              src={profile.avatar_url}
-              alt="Avatar"
-              className="w-24 h-24 rounded-full object-cover border-4 border-blue-500"
-            />
-          </div>
-        )}
-        <div className="text-lg font-semibold mb-2">
-          {t("ProfileInformation.username")}: {profile.username}
-        </div>
-        <div className="text-lg font-semibold mb-4">
-          {t("ProfileInformation.fullName")}: {profile.full_name_en}
-        </div>
+    <div
+      className="w-[40%] mx-auto mt-8 bg-[#f8f4e3] dark:bg-zinc-900 dark:text-[#C4D7F2]  rounded-xl shadow-lg p-20 text-center text-black
+    small:w-[140%]
+    small:ml-[20%]
+    semismall:w-[100%]
+    extramedium:w-[60%]
+    extramedium:ml-[35%]
+    semimedium:w-[40%]
+    xl:w-[30%]
 
-        <div className="text-lg font-semibold mb-4">
-          {t("ProfileInformation.phoneNumber")}:{" "}
-          {profile.phone_number || t("ProfileInformation.notProvided")}
-        </div>
-        <div
-          onClick={() => navigate("/profileDetailsEdit")}
-          className="cursor-pointer text-black bg-yellow-400 w-30 border-black border-[1px] rounded-md text-center px-4 py-2"
-        >
-          {t("ProfileInformation.editProfile")}
-        </div>
+    "
+    >
+      <div className="flex justify-center">
+        <img
+          src={profile.avatar_url || "/default-avatar.png"} // Provide a default avatar if `avatar_url` is missing
+          alt="Avatar"
+          className="w-24 h-24 rounded-full border-4 border-white object-cover"
+        />
       </div>
+      <h2 className="text-3xl font-bold mt-4 dark:text-[#C4D7F2] ">
+        {" "}
+        {profile.username}
+      </h2>
+      <p className="text-2xl font-semibold dark:text-[#C4D7F2] ">
+        {profile.full_name_en}
+      </p>
+      <p className="text-2xl text-black  dark:text-[#C4D7F2] mt-10">
+        {profile.phone_number}
+      </p>
+      <button
+        onClick={() => navigate("/profileDetailsEdit")}
+        className="mt-6 px-4 py-2 bg-yellow-500 text-white font-semibold rounded-full hover:bg-gray-200 transition"
+      >
+        {t("ProfileInformation.editProfile")}
+      </button>
     </div>
   );
 };

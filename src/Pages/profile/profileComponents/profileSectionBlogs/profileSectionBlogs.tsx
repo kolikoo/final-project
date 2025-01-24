@@ -41,11 +41,15 @@ const ProfileSectionBlogs: React.FC = () => {
     fetchBlogsData();
   }, []);
 
-  const handleEdit = (id: string) => {
+  const handleEdit = (id: string, event: React.MouseEvent) => {
+    event.stopPropagation(); 
     navigate(`/BlogEditPage/${id}`);
   };
 
-  const handleDelete = async (id: string) => {
+    const handleNavigate = (path: string) => navigate(path);
+
+  const handleDelete = async (id: string, event: React.MouseEvent) => {
+    event.stopPropagation();
     const confirmDelete = window.confirm(
       "Are you sure you want to delete this blog?"
     );
@@ -61,7 +65,7 @@ const ProfileSectionBlogs: React.FC = () => {
   };
 
   return (
-    <div className="container mx-auto">
+    <div className="container mx-auto small:w-[140%]">
       <h2 className="text-2xl font-bold mb-4">
         {t("ProfileInformation.myblogs")}
       </h2>
@@ -70,9 +74,21 @@ const ProfileSectionBlogs: React.FC = () => {
           <Loading />
         </div>
       ) : (
-        <div className="grid grid-cols-4 gap-4">
+        <div
+          className="
+        grid 
+        gap-4 
+        grid-cols-1 
+        sm:grid-cols-2 
+        lg:grid-cols-4 
+      "
+        >
           {blogs.map((blog) => (
-            <div key={blog.id} className="bg-white rounded-lg shadow-md p-6">
+            <div
+              onClick={() => handleNavigate(`/Details/${blog.id}`)}
+              key={blog.id}
+              className="bg-[#F7F5EB] dark:bg-zinc-800  cursor-pointer hover:scale-110 duration-300 rounded-lg shadow-md p-6"
+            >
               <img
                 src={`https://ezorpkouhvpeqvlzrolq.supabase.co/storage/v1/object/public/blog-images/${blog.image_url}`}
                 alt={blog.title || "Blog Image"}
@@ -88,13 +104,13 @@ const ProfileSectionBlogs: React.FC = () => {
               <p className="text-gray-700">Category: {blog.category}</p>
               <div className="flex space-x-4 mt-4">
                 <button
-                  onClick={() => handleEdit(blog.id)}
+                  onClick={(event) => handleEdit(blog.id, event)}
                   className="bg-blue-500 text-white py-2 px-4 rounded"
                 >
                   {t("ProfileInformation.editProfile")}
                 </button>
                 <button
-                  onClick={() => handleDelete(blog.id)}
+                  onClick={(event) => handleDelete(blog.id, event)}
                   className="bg-red-500 text-white py-2 px-4 rounded"
                 >
                   {t("ProfileInformation.Delete")}

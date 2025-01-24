@@ -20,6 +20,7 @@ navigate(path)
 semismall:w-[138%]
 semimedium:w-[100%]
 small:w-[170%]
+z-40
 "
       style={{
         backgroundImage: `url(${background})`, // ფონის სურათი სექციისთვის

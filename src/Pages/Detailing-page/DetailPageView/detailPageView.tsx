@@ -1,24 +1,42 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { supabase } from "@/supabase"; // თქვენი Supabase კლიენტი
-import detailBackground1 from "@/images/detailBackground1.png";
+import { supabase } from "@/supabase";
 import Loading from "@/MainComponents/defaultComponents/loadingPage/loading";
+import {
+  fetchFavorites,
+  addFavorite,
+  removeFavorite,
+} from "@/supabase/favorites/favorites";
 
 const Details: React.FC = () => {
-  const { id } = useParams(); // URL პარამეტრიდან ID-ს აღება
-  const [blog, setBlog] = useState<any>(null); // ბლოგის მონაცემები
-  const [isLoading, setIsLoading] = useState<boolean>(true); // ლოდინის სტატუსი
+  const { id } = useParams();
+  const [blog, setBlog] = useState<any>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [userId, setUserId] = useState<string | null>(null);
+  const [favoriteBlogs, setFavoriteBlogs] = useState<number[]>([]);
+
+  useEffect(() => {
+    const fetchUserId = async () => {
+      const { data: userSession, error } = await supabase.auth.getUser();
+      if (error) {
+        console.error("Error getting user session:", error);
+        return;
+      }
+      setUserId(userSession?.user.id || null);
+    };
+
+    fetchUserId();
+  }, []);
 
   useEffect(() => {
     const fetchBlogDetails = async () => {
       try {
-        const blogId = id ? parseInt(id) : NaN; // თუ `id` არსებობს, გარდაქმნე number-ში
+        const blogId = id ? parseInt(id) : NaN;
         if (isNaN(blogId)) {
           console.error("Invalid blog ID");
           return;
         }
 
-        // Supabase-ში ბლოგის მონაცემების მოძიება ID-ის მიხედვით
         const { data, error } = await supabase
           .from("blogs-list")
           .select("*")
@@ -31,8 +49,8 @@ const Details: React.FC = () => {
 
         if (data) {
           setTimeout(() => {
-            setBlog(data); // 0.5 წამში მონაცემების განახლება
-            setIsLoading(false); // ლოდინის დასრულება
+            setBlog(data);
+            setIsLoading(false);
           }, 500);
         }
       } catch (err) {
@@ -40,16 +58,51 @@ const Details: React.FC = () => {
       }
     };
 
+    const fetchFavoritesData = async () => {
+      if (!userId) return;
+      try {
+        const favorites = await fetchFavorites(userId);
+        setFavoriteBlogs(favorites);
+      } catch (error: unknown) {
+        if (error instanceof Error) {
+          console.error("Error fetching favorites:", error.message);
+        } else {
+          console.error("Unknown error occurred:", error);
+        }
+      }
+    };
+
     if (id) {
       fetchBlogDetails();
+      fetchFavoritesData();
     }
-  }, [id]);
+  }, [id, userId]);
 
-  // Loading Page
+  const handleFavoriteToggle = async (blogId: number) => {
+    if (!userId) {
+      alert("You must be logged in to add items to favorites.");
+      return;
+    }
+
+    try {
+      if (favoriteBlogs.includes(blogId)) {
+        await removeFavorite(userId, blogId);
+        setFavoriteBlogs((prev) => prev.filter((id) => id !== blogId));
+      } else {
+        await addFavorite(userId, blogId);
+        setFavoriteBlogs((prev) => [...prev, blogId]);
+      }
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        console.error("Error handling favorite:", error.message);
+      } else {
+        console.error("Unknown error occurred:", error);
+      }
+    }
+  };
+
   if (isLoading) {
-    return (
-      <Loading/>
-    );
+    return <Loading />;
   }
 
   if (!blog) {
@@ -59,45 +112,67 @@ const Details: React.FC = () => {
       </div>
     );
   }
-
+// sm: "640px", 
+//         small: "340px", 
+//         semismall:"500px",
+//         extramedium:"780px",
+//         medium:"580px",
+//         semimedium:"800px",
+//         large:"900px"
   return (
-    <div
-      className="h-[700px] bg-beige flex items-center justify-center p-8 bg-center bg-fixed bg-repeat"
-      style={{
-        backgroundImage: `url(${detailBackground1})`,
-      }}
-    >
-      <div className="w-[70%] h-[600px] flex border-black border-[1px] border-dashed flex-wrap md:flex-nowrap dark:bg-zinc-800 bg-white shadow-lg rounded-[20px]  overflow-hidden">
-        {/* Left Section: Image */}
-        <div className="w-full md:w-1/2 p-4 flex justify-center items-center">
+    <div className="min-h-screen small:ml-44 semismall:ml-24   w-full flex items-start justify-center p-4 bg-white dark:bg-zinc-900 xl:w-[90%] xl:mr-[500px]  semimedium:w-[100%] semimedium:ml-0 ">
+      <div
+        className="
+    w-full max-w-5xl 
+    flex flex-wrap md:flex-nowrap gap-4
+    border border-black border-dashed 
+    rounded-lg overflow-hidden 
+    shadow-md dark:bg-zinc-800 bg-[#F7F5EB]
+    semimedium:w-[100%]
+    semimedium:mr-[20%px]
+    xl:ml-[8%]
+    
+    p-6
+    "
+      >
+        {/* Image Section */}
+        <div className="w-full md:w-1/2 flex justify-center items-center bg-white dark:bg-zinc-800">
           <img
             src={`https://ezorpkouhvpeqvlzrolq.supabase.co/storage/v1/object/public/blog-images/${blog.image_url}`}
             alt={blog.title}
-            className="object-cover w-[80%]"
+            className="w-full max-w-[90%] h-auto object-cover rounded-[40px]"
           />
         </div>
-        {/* Right Section: Details */}
-        <div className="dark:text-white w-full md:w-1/2 p-6 space-y-6 m-auto">
-          <h1 className="dark:text-white text-3xl font-semibold text-gray-800">
+
+        {/* Content Section */}
+        <div className="w-full md:w-1/2 flex flex-col gap-4 justify-center dark:text-white">
+          <h1 className="text-2xl sm:text-3xl font-semibold text-gray-800 dark:text-white">
             {blog.title}
           </h1>
-          <p className="dark:text-white text-xl font-bold text-gray-700">
-            {blog.price} {blog.currency}
+          <p className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white">
+            Price: {blog.price} {blog.currency}
           </p>
           <div>
-            <label className="block dark:text-white text-gray-600 mb-2 font-extrabold">
+            <label className="block text-lg font-bold text-gray-900 dark:text-white">
               Description:
             </label>
-            <p className="dark:text-white text-gray-600 ">{blog.description}</p>
+            <p className="text-gray-700 dark:text-gray-300">
+              {blog.description}
+            </p>
           </div>
           <div>
-            <label className="block text-gray-600 mb-2 dark:text-white font-extrabold">
+            <label className="block text-lg font-bold text-gray-900 dark:text-white">
               Category:
             </label>
-            <p className="text-gray-600 dark:text-white ">{blog.category}</p>
+            <p className="text-gray-700 dark:text-gray-300">{blog.category}</p>
           </div>
-          <button className="w-full bg-black text-white py-2 rounded dark:text-white dark:bg-green-9 hover:bg-gray-800">
-            Add to Cart
+          <button
+            onClick={() => handleFavoriteToggle(blog.id)}
+            className="w-full bg-black text-white py-2 rounded hover:bg-gray-800 dark:bg-[#C4D7F2] dark:hover:bg-opacity-45"
+          >
+            {favoriteBlogs.includes(blog.id)
+              ? "Remove from Favorites"
+              : "Add to Favorites"}
           </button>
         </div>
       </div>

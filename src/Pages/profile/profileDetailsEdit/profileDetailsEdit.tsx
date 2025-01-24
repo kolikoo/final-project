@@ -118,7 +118,7 @@ small:m-auto
 small:ml-[37%]
 semismall:ml-[34%]
 sm:ml-[44%]
-bg-white  dark:bg-zinc-900 p-30
+bg-white xl:p-11 dark:bg-zinc-900 p-30
       "
     >
       <div className="mt-4 flex justify-center items-center">
@@ -135,12 +135,12 @@ bg-white  dark:bg-zinc-900 p-30
         )}
       </div>
 
-      <div className="ml-2 w-[98%] dark:bg-black dark:text-white">
+      <div className="ml-2 w-[98%] dark:bg-zinc-900 dark:text-white">
         <label>{t("ProfileInformation.avatarSelection")}</label>
         <div>
           <select
             onChange={(e) => handleAvatarChange(e.target.value)}
-            className="bg-white text-black rounded min-w-full p-2 m-1"
+            className="bg-white dark:bg-[#C4D7F2] rounded-[7px] text-black  min-w-full p-2  animate-pulse opacity-50 border-[#450920] dark:border-[#C4D7F2] border-[2px] placeholder:text-[#450920] dark:placeholder:text-[#C4D7F2]"
           >
             <option value="avatar1">avatar1</option>
             <option value="avatar2">avatar2</option>
@@ -159,7 +159,7 @@ bg-white  dark:bg-zinc-900 p-30
         )}
       </div>
 
-      <div className="ml-2 w-[98%] dark:bg-black dark:text-white">
+      <div className="ml-2 w-[98%] dark:bg-zinc-900 dark:text-white">
         <label htmlFor="username">{t("ProfileInformation.username")}</label>
         <Input
           value={profilePayload.username}
@@ -177,14 +177,14 @@ bg-white  dark:bg-zinc-900 p-30
           type="text"
           placeholder={t("username")}
           required
-          className="animate-pulse opacity-50"
+          className="animate-pulse opacity-50 border-[#450920] dark:border-[#C4D7F2] border-[2px] placeholder:text-[#450920] dark:placeholder:text-[#C4D7F2]"
         />
         {formErrors.username && (
           <p className="text-red-500">{formErrors.username}</p>
         )}
       </div>
 
-      <div className="ml-2 w-[98%] dark:bg-black dark:text-white">
+      <div className="ml-2 w-[98%] dark:bg-zinc-900 dark:text-white">
         <label>{t("ProfileInformation.fullName")}</label>
         <Input
           value={profilePayload.full_name_en}
@@ -198,14 +198,14 @@ bg-white  dark:bg-zinc-900 p-30
           type="text"
           placeholder={t("ProfileInformation.fullName")}
           required
-          className="animate-pulse opacity-50"
+          className="animate-pulse opacity-50 border-[#450920] dark:border-[#C4D7F2] border-[2px] placeholder:text-[#450920] dark:placeholder:text-[#C4D7F2]"
         />
         {formErrors.full_name_en && (
           <p className="text-red-500">{formErrors.full_name_en}</p>
         )}
       </div>
 
-      <div className="ml-2 w-[98%] dark:bg-black dark:text-white">
+      <div className="ml-2 w-[98%] dark:bg-zinc-900 dark:text-white">
         <label htmlFor="phone_number">
           {t("ProfileInformation.phoneNumber")}
         </label>
@@ -220,7 +220,7 @@ bg-white  dark:bg-zinc-900 p-30
           name="phone_number"
           type="text"
           placeholder={t("ProfileInformation.phoneNumber")}
-          className="animate-pulse opacity-50"
+          className="animate-pulse opacity-50 border-[#450920] dark:border-[#C4D7F2] border-[2px] placeholder:text-[#450920] dark:placeholder:text-[#C4D7F2]"
         />
         {formErrors.phone_number && (
           <p className="text-red-500">{formErrors.phone_number}</p>
