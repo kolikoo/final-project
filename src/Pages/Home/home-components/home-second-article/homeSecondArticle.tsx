@@ -1,49 +1,64 @@
  import { useNavigate } from "react-router-dom";
-import newClothImage from "../../../../images/new clothes images.png"
-  import usedClothImage from "../../../../images/used clothes image.png";
+import { useTranslation } from "react-i18next";
+
+import background from "@/images/conbg.png"
  
  
  const HomeSecondArticle:React.FC=()=>{
-
+ const {t}=useTranslation()
   const navigate= useNavigate()
   const handleNavigate=(path:string)=>{
    navigate(path)
   }
   return (
-    <section className="dark:bg-zinc-900 bg-[#F7F5EB] pb-20 pt-20">
-      <div className=" flex items-center  rounded-lg gap-40 justify-center w-[80%] m-auto h-[500px] bg-[#F7F5EB]">
-        <div className="dark:bg-[#C3DFE0] bg-[#7E866F] h-[400px] rounded-lg p-3 shadow-lg items-center flex flex-col justify-center transition-transform duration-500 hover:scale-105">
-          <div className="flex space-x-4">
-            <img
-              className="w-30 h-[300px] rounded-lg"
-              src={newClothImage}
-              alt="newClothImage"
-            />
-          </div>
-          <button
-            onClick={() => handleNavigate("NewBlog")}
-            className="mt-6 hover:bg-white hover:text-[#7E866F] text-white font-bold py-2 px-4 w-25 m-auto rounded border-2 "
-          >
-            New
-          </button>
-        </div>
+   <section
+      className="relative flex flex-col md:flex-row justify-center items-center h-screen bg-cover bg-center px-4 md:px-[50px]
+      w-full
+semismall:w-[138%]
+semimedium:w-[100%]
+small:w-[170%]
+z-40
+bg-[#F7F5EB]
+dark:bg-zinc-900
 
-        <div className="bg-[#7E866F] h-[400px] rounded-lg p-3 shadow-lg items-center flex flex-col justify-center transition-transform duration-500 hover:scale-105">
-          <div className="flex space-x-4">
-            <img
-              className="w-30 h-[300px] rounded-lg"
-              src={usedClothImage}
-              alt="usedClothImage"
-            />
-          </div>
-          <button
-            onClick={() => handleNavigate("UsedBlog")}
-            className="mt-6 hover:bg-white hover:text-[#7E866F] text-white font-bold py-2 px-4 w-25 m-auto rounded border-2 "
-          >
-            Used
-          </button>
-        </div>
-      </div>
+"
+      
+    >
+<div
+  style={{
+    position: "relative", 
+    backgroundImage: `url(${background})`,
+    backgroundPosition: "center",
+    backgroundSize: "cover",
+    width: "70%",
+    height: "600px",
+    borderRadius: "20px",
+  }}
+  className="flex items-center justify-center"
+>
+ 
+  <div className="rounded-[20px]"
+    style={{
+      position: "absolute", 
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: "rgba(0, 0, 0, 0.5)", 
+      zIndex: 1, 
+    }}
+  />
+  
+  <button
+    onClick={() => handleNavigate("/Shoes")}
+    className="z-10 px-4 py-2 md:px-6 md:py-3 text-[20px] md:text-[40px] w-[80%] md:w-[35%] h-[60px] md:h-[85px] font-[100] text-[#F7F5EB] border-[2px] border-black bg-zinc-300 bg-opacity-30 hover:bg-white hover:text-black transition-colors rounded-md sm:w-40 semismall:w-40 small:w-40 xl:bg-w-[70px]"
+  >
+    {t("header.shoes")}
+  </button>
+</div>
+
+
+
     </section>
   );
  }

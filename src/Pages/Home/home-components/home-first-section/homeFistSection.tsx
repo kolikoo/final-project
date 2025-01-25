@@ -15,7 +15,7 @@ const HomeFirstSection: React.FC = () => {
       semismall:w-[138%] semimedium:w-[100%] small:w-[170%]"
     >
 
-      <h1 className="absolute top-[7%] left-[23%] text-[140px] dark:text-white dark:opacity-90 font-serif font-bold text-[#450920] leading-none z-1 xl:text-[150px] xl:left-[23%] lg:text-[130px] lg:left-[20%] large:text-[100px] semimedium:text-[100px] semimedium:left-[21%] semimedium:top-[13%] extramedium:left-[28%] small:text-[75px] small:top-10 sm:text-[80px] sm:top-[5%] medium:text-[60px] large:left-[24%] large:top-[12%] lg:top-[19%] xl:top-[12%] semismall:text-[80px]">
+      <h1 className="absolute top-[7%] left-[23%] text-[140px] dark:text-white dark:opacity-90 font-serif font-bold text-[#450920] leading-none z-1 xl:text-[150px] xl:left-[23%] lg:text-[130px] lg:left-[20%] large:text-[100px] semimedium:text-[100px] semimedium:left-[21%] semimedium:top-[13%] extramedium:left-[28%] small:text-[75px] small:top-10 sm:text-[80px] sm:top-[5%] medium:text-[60px] large:left-[24%] large:top-[12%] lg:top-[19%] xl:top-[12%] semismall:text-[80px] ">
         ThriftShop
       </h1>
 

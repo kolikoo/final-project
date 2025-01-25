@@ -127,24 +127,29 @@ const HeaderRight:React.FC = () => {
         <div
           className={`${containerClassNameSecond} small:w-[70%] large:w-[70%] lg:w-[50%]`}
         >
-          <div
-            className="relative"
-            onClick={() => handleNavigate("/CheckoutView")}
-          >
-            <p
-              className="small:text-[1px]"
-              id="cart-icon"
-              onClick={() => handleNavigate("/CheckoutView")}
-            >
-              <AddShoppingCartIcon className="text-[#450920] dark:text-white hover:scale-110 transition-transform duration-300 hover:text-black cursor-pointer" />
-            </p>
+         <div
+  className="relative"
+  onClick={() => handleNavigate("/CheckoutView")}
+>
+  <p
+    className="small:text-[1px]"
+    id="cart-icon"
+    onClick={() => handleNavigate("/CheckoutView")}
+  >
+    <AddShoppingCartIcon
+      className={`text-[#450920] dark:text-white hover:scale-110 transition-transform duration-300 hover:text-black cursor-pointer ${
+        !user && "opacity-50 pointer-events-none"
+      }`}
+    />
+  </p>
 
-            {favoritesCount > 0 && (
-              <div className="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center animate-bounce-limited animate-bounce duration-2000">
-                {favoritesCount}
-              </div>
-            )}
-          </div>
+  {user && favoritesCount > 0 && (
+    <div className="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center animate-bounce-limited animate-bounce duration-2000">
+      {favoritesCount}
+    </div>
+  )}
+</div>
+
 
           <div className="flex items-center justify-center gap-3 ">
             <div

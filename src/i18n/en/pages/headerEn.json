@@ -1,15 +1,18 @@
 {
- 
-   
-     "Add List +":"Add List +",
-     "New":"New",
-     "Used":"Used",
-     "Profile":"Profile",
-     "geo":"Geo",
-     "eng":"Eng",
-     "home":"HOME",
-     "about":"ABOUT",
-     "category":"SHOP",
-     "logout":"LOG OUT"
-     
+  "Add List +": "Add List +",
+  "New": "New",
+  "Used": "Used",
+  "Profile": "Profile",
+  "logout": "Log Out",
+  "geo": "Geo",
+  "eng": "Eng",
+  "home": "HOME",
+  "about": "ABOUT",
+  "category": "SHOP",
+  "shoes": "SHOES",
+  "Stay Up To Date": "Stay Up To Date",
+  "Terms": "Terms",
+  "Privacy": "Privacy",
+  "Cookies": "Cookies",
+  "Contact": "Contact"
 }

@@ -8,9 +8,22 @@ import {
   removeFavorite,
 } from "@/supabase/favorites/favorites";
 
+// Define the types for blog and favorite blog
+interface Blog {
+  id: number;
+  category: string | null;
+  created_at: string;
+  currency: string | null;
+  description: string | null;
+  image_url: string | null;
+  price: string | null;
+  title: string | null;
+  user_id: string | null;
+}
+
 const Details: React.FC = () => {
   const { id } = useParams();
-  const [blog, setBlog] = useState<any>(null);
+  const [blog, setBlog] = useState<Blog | null>(null); // Updated the type for blog
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [userId, setUserId] = useState<string | null>(null);
   const [favoriteBlogs, setFavoriteBlogs] = useState<number[]>([]);
@@ -112,13 +125,7 @@ const Details: React.FC = () => {
       </div>
     );
   }
-// sm: "640px", 
-//         small: "340px", 
-//         semismall:"500px",
-//         extramedium:"780px",
-//         medium:"580px",
-//         semimedium:"800px",
-//         large:"900px"
+
   return (
     <div className="min-h-screen small:ml-44 semismall:ml-24   w-full flex items-start justify-center p-4 bg-white dark:bg-zinc-900 xl:w-[90%] xl:mr-[500px]  semimedium:w-[100%] semimedium:ml-0 ">
       <div
@@ -135,16 +142,16 @@ const Details: React.FC = () => {
     p-6
     "
       >
-        {/* Image Section */}
+       
         <div className="w-full md:w-1/2 flex justify-center items-center bg-white dark:bg-zinc-800">
           <img
             src={`https://ezorpkouhvpeqvlzrolq.supabase.co/storage/v1/object/public/blog-images/${blog.image_url}`}
-            alt={blog.title}
+            alt={blog.title || ""} 
             className="w-full max-w-[90%] h-auto object-cover rounded-[40px]"
           />
         </div>
 
-        {/* Content Section */}
+     
         <div className="w-full md:w-1/2 flex flex-col gap-4 justify-center dark:text-white">
           <h1 className="text-2xl sm:text-3xl font-semibold text-gray-800 dark:text-white">
             {blog.title}

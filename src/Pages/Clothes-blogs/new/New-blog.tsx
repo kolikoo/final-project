@@ -13,12 +13,22 @@ import {
 } from "@/supabase/blogs/newBlogs/newBlogs";
 import { supabase } from "@/supabase";
 
+// Define types for blog and favorite data
+interface Blog {
+  id: number;
+  title: string;
+  description: string;
+  price: number;
+  currency: string;
+  image_url: string;
+}
+
 const NewBlogs: React.FC = () => {
-  const [blogs, setBlogs] = useState<any[]>([]);
-  const [filteredBlogs, setFilteredBlogs] = useState<any[]>([]);
+  const [blogs, setBlogs] = useState<Blog[]>([]);
+  const [filteredBlogs, setFilteredBlogs] = useState<Blog[]>([]);
   const [favoriteBlogs, setFavoriteBlogs] = useState<number[]>([]);
   const [userId, setUserId] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const blogsPerPage = 12;
   const navigate = useNavigate();
@@ -33,7 +43,7 @@ const NewBlogs: React.FC = () => {
 
         const [blogsData, favorites] = await Promise.all([
           fetchBlogs(),
-          fetchedUserId ? fetchFavorites(fetchedUserId) : [],
+          fetchedUserId ? fetchFavorites(fetchedUserId) : Promise.resolve([]),
         ]);
 
         setBlogs(blogsData);
@@ -72,25 +82,13 @@ const NewBlogs: React.FC = () => {
   // Pagination logic
   const currentBlogs = filteredBlogs.slice(
     (currentPage - 1) * blogsPerPage,
-    currentPage * blogsPerPage
+    currentPage * blogsPerPage,
   );
 
   if (isLoading) return <Loading />;
-    // sm: "640px", 
-    //     small: "340px", 
-    //     semismall:"500px",
-    //     extramedium:"780px",
-    //     medium:"580px",
-    //     semimedium:"800px",
-    //     large:"900px"
-    
 
   return (
-    <div
-      className="w-full   bg-white px-10 dark:bg-zinc-900
-    
-    "
-    >
+    <div className="w-full bg-white px-10 dark:bg-zinc-900">
       <FilterSection allBlogs={blogs} onFilterChange={setFilteredBlogs} />
       <BlogHomeSection>
         <MainBlogCards>
@@ -98,7 +96,7 @@ const NewBlogs: React.FC = () => {
             <div
               key={blog.id}
               onClick={() => navigate(`/Details/${blog.id}`)}
-              className="bg-white  dark:bg-zinc-800 p-4 shadow-lg rounded-lg cursor-pointer hover:scale-110 duration-300"
+              className="bg-white dark:bg-zinc-800 p-4 shadow-lg rounded-lg cursor-pointer hover:scale-110 duration-300"
             >
               <div className="relative">
                 <img
@@ -145,7 +143,10 @@ const NewBlogs: React.FC = () => {
         <button
           onClick={() =>
             setCurrentPage((prev) =>
-              Math.min(prev + 1, Math.ceil(filteredBlogs.length / blogsPerPage))
+              Math.min(
+                prev + 1,
+                Math.ceil(filteredBlogs.length / blogsPerPage),
+              ),
             )
           }
           disabled={

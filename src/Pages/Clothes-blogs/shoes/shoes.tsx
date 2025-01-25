@@ -10,10 +10,10 @@ import {
   fetchFavorites,
   addFavorite,
   removeFavorite,
-} from "@/supabase/blogs/usedBlogs/usedBlogs";
+} from "@/supabase/blogs/shoes/shoes";
 import { supabase } from "@/supabase";
 
-const UsedBlog: React.FC = () => {
+const Shoes: React.FC = () => {
   const [blogs, setBlogs] = useState<any[]>([]);
   const [filteredBlogs, setFilteredBlogs] = useState<any[]>([]);
   const [favoriteBlogs, setFavoriteBlogs] = useState<number[]>([]);
@@ -76,7 +76,7 @@ const UsedBlog: React.FC = () => {
     const filterUsedBlogs = () => {
       const filtered = blogs.filter(
         (blog) =>
-          blog.category === "used" &&
+          blog.category === "shoes" &&
           blog.title.toLowerCase().includes(searchQuery.toLowerCase())
       );
       setFilteredBlogs(filtered);
@@ -188,4 +188,4 @@ const UsedBlog: React.FC = () => {
   );
 };
 
-export default UsedBlog;
+export default Shoes;

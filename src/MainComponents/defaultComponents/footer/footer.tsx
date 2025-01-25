@@ -1,13 +1,21 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 
 const Footer: React.FC = () => {
+  const { t } = useTranslation();
+  const navigate = useNavigate();
+
+  const handleNavigate = (path: string) => {
+    navigate(path);
+  };
+
   return (
     <footer
       className="bg-[#F7F5EB] text-black dark:bg-zinc-900 dark:text-[#f8f4e3] w-full
-     
-semismall:w-[138%]
-semimedium:w-[100%]
-small:w-[170%]"
+      semismall:w-[138%]
+      semimedium:w-[100%]
+      small:w-[170%]"
     >
       <div className="container mx-auto py-8">
         <div className="flex flex-col md:flex-row justify-between items-center">
@@ -33,57 +41,34 @@ small:w-[170%]"
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
             <div>
-              <h3 className="text-lg font-semibold mb-2">Shop</h3>
+              <h3 className="text-lg font-semibold mb-2">{t("header.category")}</h3>
               <ul>
                 <li>
-                  <a href="#" className="hover:text-gray-200">
-                    Products
-                  </a>
+                  <p onClick={() => handleNavigate("/NewBlog")}>{t("header.New")}</p>
+                </li>
+                <li>
+                  <p onClick={() => handleNavigate("/UsedBlog")}>{t("header.Used")}</p>
+                </li>
+                <li>
+                  <p onClick={() => handleNavigate("/Shoes")}>{t("header.shoes")}</p>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold mb-2">{t("header.about")}</h3>
+              <ul>
+                <li>
+                  <a href="#homeBlogAboutArticle">{t("header.about")}</a>
                 </li>
                 <li>
                   <a href="#" className="hover:text-gray-200">
-                    Overview
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-gray-200">
-                    Pricing
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-gray-200">
-                    Releases
+                    {t("header.Contact")}
                   </a>
                 </li>
               </ul>
             </div>
             <div>
-              <h3 className="text-lg font-semibold mb-2">Company</h3>
-              <ul>
-                <li>
-                  <a href="#" className="hover:text-gray-200">
-                    About Us
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-gray-200">
-                    Contact
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-gray-200">
-                    News
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-gray-200">
-                    Support
-                  </a>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="text-lg font-semibold mb-2">Stay Up To Date</h3>
+              <h3 className="text-lg font-semibold mb-2">{t("header.Stay Up To Date")}</h3>
               {/* Optionally, add a subscription form or other content */}
             </div>
           </div>
@@ -93,17 +78,17 @@ small:w-[170%]"
           <ul className="flex justify-center space-x-4 mt-2">
             <li>
               <a href="#" className="hover:text-gray-200">
-                Terms
+                {t("header.Terms")}
               </a>
             </li>
             <li>
               <a href="#" className="hover:text-gray-200">
-                Privacy
+                {t("header.Privacy")}
               </a>
             </li>
             <li>
               <a href="#" className="hover:text-gray-200">
-                Cookies
+                {t("header.Cookies")}
               </a>
             </li>
           </ul>

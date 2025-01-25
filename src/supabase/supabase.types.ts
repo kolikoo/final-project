@@ -60,6 +60,7 @@ export type Database = {
           image_url: string | null
           price: string | null
           title: string | null
+          type: string | null
           user_id: string | null
         }
         Insert: {
@@ -71,6 +72,7 @@ export type Database = {
           image_url?: string | null
           price?: string | null
           title?: string | null
+          type?: string | null
           user_id?: string | null
         }
         Update: {
@@ -82,6 +84,7 @@ export type Database = {
           image_url?: string | null
           price?: string | null
           title?: string | null
+          type?: string | null
           user_id?: string | null
         }
         Relationships: [

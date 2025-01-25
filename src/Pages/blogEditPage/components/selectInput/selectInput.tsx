@@ -1,12 +1,12 @@
-// src/Components/SelectInput.tsx
 import React from "react";
+import { FieldValues, UseFormRegister, FieldError } from "react-hook-form";
 
 interface SelectInputProps {
   label: string;
   options: { value: string; label: string }[];
-  register: any;
+  register: UseFormRegister<FieldValues>;
   name: string;
-  errors: any;
+  errors: { [key: string]: FieldError | undefined };
 }
 
 const SelectInput: React.FC<SelectInputProps> = ({

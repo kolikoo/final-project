@@ -1,15 +1,25 @@
-import React, { useState, useEffect,} from "react";
+import React, { useState, useEffect } from "react";
 import { supabase } from "@/supabase";
 import { useTranslation } from "react-i18next";
 
+interface Blog {
+  title: string;
+  price: number;
+  currency: string;
+  image_url: string;
+}
+
+interface FavoriteItem {
+  blog_id: string;
+  quantity: number;
+  "blogs-list": Blog;
+}
 
 const CheckoutView: React.FC = () => {
-
-    const { t } = useTranslation();
-  const [favorites, setFavorites] = useState<any[]>([]);
+  const { t } = useTranslation();
+  const [favorites, setFavorites] = useState<FavoriteItem[]>([]);
   const [userId, setUserId] = useState<string | null>(null);
-  const exchangeRate = 2.84; 
-
+  const exchangeRate = 2.84;
 
   useEffect(() => {
     const getUser = async () => {
@@ -42,40 +52,37 @@ const CheckoutView: React.FC = () => {
           return;
         }
 
-        setFavorites(data);
+        setFavorites(data as unknown as FavoriteItem[]);
       };
 
       fetchFavorites();
     }
   }, [userId]);
 
-
+  // Handle quantity change for a favorite item
   const handleQuantityChange = (id: string, delta: number) => {
     setFavorites((prev) =>
       prev.map((item) =>
         item.blog_id === id
           ? { ...item, quantity: Math.max(1, (item.quantity || 1) + delta) }
-          : item
-      )
+          : item,
+      ),
     );
   };
 
+  // Calculate subtotal and total
   const subtotal = favorites.reduce(
     (sum, item) => sum + (item["blogs-list"].price || 0) * (item.quantity || 1),
-    0
+    0,
   );
-
 
   const subtotalInUSD = subtotal / exchangeRate;
 
-
-  const shipping = 20; 
+  const shipping = 20;
   const shippingInUSD = shipping / exchangeRate;
-
 
   const subtotalInGEL = subtotal.toFixed(2);
   const shippingInGEL = shipping.toFixed(2);
-
 
   const finalTotalInUSD = (subtotalInUSD + shippingInUSD).toFixed(2);
 
@@ -104,24 +111,21 @@ const CheckoutView: React.FC = () => {
                   <h3 className="font-medium text-[23px]">
                     {item["blogs-list"].title}
                   </h3>
-                  <p
-                    className="text-gray-600 text-[16px]
-                  dark:text-white"
-                  >
+                  <p className="text-gray-600 text-[16px] dark:text-white">
                     {item["blogs-list"].price} {item["blogs-list"].currency}
                   </p>
                 </div>
                 <div className="w-[20%] flex items-center">
                   <button
                     onClick={() => handleQuantityChange(item.blog_id, -1)}
-                    className="px-3 py-2 bg-black  dark:bg-white hover:bg-gray-300"
+                    className="px-3 py-2 bg-black dark:bg-white hover:bg-gray-300"
                   >
                     <p className="dark:text-black text-white">-</p>
                   </button>
                   <span className="px-3">{item.quantity || 1}</span>
                   <button
                     onClick={() => handleQuantityChange(item.blog_id, 1)}
-                    className="px-3 py-2 bg-black  dark:bg-white hover:bg-gray-300"
+                    className="px-3 py-2 bg-black dark:bg-white hover:bg-gray-300"
                   >
                     <p className="text-white dark:text-black">+</p>
                   </button>

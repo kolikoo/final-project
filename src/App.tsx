@@ -28,6 +28,8 @@ import CheckoutView from "./Pages/checkout/checkoutView/checkoutView";
 import BlogEditPage from "./Pages/blogEditPage/blogEditPage";
 import Header from "./MainComponents/defaultComponents/header/header";
 import HomeLoadingPage from "./MainComponents/defaultComponents/homeLoadingPage/homeLoadingPage";
+import Shoes from "./Pages/Clothes-blogs/shoes/shoes";
+import RegisterConfirmationPage from "./Pages/Registration/confirmation/registerConfirmationPage";
 
 function App() {
   const [, setUser] = useAtom(userAtom);
@@ -93,11 +95,31 @@ function App() {
             </AuthGuard>
           }
         />
+
+        <Route
+          path="/Login/registration/confirmation"
+          element={
+            <LoginAuthGuard>
+              < RegisterConfirmationPage/>
+            </LoginAuthGuard>
+          }
+        />
+
+       
         <Route
           path="/Details/:id"
           element={
             <Suspense fallback={<Loading />}>
               <Details />
+            </Suspense>
+          }
+        />
+
+         <Route
+          path="/Shoes"
+          element={
+            <Suspense fallback={<Loading />}>
+              <Shoes/>
             </Suspense>
           }
         />

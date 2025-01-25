@@ -7,6 +7,8 @@
     "email":" Email",
     "password":"Password",
      "emailHolder":"text Email",
-    "passwordHolder":"text Password"
-
+    "passwordHolder":"text Password",
+    "tryagain":"Try Again",
+    "confirmed":"Confirmed",
+    "firstly":"Firstly, Please Confirm Your Registration In Your Email"
 }

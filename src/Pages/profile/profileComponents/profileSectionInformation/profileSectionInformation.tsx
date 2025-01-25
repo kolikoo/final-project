@@ -5,10 +5,17 @@ import { getProfileInfo } from "@/supabase/profile";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
+interface Profile {
+  username: string;
+  full_name_en: string;
+  phone_number: string;
+  avatar_url?: string; 
+}
+
 const ProfileSectionInformation: React.FC = () => {
   const { t } = useTranslation();
   const user = useAtomValue(userAtom);
-  const [profile, setProfile] = useState<any>(null);
+const [profile, setProfile] = useState<Profile | null>(null); 
   const navigate = useNavigate();
 
   useEffect(() => {

@@ -10,8 +10,9 @@ const blogSchema = z.object({
   title: z.string().min(1, "Title is required"),
   description: z.string().min(1, "Description is required"),
   price: z.string().regex(/^\d+(\.\d{1,2})?$/, "Invalid price"),
-  category: z.enum(["used", "new"]),
+  category: z.enum(["used", "new", "shoes"]), 
 });
+
 
 type BlogFormValues = z.infer<typeof blogSchema>;
 
@@ -36,25 +37,31 @@ const BlogEditPage: React.FC = () => {
       return;
     }
 
-    const fetchBlog = async () => {
-      setLoading(true);
-      try {
-        const data = await fetchBlogData(blogId); // გამოიყენეთ fetchBlogData
-        reset({
-          title: data.title || "",
-          description: data.description || "",
-          price: data.price || "",
-          category:
-            data.category === "used" || data.category === "new"
-              ? data.category
-              : "new",
-        });
-      } catch (error) {
-        console.error("Error fetching blog:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
+   const fetchBlog = async () => {
+  setLoading(true);
+  try {
+    const data = await fetchBlogData(blogId);
+    if (!data) {
+      console.error("Blog data is null or undefined");
+      return;
+    }
+
+    reset({
+      title: data.title || "",
+      description: data.description || "",
+      price: data.price || "",
+      category:
+        data.category === "used" || data.category === "new" ||data.category==="shoes"
+          ? data.category
+          : "new",
+    });
+  } catch (error) {
+    console.error("Error fetching blog:", error);
+  } finally {
+    setLoading(false);
+  }
+};
+
 
     fetchBlog();
   }, [id, reset]);
@@ -69,7 +76,7 @@ const BlogEditPage: React.FC = () => {
     const payload = {
       ...formData,
       category:
-        formData.category === "used" || formData.category === "new"
+        formData.category === "used" || formData.category === "new"||formData.category==="shoes"
           ? formData.category
           : "new",
     };
@@ -145,6 +152,7 @@ dark:bg-zinc-900"
             >
               <option value="new">New</option>
               <option value="used">Used</option>
+              <option value="shoes">Shoes</option>
             </select>
             {errors.category && (
               <p className="text-red-500">{errors.category.message}</p>

@@ -2,10 +2,27 @@ import React, { useEffect, useState } from "react";
 import ReactSlider from "react-slider";
 import SearchIcon from "@mui/icons-material/Search";
 
-const FilterSection: React.FC<{
-  onFilterChange: (filteredBlogs: any[]) => void;
-  allBlogs: any[];
-}> = ({ onFilterChange, allBlogs }) => {
+// types/Blog.ts
+export interface Blog {
+  id: number;
+  title: string;
+  description: string;
+  currency: string;
+  image_url: string;
+  price: number;
+}
+
+
+interface FilterSectionProps {
+  allBlogs: Blog[];
+  onFilterChange: (filteredBlogs: Blog[]) => void;
+}
+
+
+const FilterSection: React.FC<FilterSectionProps> = ({
+  onFilterChange,
+  allBlogs,
+}) => {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 5000]);
   const [sortOrder, setSortOrder] = useState<string>("default");
@@ -13,11 +30,10 @@ const FilterSection: React.FC<{
   useEffect(() => {
     const filteredBlogs = allBlogs
       .filter((blog) =>
-        blog.title.toLowerCase().includes(searchQuery.toLowerCase())
+        blog.title.toLowerCase().includes(searchQuery.toLowerCase()),
       )
-
       .filter(
-        (blog) => blog.price >= priceRange[0] && blog.price <= priceRange[1]
+        (blog) => blog.price >= priceRange[0] && blog.price <= priceRange[1],
       )
       .sort((a, b) => {
         if (sortOrder === "ascending") return a.price - b.price;
@@ -28,24 +44,15 @@ const FilterSection: React.FC<{
     onFilterChange(filteredBlogs);
   }, [searchQuery, priceRange, sortOrder, allBlogs, onFilterChange]);
 
-  // sm: "640px",
-  //     small: "340px",
-  //     semismall:"500px",
-  //     extramedium:"780px",
-  //     medium:"580px",
-  //     semimedium:"800px",
-  //     large:"900px"
-
   return (
     <div
-      className="filter-container flex  gap-5 py-6 w-[60%]  justify-start
+      className="filter-container flex gap-5 py-6 w-[60%] justify-start
     small:w-[160%]
     semismall:w-[130%]
     medium:w-[110%]
     sm:w-[100%]
     semimedium:w-[75%]
-    xl:w-[60%]
-    "
+    xl:w-[60%]"
     >
       {/* Search */}
       <div className="search-container flex gap-5 py-6 w-[40%]">
@@ -117,7 +124,6 @@ const FilterSection: React.FC<{
       </div>
 
       {/* Sort Order */}
-
       <div className="flex flex-col justify-center textce mb-7">
         <label htmlFor="sortPrice"> Sort By Price</label>
         <select

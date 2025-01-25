@@ -1,12 +1,12 @@
-// src/Components/TextAreaInput.tsx
 import React from "react";
+import { FieldValues, UseFormRegister, FieldError } from "react-hook-form";
 
 interface TextAreaInputProps {
   label: string;
   placeholder: string;
-  register: any;
+  register: UseFormRegister<FieldValues>;
   name: string;
-  errors: any;
+  errors: { [key: string]: FieldError | undefined };
 }
 
 const TextAreaInput: React.FC<TextAreaInputProps> = ({
