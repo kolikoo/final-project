@@ -1,19 +1,17 @@
-import React, { useState } from "react";
+import React from "react";
 import { useTranslation } from "react-i18next";
 
-const Category = () => {
+interface CategoryProps {
+  value: string;
+  onChange: (value: string) => void;
+}
+
+const Category: React.FC<CategoryProps> = ({ value, onChange }) => {
   const { t } = useTranslation();
-  const [formData, setFormData] = useState({
-    title: "",
-    description: "",
-    price: "",
-    currency: "GEL",
-    category: "new",
-  });
 
   const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    const { value } = e.target;
+    onChange(value); 
   };
 
   return (
@@ -24,7 +22,7 @@ const Category = () => {
       <select
         id="category"
         name="category"
-        value={formData.category}
+        value={value}
         onChange={handleSelectChange}
         required
         className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 border-[#450920] dark:border-slate-400 focus:dark:bg-slate-800 dark:bg-zinc-900 placeholder:text-zinc-500"

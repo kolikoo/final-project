@@ -12,7 +12,7 @@ const AddClothingForm: React.FC = () => {
     description: "",
     price: "",
     currency: "GEL",
-    category: "new",
+    category: "new", 
   });
 
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -24,9 +24,8 @@ const AddClothingForm: React.FC = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+  const handleCategoryChange = (value: string) => {
+    setFormData({ ...formData, category: value });
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -36,7 +35,7 @@ const AddClothingForm: React.FC = () => {
   };
 
   const handleFileRemove = () => {
-    setSelectedFile(null); // Clear the selected file
+    setSelectedFile(null); 
   };
 
   const uploadImage = async (file: File) => {
@@ -77,7 +76,7 @@ const AddClothingForm: React.FC = () => {
             description: formData.description,
             price: formData.price,
             currency: formData.currency,
-            category: formData.category,
+            category: formData.category, 
             image_url: selectedFile ? await uploadImage(selectedFile) : null,
             user_id: user.id,
           },
@@ -89,6 +88,7 @@ const AddClothingForm: React.FC = () => {
 
       console.log("Successfully created blog post:", data);
 
+      // Reset form
       setFormData({
         title: "",
         description: "",
@@ -148,7 +148,9 @@ const AddClothingForm: React.FC = () => {
             id="currency"
             name="currency"
             value={formData.currency}
-            onChange={handleSelectChange}
+            onChange={(e) =>
+              setFormData({ ...formData, currency: e.target.value })
+            }
             className="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 border-[#450920] dark:border-slate-400 focus:dark:bg-slate-800 dark:bg-zinc-900 placeholder:text-zinc-500"
           >
             <option value="GEL">
@@ -161,13 +163,19 @@ const AddClothingForm: React.FC = () => {
         </div>
       </div>
 
-      <Category />
+
+      <Category
+        value={formData.category}
+        onChange={handleCategoryChange} 
+      />
+
 
       <FileUpload
         selectedFile={selectedFile}
         onFileChange={handleFileChange}
         onFileRemove={handleFileRemove}
       />
+
 
       <button
         type="submit"
