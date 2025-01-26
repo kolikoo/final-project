@@ -83,7 +83,7 @@ const FilterSection: React.FC<FilterSectionProps> = ({
                 priceRange[1],
               ])
             }
-            className="w-17 p-1 border-[2px] rounded-2xl text-center dark:text-black border-[#450920] dark:border-black font-semibold dark:bg-[#C4D7F2]"
+            className="w-18 p-1 border-[2px] rounded-2xl text-center dark:text-black border-[#450920] dark:border-black font-semibold dark:bg-[#C4D7F2]"
           />
           <span>-</span>
           <input
@@ -97,7 +97,7 @@ const FilterSection: React.FC<FilterSectionProps> = ({
                 Math.min(5000, Number(e.target.value)),
               ])
             }
-            className="w-17 p-1 border-[2px] rounded-2xl text-center dark:text-black border-[#450920] dark:border-black font-semibold dark:bg-[#C4D7F2]"
+            className="w-18  p-1 border-[2px] rounded-2xl text-center dark:text-black border-[#450920] dark:border-black font-semibold dark:bg-[#C4D7F2]"
           />
         </div>
         <ReactSlider

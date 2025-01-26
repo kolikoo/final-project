@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { supabase } from "@/supabase";
 import Loading from "@/MainComponents/defaultComponents/loadingPage/loading";
 import {
@@ -23,7 +23,7 @@ interface Blog {
 
 const Details: React.FC = () => {
   const { id } = useParams();
-  const [blog, setBlog] = useState<Blog | null>(null); // Updated the type for blog
+  const [blog, setBlog] = useState<Blog | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [userId, setUserId] = useState<string | null>(null);
   const [favoriteBlogs, setFavoriteBlogs] = useState<number[]>([]);
@@ -40,6 +40,12 @@ const Details: React.FC = () => {
 
     fetchUserId();
   }, []);
+
+  const navigate = useNavigate()
+
+  const handleNavigate = (path:string)=>{
+    navigate(path)
+  }
 
   useEffect(() => {
     const fetchBlogDetails = async () => {
@@ -181,6 +187,14 @@ const Details: React.FC = () => {
               ? "Remove from Favorites"
               : "Add to Favorites"}
           </button>
+         {favoriteBlogs.includes(blog.id) && (
+  <button
+    onClick={() => handleNavigate("/CheckoutView")}
+    className="w-full bg-black text-white py-2 rounded hover:bg-gray-800 dark:bg-[#C4D7F2] dark:hover:bg-opacity-45"
+  >
+    Buy
+  </button>
+)}
         </div>
       </div>
     </div>

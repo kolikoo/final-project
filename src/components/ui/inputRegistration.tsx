@@ -9,7 +9,6 @@ import { useNavigate } from "react-router-dom";
 
 import { z } from "zod"; 
 
-
 const registerSchema = z.object({
   email: z.string().email("Invalid email address").min(1, "Email is required"),
   password: z
@@ -24,7 +23,9 @@ const RegisterForm: React.FC = () => {
     email: "",
     password: "",
   });
-
+  
+  // State to store error messages
+  const [errors, setErrors] = useState<{ email?: string, password?: string }>({});
   
   const navigate = useNavigate();
 
@@ -39,13 +40,23 @@ const RegisterForm: React.FC = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
- 
+    // Perform validation using zod schema
     const result = registerSchema.safeParse(registerPayload);
+
     if (result.success) {
+      setErrors({});
       handleRegister(registerPayload);
     } else {
-     
-      console.log(result.error.errors); 
+      const newErrors: { email?: string, password?: string } = {};
+      result.error.errors.forEach((error) => {
+        if (error.path[0] === 'email') {
+          newErrors.email = error.message;
+        }
+        if (error.path[0] === 'password') {
+          newErrors.password = error.message;
+        }
+      });
+      setErrors(newErrors);
     }
   };
 
@@ -70,6 +81,8 @@ const RegisterForm: React.FC = () => {
           required
           className="border-[#450920] dark:border-slate-400 focus:outline-none focus:ring-2 focus:dark:bg-slate-800 dark:bg-zinc-900 placeholder:text-zinc-500 "
         />
+        {/* Display email error if any */}
+        {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
       </div>
 
       <div className="dark:text-[#C4D7F2]">
@@ -88,10 +101,11 @@ const RegisterForm: React.FC = () => {
           placeholder={t("SignIn-Page.passwordHolder")}
           required
         />
+        {/* Display password error if any */}
+        {errors.password && <p className="text-red-500 text-sm">{errors.password}</p>}
       </div>
 
       <Button
-        onClick={handleSubmit}
         className="w-[100%] bg-[#450920] text-white font-bold py-2 px-4 rounded border-[#450920] dark:border-slate-400 focus:dark:bg-slate-400 focus:opacity-30 hover:bg-opacity-10 focus:text-black dark:bg-[#C4D7F2] placeholder:text-zinc-500 transition-colors "
         type="submit"
       >

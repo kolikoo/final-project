@@ -105,7 +105,7 @@ const ProfileSectionBlogs: React.FC = () => {
               <div className="flex space-x-4 mt-4">
                 <button
                   onClick={(event) => handleEdit(blog.id, event)}
-                  className="bg-blue-500 text-white py-2 px-4 rounded"
+                  className="bg-yellow-700 text-white py-2 px-4 rounded"
                 >
                   {t("ProfileInformation.editProfile")}
                 </button>

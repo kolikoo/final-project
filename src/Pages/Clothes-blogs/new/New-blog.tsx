@@ -13,7 +13,6 @@ import {
 } from "@/supabase/blogs/newBlogs/newBlogs";
 import { supabase } from "@/supabase";
 
-// Define types for blog and favorite data
 interface Blog {
   id: number;
   title: string;
@@ -96,7 +95,7 @@ const NewBlogs: React.FC = () => {
             <div
               key={blog.id}
               onClick={() => navigate(`/Details/${blog.id}`)}
-              className="bg-white dark:bg-zinc-800 p-4 shadow-lg rounded-lg cursor-pointer hover:scale-110 duration-300"
+              className="bg-[#F7F5EB] dark:bg-zinc-800 p-4 shadow-lg rounded-lg cursor-pointer hover:scale-110 duration-300"
             >
               <div className="relative">
                 <img
