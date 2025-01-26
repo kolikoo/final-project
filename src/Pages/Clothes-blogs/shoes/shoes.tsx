@@ -26,7 +26,6 @@ export interface Blog {
   user_id: string | null;
 }
 
-
 const Shoes: React.FC = () => {
   const [blogs, setBlogs] = useState<Blog[]>([]);
   const [filteredBlogs, setFilteredBlogs] = useState<Blog[]>([]);
@@ -66,29 +65,28 @@ const Shoes: React.FC = () => {
   }, [userId]);
 
   useEffect(() => {
-   const fetchBlogsData = async () => {
-     try {
-       const blogs = await fetchBlogs();
-       const validatedBlogs = blogs.map((blog) => ({
-         ...blog,
-         title: blog.title ?? "",
-         description: blog.description ?? "",
-         category: blog.category ?? "",
-         price:
-           typeof blog.price === "string"
-             ? parseFloat(blog.price)
-             : (blog.price ?? null), 
-         currency: blog.currency ?? "USD",
-         image_url: blog.image_url ?? "",
-       }));
-       setBlogs(validatedBlogs);
-     } catch (error: unknown) {
-       console.error("Error fetching blogs:", error);
-     } finally {
-       setIsLoading(false);
-     }
-   };
-
+    const fetchBlogsData = async () => {
+      try {
+        const blogs = await fetchBlogs();
+        const validatedBlogs = blogs.map((blog) => ({
+          ...blog,
+          title: blog.title ?? "",
+          description: blog.description ?? "",
+          category: blog.category ?? "",
+          price:
+            typeof blog.price === "string"
+              ? parseFloat(blog.price)
+              : (blog.price ?? null),
+          currency: blog.currency ?? "USD",
+          image_url: blog.image_url ?? "",
+        }));
+        setBlogs(validatedBlogs);
+      } catch (error: unknown) {
+        console.error("Error fetching blogs:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
 
     fetchBlogsData();
   }, []);
@@ -157,7 +155,7 @@ const Shoes: React.FC = () => {
             >
               <div className="relative">
                 <img
-                  src={`https://ezorpkouhvpeqvlzrolq.supabase.co/storage/v1/object/public/blog-images/${blog.image_url }`}
+                  src={`https://ezorpkouhvpeqvlzrolq.supabase.co/storage/v1/object/public/blog-images/${blog.image_url}`}
                   alt={blog.title as string}
                   className="w-full h-64 object-cover rounded-md"
                 />

@@ -1,6 +1,5 @@
 import { supabase } from "@/supabase";
-
-// Fetch all blogs with category "new"
+//eslint-disable-next-line
 export const fetchBlogs = async (): Promise<any[]> => {
   try {
     const { data, error } = await supabase
@@ -35,7 +34,6 @@ export const fetchFavorites = async (userId: string): Promise<number[]> => {
       throw new Error("Failed to fetch favorite blogs.");
     }
 
-    // Ensure no null values and map to a number array
     return (
       data
         ?.map((fav) => fav.blog_id)
@@ -49,7 +47,6 @@ export const fetchFavorites = async (userId: string): Promise<number[]> => {
   }
 };
 
-// Add a blog to user's favorites
 export const addFavorite = async (
   userId: string,
   blogId: number,
@@ -71,7 +68,6 @@ export const addFavorite = async (
   }
 };
 
-// Remove a blog from user's favorites
 export const removeFavorite = async (
   userId: string,
   blogId: number,

@@ -13,13 +13,17 @@ import {
 } from "@/supabase/blogs/newBlogs/newBlogs";
 import { supabase } from "@/supabase";
 
-interface Blog {
-  id: number;
+export interface Blog {
   title: string;
   description: string;
-  price: number;
+  category: string | null;
+  price: number | null;
   currency: string;
   image_url: string;
+  created_at: string;
+  id: number;
+  type: string | null;
+  user_id: string | null;
 }
 
 const NewBlogs: React.FC = () => {

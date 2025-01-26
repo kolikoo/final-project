@@ -14,7 +14,9 @@ import {
 import { supabase } from "@/supabase";
 
 const UsedBlog: React.FC = () => {
+  //eslint-disable-next-line
   const [blogs, setBlogs] = useState<any[]>([]);
+  //eslint-disable-next-line
   const [filteredBlogs, setFilteredBlogs] = useState<any[]>([]);
   const [favoriteBlogs, setFavoriteBlogs] = useState<number[]>([]);
   const [userId, setUserId] = useState<string | null>(null);

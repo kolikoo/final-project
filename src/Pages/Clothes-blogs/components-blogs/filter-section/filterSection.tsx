@@ -16,7 +16,6 @@ export interface Blog {
   user_id: string | null;
 }
 
-
 interface FilterSectionProps {
   allBlogs: Blog[];
   onFilterChange: (filteredBlogs: Blog[]) => void;
@@ -52,8 +51,7 @@ const FilterSection: React.FC<FilterSectionProps> = ({
   }, [searchQuery, priceRange, sortOrder, allBlogs, onFilterChange]);
 
   return (
-   
- <div
+    <div
       className="filter-container flex gap-5 py-6 w-[60%] justify-start
     small:w-[160%]
     semismall:w-[130%]
@@ -146,10 +144,7 @@ const FilterSection: React.FC<FilterSectionProps> = ({
         </select>
       </div>
     </div>
-
   );
 };
 
 export default FilterSection;
-
-

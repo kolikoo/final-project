@@ -21,7 +21,7 @@ export const fillProfileInfo = async (
     throw new Error(error.message);
   }
 };
-
+//eslint-disable-next-line
 export const getProfileInfo = async (id: string): Promise<any> => {
   const { data, error } = await supabase
     .from("profiles")
