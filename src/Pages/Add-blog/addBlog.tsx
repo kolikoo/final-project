@@ -1,11 +1,9 @@
-
 import React, { useState } from "react";
 import { supabase } from "@/supabase";
 import { useTranslation } from "react-i18next";
 import TextInput from "./components/textInput/textInput";
 import FileUpload from "./components/fileUpload/fileUpload";
 import Category from "./components/category/category";
-
 
 const AddClothingForm: React.FC = () => {
   const { t } = useTranslation();
@@ -20,7 +18,7 @@ const AddClothingForm: React.FC = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
   const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -111,7 +109,6 @@ const AddClothingForm: React.FC = () => {
     >
       <h2 className="text-xl font-bold mb-4">{t("addBlog.form.heading")}</h2>
 
-
       <TextInput
         id="title"
         name="title"
@@ -120,7 +117,6 @@ const AddClothingForm: React.FC = () => {
         placeholder={t("addBlog.form.title")}
         label={t("addBlog.form.title")}
       />
-
 
       <TextInput
         id="description"
@@ -165,10 +161,8 @@ const AddClothingForm: React.FC = () => {
         </div>
       </div>
 
+      <Category />
 
-<Category/>
-
-     
       <FileUpload
         selectedFile={selectedFile}
         onFileChange={handleFileChange}

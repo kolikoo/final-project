@@ -1,10 +1,5 @@
-const AboutPage:React.FC=()=>{
- return(
+const AboutPage: React.FC = () => {
+  return <p>about page</p>;
+};
 
-<p>about page</p>
-
- )
-}
-
-
-export default AboutPage
+export default AboutPage;

@@ -1,18 +1,16 @@
 import { supabase } from "..";
 
-
-
 type FillProfileInfoPayload = {
   username: string;
   full_name_ka: string;
   full_name_en: string;
   avatar_url: string;
-  phone_number?:string;
+  phone_number?: string;
   id: string;
 };
 
 export const fillProfileInfo = async (
-  payload: FillProfileInfoPayload
+  payload: FillProfileInfoPayload,
 ): Promise<void> => {
   const { error } = await supabase
     .from("profiles")
@@ -36,6 +34,3 @@ export const getProfileInfo = async (id: string): Promise<any> => {
 
   return data;
 };
-
-
-

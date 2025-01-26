@@ -1,10 +1,6 @@
 import { Suspense, useEffect } from "react";
 import "./App.css";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import LogInView from "./Pages/Log-In/Log-in-view/LogInView";
 import Registration from "./Pages/Registration/registrationView";
@@ -96,16 +92,15 @@ function App() {
           }
         />
 
-        <Route
+             <Route
           path="/Login/registration/confirmation"
           element={
             <LoginAuthGuard>
-              < RegisterConfirmationPage/>
+              <RegisterConfirmationPage />
             </LoginAuthGuard>
           }
         />
 
-       
         <Route
           path="/Details/:id"
           element={
@@ -115,11 +110,11 @@ function App() {
           }
         />
 
-         <Route
+        <Route
           path="/Shoes"
           element={
             <Suspense fallback={<Loading />}>
-              <Shoes/>
+              <Shoes />
             </Suspense>
           }
         />

@@ -1,4 +1,4 @@
-import  { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { supabase } from "@/supabase";
 import { useTranslation } from "react-i18next";
 
@@ -15,9 +15,8 @@ interface FavoriteItem {
   "blogs-list": Blog;
 }
 
-const CheckoutContent=()=>{
-
- const { t } = useTranslation();
+const CheckoutContent = () => {
+  const { t } = useTranslation();
   const [favorites, setFavorites] = useState<FavoriteItem[]>([]);
   const [userId, setUserId] = useState<string | null>(null);
   const exchangeRate = 2.84;
@@ -38,7 +37,6 @@ const CheckoutContent=()=>{
 
     getUser();
   }, []);
-
 
   useEffect(() => {
     if (userId) {
@@ -86,8 +84,8 @@ const CheckoutContent=()=>{
   const shippingInGEL = shipping.toFixed(2);
 
   const finalTotalInUSD = (subtotalInUSD + shippingInUSD).toFixed(2);
- return(
-   <div className="w-[70%] m-auto flex flex-col gap-10 small:w-[150%] semismall:w-[130%] semimedium:w-[90%] xl:w-[70%] ">
+  return (
+    <div className="w-[70%] m-auto flex flex-col gap-10 small:w-[150%] semismall:w-[130%] semimedium:w-[90%] xl:w-[70%] ">
       <h2 className="text-3xl mt-11 font-semibold mb-4 self-center">
         {t("Checkout.CheckoutView.checkYourCart")}
       </h2>
@@ -169,6 +167,6 @@ const CheckoutContent=()=>{
         </div>
       </div>
     </div>
- )
-}
-export default CheckoutContent
+  );
+};
+export default CheckoutContent;

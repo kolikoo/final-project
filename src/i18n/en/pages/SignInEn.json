@@ -1,14 +1,14 @@
 {
-  "Sign Up for BitBlogs":"Sign Up for ThriftShop",
-  "Create your account to start blogging":"Create Your Account for More Details",
-  "Already have an account":"Already have an account?",
-  "Log In":"Log In", 
+  "Sign Up for BitBlogs": "Sign Up for ThriftShop",
+  "Create your account to start blogging": "Create Your Account for More Details",
+  "Already have an account": "Already have an account?",
+  "Log In": "Log In",
   "sign up": "Sign Up",
-    "email":" Email",
-    "password":"Password",
-     "emailHolder":"text Email",
-    "passwordHolder":"text Password",
-    "tryagain":"Try Again",
-    "confirmed":"Confirmed",
-    "firstly":"Firstly, Please Confirm Your Registration In Your Email"
+  "email": " Email",
+  "password": "Password",
+  "emailHolder": "text Email",
+  "passwordHolder": "text Password",
+  "tryagain": "Try Again",
+  "confirmed": "Confirmed",
+  "firstly": "Firstly, Please Confirm Your Registration In Your Email"
 }

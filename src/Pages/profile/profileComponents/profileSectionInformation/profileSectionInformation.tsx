@@ -9,13 +9,13 @@ interface Profile {
   username: string;
   full_name_en: string;
   phone_number: string;
-  avatar_url?: string; 
+  avatar_url?: string;
 }
 
 const ProfileSectionInformation: React.FC = () => {
   const { t } = useTranslation();
   const user = useAtomValue(userAtom);
-const [profile, setProfile] = useState<Profile | null>(null); 
+  const [profile, setProfile] = useState<Profile | null>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -35,8 +35,6 @@ const [profile, setProfile] = useState<Profile | null>(null);
   if (!profile) {
     return <div>{t("loading")}</div>;
   }
- 
-    
 
   return (
     <div

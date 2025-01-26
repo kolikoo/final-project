@@ -6,33 +6,28 @@ import HomeSecondSection from "./home-components/home-second-section/homeSecondS
 import HomeLoadingPage from "@/MainComponents/defaultComponents/homeLoadingPage/homeLoadingPage";
 
 const MainHome: React.FC = () => {
-  const [isLoading, setIsLoading] = useState(true); 
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-
     const timer = setTimeout(() => {
       setIsLoading(false);
     }, 2000);
 
-    return () => clearTimeout(timer); 
+    return () => clearTimeout(timer);
   }, []);
 
   if (isLoading) {
-    return <HomeLoadingPage />; 
+    return <HomeLoadingPage />;
   }
 
   return (
-    <><div className="dark:bg-zinc-800">
-
-
-      <HomeFirstSection />
-        <HomeSecondSection/>
-       <HomeFirstArticle />
-       <HomeSecondArticle />
-    
-
-     
-          </div>
+    <>
+      <div className="dark:bg-zinc-800">
+        <HomeFirstSection />
+        <HomeSecondSection />
+        <HomeFirstArticle />
+        <HomeSecondArticle />
+      </div>
     </>
   );
 };

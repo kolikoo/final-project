@@ -41,21 +41,31 @@ const Footer: React.FC = () => {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
             <div>
-              <h3 className="text-lg font-semibold mb-2">{t("header.category")}</h3>
+              <h3 className="text-lg font-semibold mb-2">
+                {t("header.category")}
+              </h3>
               <ul>
                 <li>
-                  <p onClick={() => handleNavigate("/NewBlog")}>{t("header.New")}</p>
+                  <p onClick={() => handleNavigate("/NewBlog")}>
+                    {t("header.New")}
+                  </p>
                 </li>
                 <li>
-                  <p onClick={() => handleNavigate("/UsedBlog")}>{t("header.Used")}</p>
+                  <p onClick={() => handleNavigate("/UsedBlog")}>
+                    {t("header.Used")}
+                  </p>
                 </li>
                 <li>
-                  <p onClick={() => handleNavigate("/Shoes")}>{t("header.shoes")}</p>
+                  <p onClick={() => handleNavigate("/Shoes")}>
+                    {t("header.shoes")}
+                  </p>
                 </li>
               </ul>
             </div>
             <div>
-              <h3 className="text-lg font-semibold mb-2">{t("header.about")}</h3>
+              <h3 className="text-lg font-semibold mb-2">
+                {t("header.about")}
+              </h3>
               <ul>
                 <li>
                   <a href="#homeBlogAboutArticle">{t("header.about")}</a>
@@ -68,7 +78,9 @@ const Footer: React.FC = () => {
               </ul>
             </div>
             <div>
-              <h3 className="text-lg font-semibold mb-2">{t("header.Stay Up To Date")}</h3>
+              <h3 className="text-lg font-semibold mb-2">
+                {t("header.Stay Up To Date")}
+              </h3>
               {/* Optionally, add a subscription form or other content */}
             </div>
           </div>

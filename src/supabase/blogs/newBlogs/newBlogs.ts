@@ -49,11 +49,10 @@ export const fetchFavorites = async (userId: string): Promise<number[]> => {
   }
 };
 
-
 // Add a blog to user's favorites
 export const addFavorite = async (
   userId: string,
-  blogId: number
+  blogId: number,
 ): Promise<void> => {
   try {
     const { error } = await supabase
@@ -75,7 +74,7 @@ export const addFavorite = async (
 // Remove a blog from user's favorites
 export const removeFavorite = async (
   userId: string,
-  blogId: number
+  blogId: number,
 ): Promise<void> => {
   try {
     const { error } = await supabase

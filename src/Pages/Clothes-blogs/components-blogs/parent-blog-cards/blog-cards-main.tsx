@@ -1,9 +1,6 @@
-
-
-type Props={
-
+type Props = {
   children?: React.ReactNode;
-}
+};
 const MainBlogCards: React.FC<Props> = ({ children }) => {
   return (
     <div
@@ -24,4 +21,4 @@ const MainBlogCards: React.FC<Props> = ({ children }) => {
   );
 };
 
-export default MainBlogCards
+export default MainBlogCards;

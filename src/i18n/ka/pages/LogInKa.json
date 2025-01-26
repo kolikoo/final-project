@@ -1,15 +1,12 @@
 {
-  
-    "Enter credentials": "შეიყვანეთ თქვენი მონაცემები რომ შეხვიდეთ თქვენს გვერდზე",
-    "Log in to BitBlogs": "ThriftShop-ში შესვლა",
-    "Forgot Password": "დაგავიწყდა პაროლი?",
-    "Don't have an account": "არ გაქვს ანგარიში?",
-    "sign up": "დარეგისტრირდი",
-    "email":" მეილი",
-    "password":"პაროლი",
-     "emailHolder":"შეიყვანე შენი მეილი",
-    "passwordHolder":"შეიყვანე შენი პაროლი",
-    "login":"შესვლა"
-    
-  
+  "Enter credentials": "შეიყვანეთ თქვენი მონაცემები რომ შეხვიდეთ თქვენს გვერდზე",
+  "Log in to BitBlogs": "ThriftShop-ში შესვლა",
+  "Forgot Password": "დაგავიწყდა პაროლი?",
+  "Don't have an account": "არ გაქვს ანგარიში?",
+  "sign up": "დარეგისტრირდი",
+  "email": " მეილი",
+  "password": "პაროლი",
+  "emailHolder": "შეიყვანე შენი მეილი",
+  "passwordHolder": "შეიყვანე შენი პაროლი",
+  "login": "შესვლა"
 }

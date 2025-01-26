@@ -21,17 +21,17 @@ const Shoes: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [searchQuery] = useState<string>("");
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const blogsPerPage = 12; 
+  const blogsPerPage = 12;
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUserId = async () => {
-      const { data: session, error } = await supabase.auth.getSession(); 
+      const { data: session, error } = await supabase.auth.getSession();
       if (error) {
         console.error("Error getting user session:", error);
         return;
       }
-      setUserId(session?.session?.user?.id || null); 
+      setUserId(session?.session?.user?.id || null);
     };
 
     fetchUserId();
@@ -46,7 +46,7 @@ const Shoes: React.FC = () => {
       } catch (error: unknown) {
         console.error(
           "Error fetching favorites:",
-          error instanceof Error ? error.message : error
+          error instanceof Error ? error.message : error,
         );
       }
     };
@@ -62,7 +62,7 @@ const Shoes: React.FC = () => {
       } catch (error: unknown) {
         console.error(
           "Error fetching blogs:",
-          error instanceof Error ? error.message : error
+          error instanceof Error ? error.message : error,
         );
       } finally {
         setIsLoading(false);
@@ -77,7 +77,7 @@ const Shoes: React.FC = () => {
       const filtered = blogs.filter(
         (blog) =>
           blog.category === "shoes" &&
-          blog.title.toLowerCase().includes(searchQuery.toLowerCase())
+          blog.title.toLowerCase().includes(searchQuery.toLowerCase()),
       );
       setFilteredBlogs(filtered);
     };
@@ -104,7 +104,7 @@ const Shoes: React.FC = () => {
     } catch (error: unknown) {
       console.error(
         "Error handling favorite:",
-        error instanceof Error ? error.message : error
+        error instanceof Error ? error.message : error,
       );
     }
   };

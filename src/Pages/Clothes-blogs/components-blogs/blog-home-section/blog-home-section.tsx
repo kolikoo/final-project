@@ -1,13 +1,11 @@
-
-
 type Props = {
   children?: React.ReactNode;
 };
 
 const BlogHomeSection: React.FC<Props> = ({ children }) => {
-return (
-  <section
-    className="
+  return (
+    <section
+      className="
     
           BlogHomeSection 
         flex 
@@ -23,10 +21,10 @@ return (
         xl:w-[100%]
         semimedium:w-[100%]
       "
-  >
-    {children}
-  </section>
-);
+    >
+      {children}
+    </section>
+  );
 };
 
 export default BlogHomeSection;

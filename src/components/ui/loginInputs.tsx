@@ -1,14 +1,13 @@
 import * as React from "react";
-import { Input } from "@/components/ui/input"; 
-import { Button } from "@/components/ui/button"; 
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import { login } from "../../supabase/auth";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { useForm } from "react-hook-form"; 
-import { zodResolver } from "@hookform/resolvers/zod"; 
-import { z } from "zod"; 
-
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 
 const loginSchema = z.object({
   email: z
@@ -27,7 +26,6 @@ const LoginInput: React.FC = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
-  
   const {
     register,
     handleSubmit,

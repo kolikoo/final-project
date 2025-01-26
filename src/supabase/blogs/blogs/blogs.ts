@@ -1,6 +1,4 @@
-
 import { supabase } from "@/supabase";
-
 
 export const fetchBlogs = async () => {
   const { data, error } = await supabase

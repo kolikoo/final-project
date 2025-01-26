@@ -41,11 +41,11 @@ const Details: React.FC = () => {
     fetchUserId();
   }, []);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  const handleNavigate = (path:string)=>{
-    navigate(path)
-  }
+  const handleNavigate = (path: string) => {
+    navigate(path);
+  };
 
   useEffect(() => {
     const fetchBlogDetails = async () => {
@@ -148,16 +148,14 @@ const Details: React.FC = () => {
     p-6
     "
       >
-       
         <div className="w-full md:w-1/2 flex justify-center items-center bg-white dark:bg-zinc-800">
           <img
             src={`https://ezorpkouhvpeqvlzrolq.supabase.co/storage/v1/object/public/blog-images/${blog.image_url}`}
-            alt={blog.title || ""} 
+            alt={blog.title || ""}
             className="w-full max-w-[90%] h-auto object-cover rounded-[40px]"
           />
         </div>
 
-     
         <div className="w-full md:w-1/2 flex flex-col gap-4 justify-center dark:text-white">
           <h1 className="text-2xl sm:text-3xl font-semibold text-gray-800 dark:text-white">
             {blog.title}
@@ -187,14 +185,14 @@ const Details: React.FC = () => {
               ? "Remove from Favorites"
               : "Add to Favorites"}
           </button>
-         {favoriteBlogs.includes(blog.id) && (
-  <button
-    onClick={() => handleNavigate("/CheckoutView")}
-    className="w-full bg-black text-white py-2 rounded hover:bg-gray-800 dark:bg-[#C4D7F2] dark:hover:bg-opacity-45"
-  >
-    Buy
-  </button>
-)}
+          {favoriteBlogs.includes(blog.id) && (
+            <button
+              onClick={() => handleNavigate("/CheckoutView")}
+              className="w-full bg-black text-white py-2 rounded hover:bg-gray-800 dark:bg-[#C4D7F2] dark:hover:bg-opacity-45"
+            >
+              Buy
+            </button>
+          )}
         </div>
       </div>
     </div>

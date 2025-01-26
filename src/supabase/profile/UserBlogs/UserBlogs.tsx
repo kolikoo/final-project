@@ -1,5 +1,3 @@
-
-
 interface Blog {
   id: string;
   title: string | null;
@@ -42,7 +40,6 @@ export const fetchBlogs = async (): Promise<Blog[]> => {
     throw error;
   }
 };
-
 
 import { supabase } from "@/supabase";
 

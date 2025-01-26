@@ -1,11 +1,9 @@
-
-import { NavLink} from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 import HeaderLeft from "./components/headerLeft/headerLeft";
 import HeaderRight from "./components/headerRight/headerRight";
 
 const Header: React.FC = () => {
-
   return (
     <header
       className="m-auto h-[100px]  bg-[#F7F5EB]  dark:bg-zinc-900 

@@ -24,8 +24,7 @@ import WbSunnyIcon from "@mui/icons-material/WbSunny";
 import BedtimeIcon from "@mui/icons-material/Bedtime";
 import { supabase } from "@/supabase";
 
-
-const HeaderRight:React.FC = () => {
+const HeaderRight: React.FC = () => {
   const { t } = useTranslation();
   const [user] = useAtom(userAtom);
   const [favoritesCount, setFavoritesCount] = useState<number>(0);
@@ -47,17 +46,16 @@ const HeaderRight:React.FC = () => {
   };
 
   useEffect(() => {
-
     fetchFavoritesCount();
 
     const subscription = supabase
-      .channel("realtime:favorites") 
+      .channel("realtime:favorites")
       .on(
         "postgres_changes",
         { event: "*", schema: "public", table: "favorites" },
         () => {
           fetchFavoritesCount();
-        }
+        },
       )
       .subscribe();
 
@@ -66,36 +64,32 @@ const HeaderRight:React.FC = () => {
     };
   }, []);
 
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
- 
-
-    const [isDarkMode, setIsDarkMode] = useState(false);
-
-    const handleToggle = () => {
-      setIsDarkMode(!isDarkMode);
-      const html = document.querySelector("html");
-      if (isDarkMode) {
-        html?.classList.remove("dark");
-      } else {
-        html?.classList.add("dark");
-      }
-    };
+  const handleToggle = () => {
+    setIsDarkMode(!isDarkMode);
+    const html = document.querySelector("html");
+    if (isDarkMode) {
+      html?.classList.remove("dark");
+    } else {
+      html?.classList.add("dark");
+    }
+  };
 
   const navigate = useNavigate();
   const handleNavigate = (path: string) => {
     navigate(path);
   };
 
- const containerClassName = `header-right-items mb-4 flex text-black gap-3 ${
-   user ? "justify-between" : "justify-center"
- } dark:text-white w-[30%] p-2 h-10 rounded-[25px] small:w-100`;
-  
- const containerClassNameSecond = ` small: border-[1px] border-[#450920] dark:border-[#C4D7F2] rounded-[25px] flex ${user ? "w-[70%]" : "w-[40%] sm:w-[20%] extramedium:w-[60%]"} justify-center gap-5 h-10 p-1 @media-(min-width: 640px)-w-13 `;
+  const containerClassName = `header-right-items mb-4 flex text-black gap-3 ${
+    user ? "justify-between" : "justify-center"
+  } dark:text-white w-[30%] p-2 h-10 rounded-[25px] small:w-100`;
+
+  const containerClassNameSecond = ` small: border-[1px] border-[#450920] dark:border-[#C4D7F2] rounded-[25px] flex ${user ? "w-[70%]" : "w-[40%] sm:w-[20%] extramedium:w-[60%]"} justify-center gap-5 h-10 p-1 @media-(min-width: 640px)-w-13 `;
 
   const handleChangeLanguage = (lang: string) => {
     i18n.changeLanguage(lang);
   };
-   ;
   return (
     <>
       <div
@@ -127,29 +121,28 @@ const HeaderRight:React.FC = () => {
         <div
           className={`${containerClassNameSecond} small:w-[70%] large:w-[70%] lg:w-[50%]`}
         >
-         <div
-  className="relative"
-  onClick={() => handleNavigate("/CheckoutView")}
->
-  <p
-    className="small:text-[1px]"
-    id="cart-icon"
-    onClick={() => handleNavigate("/CheckoutView")}
-  >
-    <AddShoppingCartIcon
-      className={`text-[#450920] dark:text-white hover:scale-110 transition-transform duration-300 hover:text-black cursor-pointer ${
-        !user && "opacity-50 pointer-events-none"
-      }`}
-    />
-  </p>
+          <div
+            className="relative"
+            onClick={() => handleNavigate("/CheckoutView")}
+          >
+            <p
+              className="small:text-[1px]"
+              id="cart-icon"
+              onClick={() => handleNavigate("/CheckoutView")}
+            >
+              <AddShoppingCartIcon
+                className={`text-[#450920] dark:text-white hover:scale-110 transition-transform duration-300 hover:text-black cursor-pointer ${
+                  !user && "opacity-50 pointer-events-none"
+                }`}
+              />
+            </p>
 
-  {user && favoritesCount > 0 && (
-    <div className="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center animate-bounce-limited animate-bounce duration-2000">
-      {favoritesCount}
-    </div>
-  )}
-</div>
-
+            {user && favoritesCount > 0 && (
+              <div className="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center animate-bounce-limited animate-bounce duration-2000">
+                {favoritesCount}
+              </div>
+            )}
+          </div>
 
           <div className="flex items-center justify-center gap-3 ">
             <div

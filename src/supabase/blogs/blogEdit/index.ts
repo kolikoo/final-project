@@ -1,9 +1,8 @@
 import { supabase } from "@/supabase";
 
-
 interface Blog {
   id: number;
-  title: string | null; 
+  title: string | null;
   content?: string;
   created_at: string;
   updated_at?: string;
@@ -15,9 +14,6 @@ interface Blog {
   user_id: string | null;
 }
 
-
-
-
 export const fetchBlogData = async (blogId: number): Promise<Blog | null> => {
   const { data, error } = await supabase
     .from("blogs-list")
@@ -28,7 +24,6 @@ export const fetchBlogData = async (blogId: number): Promise<Blog | null> => {
   if (error) throw new Error(error.message);
   return data;
 };
-
 
 interface UpdateBlogPayload {
   title?: string;

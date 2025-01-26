@@ -12,12 +12,10 @@ export interface Blog {
   price: number;
 }
 
-
 interface FilterSectionProps {
   allBlogs: Blog[];
   onFilterChange: (filteredBlogs: Blog[]) => void;
 }
-
 
 const FilterSection: React.FC<FilterSectionProps> = ({
   onFilterChange,

@@ -29,7 +29,6 @@ export const fetchFavorites = async (userId: string) => {
     .filter((id): id is number => id !== null);
 };
 
-
 export const addFavorite = async (userId: string, blogId: number) => {
   const { error } = await supabase
     .from("favorites")

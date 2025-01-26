@@ -1,6 +1,6 @@
 import { supabase } from "../index";
 
-export const register =  ({
+export const register = ({
   email,
   password,
 }: {
@@ -9,7 +9,6 @@ export const register =  ({
 }) => {
   return supabase.auth.signUp({ email, password });
 };
-
 
 export const login = ({
   email,
@@ -28,9 +27,8 @@ export const login = ({
     }
     return res;
   });
-}; 
+};
 
-
-export const logout = ()=>{
-return supabase.auth.signOut()
-}
+export const logout = () => {
+  return supabase.auth.signOut();
+};

@@ -1,5 +1,3 @@
-
-
 import React from "react";
 
 interface TextInputProps {
@@ -7,7 +5,7 @@ interface TextInputProps {
   name: string;
   value: string;
   onChange: (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => void;
   placeholder: string;
   label: string;

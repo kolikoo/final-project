@@ -1,13 +1,13 @@
 import * as React from "react";
-import { Input } from "@/components/ui/input"; 
-import { Button } from "@/components/ui/button"; 
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { register } from "../../supabase/auth";
 import { useMutation } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
-import { z } from "zod"; 
+import { z } from "zod";
 
 const registerSchema = z.object({
   email: z.string().email("Invalid email address").min(1, "Email is required"),
@@ -23,10 +23,12 @@ const RegisterForm: React.FC = () => {
     email: "",
     password: "",
   });
-  
+
   // State to store error messages
-  const [errors, setErrors] = useState<{ email?: string, password?: string }>({});
-  
+  const [errors, setErrors] = useState<{ email?: string; password?: string }>(
+    {},
+  );
+
   const navigate = useNavigate();
 
   const { mutate: handleRegister } = useMutation({
@@ -47,12 +49,12 @@ const RegisterForm: React.FC = () => {
       setErrors({});
       handleRegister(registerPayload);
     } else {
-      const newErrors: { email?: string, password?: string } = {};
+      const newErrors: { email?: string; password?: string } = {};
       result.error.errors.forEach((error) => {
-        if (error.path[0] === 'email') {
+        if (error.path[0] === "email") {
           newErrors.email = error.message;
         }
-        if (error.path[0] === 'password') {
+        if (error.path[0] === "password") {
           newErrors.password = error.message;
         }
       });
@@ -102,7 +104,9 @@ const RegisterForm: React.FC = () => {
           required
         />
         {/* Display password error if any */}
-        {errors.password && <p className="text-red-500 text-sm">{errors.password}</p>}
+        {errors.password && (
+          <p className="text-red-500 text-sm">{errors.password}</p>
+        )}
       </div>
 
       <Button

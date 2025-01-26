@@ -6,12 +6,12 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
 const HomeSecondSection: React.FC = () => {
- const {t}=useTranslation()
+  const { t } = useTranslation();
 
- const navigate=useNavigate()
- const handleNavigate=(path:string)=>{
-navigate(path)
- }
+  const navigate = useNavigate();
+  const handleNavigate = (path: string) => {
+    navigate(path);
+  };
 
   return (
     <section

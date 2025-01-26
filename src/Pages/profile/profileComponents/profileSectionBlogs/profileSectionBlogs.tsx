@@ -1,10 +1,7 @@
 // src/components/ProfileSectionBlogs.tsx
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  fetchBlogs,
-  deleteBlog,
-} from "@/supabase/profile/UserBlogs/UserBlogs";
+import { fetchBlogs, deleteBlog } from "@/supabase/profile/UserBlogs/UserBlogs";
 import Loading from "@/MainComponents/defaultComponents/loadingPage/loading";
 import { useTranslation } from "react-i18next";
 
@@ -20,7 +17,7 @@ interface Blog {
 }
 
 const ProfileSectionBlogs: React.FC = () => {
-  const { t } = useTranslation(); 
+  const { t } = useTranslation();
   const [blogs, setBlogs] = useState<Blog[]>([]);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -42,16 +39,16 @@ const ProfileSectionBlogs: React.FC = () => {
   }, []);
 
   const handleEdit = (id: string, event: React.MouseEvent) => {
-    event.stopPropagation(); 
+    event.stopPropagation();
     navigate(`/BlogEditPage/${id}`);
   };
 
-    const handleNavigate = (path: string) => navigate(path);
+  const handleNavigate = (path: string) => navigate(path);
 
   const handleDelete = async (id: string, event: React.MouseEvent) => {
     event.stopPropagation();
     const confirmDelete = window.confirm(
-      "Are you sure you want to delete this blog?"
+      "Are you sure you want to delete this blog?",
     );
     if (!confirmDelete) return;
 

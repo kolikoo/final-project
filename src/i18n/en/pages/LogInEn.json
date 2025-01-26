@@ -1,12 +1,11 @@
 {
- "Enter credentials":"Enter your credentials to access your account",
- "Log in to BitBlogs":"Log in to ThriftShop",
- "Forgot Password":"Forgot Password",
- "Don't have an account":"Don't have an account?",
- "sign up":"sign in",
-    "email":"Email",
-    "password":"Password",
-     "emailHolder":"Text Email",
-    "passwordHolder":"Text Password"
-
+  "Enter credentials": "Enter your credentials to access your account",
+  "Log in to BitBlogs": "Log in to ThriftShop",
+  "Forgot Password": "Forgot Password",
+  "Don't have an account": "Don't have an account?",
+  "sign up": "sign in",
+  "email": "Email",
+  "password": "Password",
+  "emailHolder": "Text Email",
+  "passwordHolder": "Text Password"
 }
