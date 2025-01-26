@@ -2,15 +2,20 @@ import React, { useEffect, useState } from "react";
 import ReactSlider from "react-slider";
 import SearchIcon from "@mui/icons-material/Search";
 
-// types/Blog.ts
+// Blog ტიპი
 export interface Blog {
-  id: number;
   title: string;
   description: string;
+  category: string | null;
+  price: number | null;
   currency: string;
   image_url: string;
-  price: number;
+  created_at: string;
+  id: number;
+  type: string | null;
+  user_id: string | null;
 }
+
 
 interface FilterSectionProps {
   allBlogs: Blog[];
@@ -26,16 +31,20 @@ const FilterSection: React.FC<FilterSectionProps> = ({
   const [sortOrder, setSortOrder] = useState<string>("default");
 
   useEffect(() => {
+    if (!allBlogs || allBlogs.length === 0) return;
+
     const filteredBlogs = allBlogs
       .filter((blog) =>
-        blog.title.toLowerCase().includes(searchQuery.toLowerCase()),
+        blog.title?.toLowerCase().includes(searchQuery.toLowerCase()),
       )
       .filter(
-        (blog) => blog.price >= priceRange[0] && blog.price <= priceRange[1],
+        (blog) =>
+          (blog.price || 0) >= priceRange[0] &&
+          (blog.price || 0) <= priceRange[1],
       )
       .sort((a, b) => {
-        if (sortOrder === "ascending") return a.price - b.price;
-        if (sortOrder === "descending") return b.price - a.price;
+        if (sortOrder === "ascending") return (a.price || 0) - (b.price || 0);
+        if (sortOrder === "descending") return (b.price || 0) - (a.price || 0);
         return 0;
       });
 
@@ -43,7 +52,8 @@ const FilterSection: React.FC<FilterSectionProps> = ({
   }, [searchQuery, priceRange, sortOrder, allBlogs, onFilterChange]);
 
   return (
-    <div
+   
+ <div
       className="filter-container flex gap-5 py-6 w-[60%] justify-start
     small:w-[160%]
     semismall:w-[130%]
@@ -136,7 +146,10 @@ const FilterSection: React.FC<FilterSectionProps> = ({
         </select>
       </div>
     </div>
+
   );
 };
 
 export default FilterSection;
+
+

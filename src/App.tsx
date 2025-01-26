@@ -92,7 +92,7 @@ function App() {
           }
         />
 
-             <Route
+        <Route
           path="/Login/registration/confirmation"
           element={
             <LoginAuthGuard>

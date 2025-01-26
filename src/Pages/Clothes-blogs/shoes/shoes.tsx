@@ -13,9 +13,23 @@ import {
 } from "@/supabase/blogs/shoes/shoes";
 import { supabase } from "@/supabase";
 
+export interface Blog {
+  title: string;
+  description: string;
+  category: string | null;
+  price: number | null;
+  currency: string;
+  image_url: string;
+  created_at: string;
+  id: number;
+  type: string | null;
+  user_id: string | null;
+}
+
+
 const Shoes: React.FC = () => {
-  const [blogs, setBlogs] = useState<any[]>([]);
-  const [filteredBlogs, setFilteredBlogs] = useState<any[]>([]);
+  const [blogs, setBlogs] = useState<Blog[]>([]);
+  const [filteredBlogs, setFilteredBlogs] = useState<Blog[]>([]);
   const [favoriteBlogs, setFavoriteBlogs] = useState<number[]>([]);
   const [userId, setUserId] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -27,11 +41,11 @@ const Shoes: React.FC = () => {
   useEffect(() => {
     const fetchUserId = async () => {
       const { data: session, error } = await supabase.auth.getSession();
-      if (error) {
+      if (error || !session?.session?.user?.id) {
         console.error("Error getting user session:", error);
         return;
       }
-      setUserId(session?.session?.user?.id || null);
+      setUserId(session.session.user.id);
     };
 
     fetchUserId();
@@ -44,10 +58,7 @@ const Shoes: React.FC = () => {
         const favorites = await fetchFavorites(userId);
         setFavoriteBlogs(favorites);
       } catch (error: unknown) {
-        console.error(
-          "Error fetching favorites:",
-          error instanceof Error ? error.message : error,
-        );
+        console.error("Error fetching favorites:", error);
       }
     };
 
@@ -55,19 +66,29 @@ const Shoes: React.FC = () => {
   }, [userId]);
 
   useEffect(() => {
-    const fetchBlogsData = async () => {
-      try {
-        const blogs = await fetchBlogs();
-        setBlogs(blogs);
-      } catch (error: unknown) {
-        console.error(
-          "Error fetching blogs:",
-          error instanceof Error ? error.message : error,
-        );
-      } finally {
-        setIsLoading(false);
-      }
-    };
+   const fetchBlogsData = async () => {
+     try {
+       const blogs = await fetchBlogs();
+       const validatedBlogs = blogs.map((blog) => ({
+         ...blog,
+         title: blog.title ?? "",
+         description: blog.description ?? "",
+         category: blog.category ?? "",
+         price:
+           typeof blog.price === "string"
+             ? parseFloat(blog.price)
+             : (blog.price ?? null), 
+         currency: blog.currency ?? "USD",
+         image_url: blog.image_url ?? "",
+       }));
+       setBlogs(validatedBlogs);
+     } catch (error: unknown) {
+       console.error("Error fetching blogs:", error);
+     } finally {
+       setIsLoading(false);
+     }
+   };
+
 
     fetchBlogsData();
   }, []);
@@ -77,7 +98,7 @@ const Shoes: React.FC = () => {
       const filtered = blogs.filter(
         (blog) =>
           blog.category === "shoes" &&
-          blog.title.toLowerCase().includes(searchQuery.toLowerCase()),
+          blog.title?.toLowerCase().includes(searchQuery.toLowerCase()),
       );
       setFilteredBlogs(filtered);
     };
@@ -102,10 +123,7 @@ const Shoes: React.FC = () => {
         setFavoriteBlogs((prev) => [...prev, blogId]);
       }
     } catch (error: unknown) {
-      console.error(
-        "Error handling favorite:",
-        error instanceof Error ? error.message : error,
-      );
+      console.error("Error handling favorite:", error);
     }
   };
 
@@ -120,10 +138,14 @@ const Shoes: React.FC = () => {
   if (isLoading) {
     return <Loading />;
   }
-
   return (
     <div className="w-full   bg-white px-10 dark:bg-zinc-900 xl:pb-11">
-      <FilterSection allBlogs={blogs} onFilterChange={setFilteredBlogs} />
+      <FilterSection
+        allBlogs={blogs}
+        onFilterChange={(filteredBlogs: Blog[]) =>
+          setFilteredBlogs(filteredBlogs)
+        }
+      />
 
       <BlogHomeSection>
         <MainBlogCards>
@@ -135,8 +157,8 @@ const Shoes: React.FC = () => {
             >
               <div className="relative">
                 <img
-                  src={`https://ezorpkouhvpeqvlzrolq.supabase.co/storage/v1/object/public/blog-images/${blog.image_url}`}
-                  alt={blog.title}
+                  src={`https://ezorpkouhvpeqvlzrolq.supabase.co/storage/v1/object/public/blog-images/${blog.image_url }`}
+                  alt={blog.title as string}
                   className="w-full h-64 object-cover rounded-md"
                 />
                 <div className="favorite-icon absolute top-3 right-3">
