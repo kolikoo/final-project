@@ -1,4 +1,3 @@
-
 import { BlogDetails } from "./Details";
 import { Home } from "./home";
 import { Login } from "./LogIn";
@@ -16,5 +15,5 @@ export const Default_Routes = [
   ...Register_Confirmation_Page,
   ...registration,
   ...shoes,
-  ...UsedBlogs
+  ...UsedBlogs,
 ];

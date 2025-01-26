@@ -4,8 +4,9 @@ import { lazy, Suspense } from "react";
 import { Route } from "react-router-dom";
 import { Author_Layout_Path } from "../index.enum";
 
-const CheckoutView = lazy(() => import("@/Pages/checkout/checkoutView/checkoutView"));
-
+const CheckoutView = lazy(
+  () => import("@/Pages/checkout/checkoutView/checkoutView"),
+);
 
 export const Checkout_View = [
   <Route

@@ -9,5 +9,5 @@ export const Auth_Routes = [
   ...Checkout_View,
   ...Profile,
   ...Blog_Edit_Page,
-  ...Profile_Details_Edit
+  ...Profile_Details_Edit,
 ];

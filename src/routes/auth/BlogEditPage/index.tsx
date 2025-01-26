@@ -6,10 +6,9 @@ import { Author_Layout_Path } from "../index.enum";
 
 const BlogEditPage = lazy(() => import("@/Pages/blogEditPage/blogEditPage"));
 
-
 export const Blog_Edit_Page = [
   <Route
-    path={Author_Layout_Path.BlogEditPage+ "/:id"}
+    path={Author_Layout_Path.BlogEditPage + "/:id"}
     element={
       <AuthGuard>
         <Suspense fallback={<Loading />}>

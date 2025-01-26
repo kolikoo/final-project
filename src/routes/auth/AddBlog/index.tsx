@@ -4,7 +4,6 @@ import { lazy, Suspense } from "react";
 import { Route } from "react-router-dom";
 import { Author_Layout_Path } from "../index.enum";
 
-
 const AddBlog = lazy(() => import("@/Pages/Add-blog/addBlog"));
 
 export const Addblog = [
@@ -17,6 +16,5 @@ export const Addblog = [
         </Suspense>
       </AuthGuard>
     }
-    
   />,
 ];

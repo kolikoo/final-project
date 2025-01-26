@@ -1,6 +1,6 @@
-import {  useEffect } from "react";
+import { useEffect } from "react";
 import "./App.css";
-import { BrowserRouter as Router, Routes} from "react-router-dom";
+import { BrowserRouter as Router, Routes } from "react-router-dom";
 
 import { supabase } from "./supabase";
 

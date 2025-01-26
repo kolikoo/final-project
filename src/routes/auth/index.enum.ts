@@ -5,4 +5,3 @@ export enum Author_Layout_Path {
   BlogEditPage = "/BlogEditPage",
   profileDetailsEdit = "/profileDetailsEdit",
 }
-

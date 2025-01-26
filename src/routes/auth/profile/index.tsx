@@ -4,7 +4,9 @@ import { lazy, Suspense } from "react";
 import { Route } from "react-router-dom";
 import { Author_Layout_Path } from "../index.enum";
 
-const ProfileMainView = lazy(() => import("@/Pages/profile/profileMainView/profileMainView"));
+const ProfileMainView = lazy(
+  () => import("@/Pages/profile/profileMainView/profileMainView"),
+);
 
 export const Profile = [
   <Route
