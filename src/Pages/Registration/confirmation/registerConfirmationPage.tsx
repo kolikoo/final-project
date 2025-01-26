@@ -10,7 +10,7 @@ const RegisterConfirmationPage = () => {
   };
   return (
     <>
-      <div className="w-[40%] m-auto h-[300px] p-35  flex flex-col justify-center align-middle text-center   my-8 rounded-[20px] bg-[#f8f4e3] dark:bg-zinc-900 text-[#450920] dark:text-white gap-5">
+      <div className="w-[40%] m-auto h-[300px] p-35 flex flex-col justify-center align-middle text-center   my-8 rounded-[20px] bg-[#f8f4e3] dark:bg-zinc-900 text-[#450920] dark:text-white gap-5">
         <p className="font-[700] text-[18px] ">{t("SignIn-Page.firstly")}</p>
 
         <button

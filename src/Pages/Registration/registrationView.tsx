@@ -9,7 +9,7 @@ const Registration: React.FC = () => {
   return (
     <article className="w-full">
       <div
-        className="m-auto mt-20 flex w-[90%] sm:w-[70%] md:w-[50%] lg:w-[35%] flex-col gap-9 rounded-[10px] bg-[#F7F5EB] mb-4 pb-10 pl-10 pr-10 pt-10 dark:bg-black dark:text-white
+        className="m-auto mt-20 flex w-[90%] xl:my-10 sm:w-[70%] md:w-[50%] lg:w-[35%] flex-col gap-9 rounded-[10px] bg-[#F7F5EB] mb-4 pb-10 pl-10 pr-10 pt-10 dark:bg-black dark:text-white
      semismall:m-auto
 semimedium:m-auto
 small:m-auto
