@@ -5,6 +5,7 @@ import HomeSecondArticle from "./home-components/home-second-article/homeSecondA
 import HomeSecondSection from "./home-components/home-second-section/homeSecondSection";
 import HomeLoadingPage from "@/MainComponents/defaultComponents/homeLoadingPage/homeLoadingPage";
 
+
 const MainHome: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
 
@@ -24,9 +25,11 @@ const MainHome: React.FC = () => {
     <>
       <div className="dark:bg-zinc-800">
         <HomeFirstSection />
+     
         <HomeSecondSection />
         <HomeFirstArticle />
         <HomeSecondArticle />
+        
       </div>
     </>
   );

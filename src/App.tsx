@@ -11,6 +11,7 @@ import Header from "./MainComponents/defaultComponents/header/header";
 import { Auth_Routes } from "./routes/auth";
 import { Default_Routes } from "./routes/default";
 import Footer from "./MainComponents/defaultComponents/footer/footer";
+import MusicPlayer from "./components/ui/musicPlayer";
 
 function App() {
   const [, setUser] = useAtom(userAtom);
@@ -35,7 +36,9 @@ function App() {
         {Auth_Routes}
         {Default_Routes}
       </Routes>
+  
       <Footer />
+      <MusicPlayer />
     </Router>
   );
 }

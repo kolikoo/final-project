@@ -12,7 +12,7 @@ const AddClothingForm: React.FC = () => {
     description: "",
     price: "",
     currency: "GEL",
-    category: "new", 
+    category: "new",
   });
 
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -35,7 +35,7 @@ const AddClothingForm: React.FC = () => {
   };
 
   const handleFileRemove = () => {
-    setSelectedFile(null); 
+    setSelectedFile(null);
   };
 
   const uploadImage = async (file: File) => {
@@ -76,7 +76,7 @@ const AddClothingForm: React.FC = () => {
             description: formData.description,
             price: formData.price,
             currency: formData.currency,
-            category: formData.category, 
+            category: formData.category,
             image_url: selectedFile ? await uploadImage(selectedFile) : null,
             user_id: user.id,
           },
@@ -163,19 +163,13 @@ const AddClothingForm: React.FC = () => {
         </div>
       </div>
 
-
-      <Category
-        value={formData.category}
-        onChange={handleCategoryChange} 
-      />
-
+      <Category value={formData.category} onChange={handleCategoryChange} />
 
       <FileUpload
         selectedFile={selectedFile}
         onFileChange={handleFileChange}
         onFileRemove={handleFileRemove}
       />
-
 
       <button
         type="submit"

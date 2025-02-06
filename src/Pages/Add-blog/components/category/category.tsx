@@ -11,7 +11,7 @@ const Category: React.FC<CategoryProps> = ({ value, onChange }) => {
 
   const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const { value } = e.target;
-    onChange(value); 
+    onChange(value);
   };
 
   return (
